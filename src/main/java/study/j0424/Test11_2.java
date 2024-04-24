@@ -20,12 +20,12 @@ public class Test11_2 extends HttpServlet {
 		int su1 = Integer.parseInt(request.getParameter("su1"));
 		int su2 = Integer.parseInt(request.getParameter("su2"));
 		
-		int temp, tot = 0;
+		int temp=0, tot = 0;
 		
 		if(su1 > su2) {
 			temp = su1;
 			su1 = su2;
-			
+			su2 = temp;
 		}
 		
 		for(int i=su1; i<=su2; i++) {
@@ -35,6 +35,6 @@ public class Test11_2 extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		out.println("이곳은 서블릿에서 보냅니다.");
-		out.println("<p><input type='button' value='돌아가기' onclick='location.href=\"/javaclass/study/0424/test12OK.jsp?su1="+su1+"&su2="+su2+"&tot="+tot+"\"' /></p>");
+		out.println("<p><input type='button' value='돌아가기' onclick='location.href=\"/javaclass/study/0424/test11_2OK.jsp?su1="+su1+"&su2="+su2+"&tot="+tot+"\"' /></p>");
 	}
 }
