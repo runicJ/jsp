@@ -14,7 +14,7 @@ public class Test2 extends HttpServlet {  // 부모 추상메소드 상속받아
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());  // response.getWriter() 메소드(브라우저에다가 명령을 출력하겠다.)  // Served at: javaclass
+		response.getWriter().append("Served at: ").append(request.getContextPath());  // response.getWriter() 메소드(브라우저에다가 명령을 출력하겠다.) 16번에 상속줄이 있어야 사용가능  // Served at: javaclass
 		System.out.println("이곳은 Get메소드 입니다.");
 	}
 

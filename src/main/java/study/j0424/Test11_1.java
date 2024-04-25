@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet("/T11")
-public class Test11 extends HttpServlet {
+@WebServlet("/T11_1")
+public class Test11_1 extends HttpServlet {
 	
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,6 +27,6 @@ public class Test11 extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		out.println("이곳은 서블릿에서 보냅니다.");
-		out.println("<p><input type='button' value='돌아가기' onclick='location.href=\"/javaclass/study/0424/test11OK.jsp?tot="+tot+"\"' /></p>");
+		out.println("<p><input type='button' value='돌아가기' onclick='location.href=\"/javaclass/study/0424/test11_1OK.jsp?tot="+tot+"\"' /></p>");
 	}
 }

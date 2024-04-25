@@ -19,7 +19,7 @@ public class Test8 extends HttpServlet {
 		System.out.println("이곳은 Get 메소드 입니다.");
 		
 		PrintWriter out = response.getWriter();  // out 객체 생성
-		out.println("<p><a href='/javaclass/study/0424/test8.jsp'>돌아가기</a></p>");
+		out.println("<p><a href='/javaclass/study/0424/test08.jsp'>돌아가기</a></p>");
 		
 //		response.getWriter().append("<p><a href='/javaclass/test8.jsp'>돌아가기</a></p>");  // out.println innerHTML // 서버로 들어갔다 나오면 무조건 한글이 깨짐
 	}
