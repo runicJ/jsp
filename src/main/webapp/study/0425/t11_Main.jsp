@@ -27,7 +27,7 @@
 			if(ans) {
 				alert('<%=mid%>님 로그아웃 되셨습니다.');
 				/* location.href='t11_Login.jsp'; */  // http://localhost:9090/javaclass/j0425/T11Ok 경로가 이렇게 되어있어서 study/0425가 아님 아까와 같은 위치가 아님 // 그냥 이렇게 쓰면 경로 마지막 뒤에 /파일명으로 됨.  
-				location.href='<%=request.getContextPath()%>/study/0425/t11_Login.jsp'; /* javascript코드 사용 // response.sendRedirect(location.href / get방식)  //  request.getRequestDispatcher(순간이동 방식 get,post 둘다 아님) */
+				location.href='<%=request.getContextPath()%>/study/0425/t11_Login.jsp'; /* javascript코드 사용 // response.sendRedirect(location.href / get방식)  //  request.getRequestDispatcher(dispatcher.forward()//순간이동 방식 get,post 둘다 아님) */
 			}
 		}
 	</script>

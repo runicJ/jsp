@@ -31,7 +31,7 @@
 			alert("${vo.name}님 로그아웃 되었습니다.");
 			/* location.href = "t12_form.jsp"; */
 			/* location.href = "javaclass/study/0425/t12_form.jsp"; */
-			<%-- location.href = "<%=request.getContextPath()%>/study/0425/t12_form.jsp"; --%>
+			location.href = "<%=request.getContextPath()%>/study/0425/t12_form.jsp";
 			/* location.href = '${request.getContextPath()}/study/0425/t12_form.jsp'; */
 			/* location.href = request.getContextPath() + '/study/0425/t12_form.jsp'; */
 		}
