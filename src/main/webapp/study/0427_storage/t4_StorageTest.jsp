@@ -2,7 +2,7 @@
 <%@ include file="/include/certification.jsp" %>
 <%
 	int aCount = application.getAttribute("aCount")==null ? 0 : (int) application.getAttribute("aCount");  // Integer.parseInt 해도 됨
-	int sCount = session.getAttribute("sCount")==null ? 0 : (int) session.getAttribute("sCount");  // Integer.parseInt 해도 됨
+	int sCount = session.getAttribute("sCount")==null ? 0 : (int) session.getAttribute("sCount");
 
 	aCount++;
 	sCount++;

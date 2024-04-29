@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%@ include file = "/include/bs4.jsp" %>
-  <title>t02_2.jsp</title>
+  <title>t02_3.jsp</title>
 </head>
 <body>
 <%@ include file = "/include/header.jsp" %>

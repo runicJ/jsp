@@ -44,6 +44,7 @@
       <li class="nav-item">
 <%		if(!mid_.equals("")) { %>
         <a class="nav-link" href="${pageContext.request.contextPath}/j0427/Logout">Logout</a>
+        <li><a class="nav-link ml-3" href="#">${sMid} 님 환영합니다!(마지막 방문일자: $)</a></li>
 <%		} else { %>
         <a class="nav-link" href="<%=request.getContextPath() %>/study/0428_Login/login.jsp">Login</a>
 <%		} %>

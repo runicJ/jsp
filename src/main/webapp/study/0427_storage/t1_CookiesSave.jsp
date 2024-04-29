@@ -12,7 +12,7 @@
 	response.addCookie(cookiePwd);
 	
 	String tel = "010-1234-5678";
-	Cookie cookieTel = new Cookie("cTel", pwd);
+	Cookie cookieTel = new Cookie("cTel", tel);
 	cookieTel.setMaxAge(60*60*24);
 	response.addCookie(cookieTel);
 %>

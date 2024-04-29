@@ -21,6 +21,7 @@ public class LoginOk extends HttpServlet {
 		
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 		String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd");
+		String last = request.getParameter("last")==null ? "" : request.getParameter("last");
 		
 		PrintWriter out = response.getWriter();  // out.print 사용 위해서
 		if((mid.equals("admin") && pwd.equals("1234")) ||(mid.equals("atom") && pwd.equals("1234"))) {
@@ -36,6 +37,10 @@ public class LoginOk extends HttpServlet {
 				cookieMid.setMaxAge(0);
 			}
 			response.addCookie(cookieMid);
+			
+			Cookie cookieLast = new Cookie("cLast", last);
+			cookieLast.setPath("/");
+			response.addCookie(cookieLast);
 			
 			// 필요한 정보를 session에 저장처리한다.
 			HttpSession session = request.getSession();
@@ -56,3 +61,16 @@ public class LoginOk extends HttpServlet {
 		}
 	}
 }
+
+/*
+ * <% // 세션의 최초 생성시간 long creationTime = session.getCreationTime();
+ * SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+ * String creationTimeString = dateFormat.format(new Date(creationTime));
+ * 
+ * // 서버로 클라이언트가 마지막으로 요청한 시간 long accessedTime = session.getLastAccessedTime();
+ * String accessedTimeString = dateFormat.format(new Date(accessedTime)); %>
+ * <li>세션의 최초 생성시간 : <%=creationTimeString %></li> <li>클라이언트의 마지막 요청시간 :
+ * <%=accessedTimeString %></li> </ul> <h2>세션 및 리퀘스트 영역에 저장</h2> <%
+ * request.setAttribute("requestScope", "리퀘스트 영역입니다");
+ * session.setAttribute("sessionScope", "세션 영역입니다"); %>
+ */

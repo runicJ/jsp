@@ -1,3 +1,4 @@
+<%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	// 로그인창에 아이디 체크 유무에 대한 처리
@@ -10,8 +11,21 @@
 				pageContext.setAttribute("mid", cookies[i].getValue());  // pageContext로 담아야(mid 변수에 / 저장소에 담은 것) EL로 출력 가능
 				break;
 			}
+/* 			if(cookies[i].getName().equals("cLastVisit")) {
+				pageContext.setAttribute("last", cookies[i].getValue());
+			} */
 		}
 	}
+	Calendar today = Calendar.getInstance();
+	int year = today.get(Calendar.YEAR);
+	int month = today.get(Calendar.MONTH);
+	int date = today.get(Calendar.DAY_OF_MONTH);
+	int hour = today.get(Calendar.HOUR);
+	int minute = today.get(Calendar.MINUTE);
+	int second = today.get(Calendar.SECOND);
+	String last = year+"년"+(month+1)+"월"+date+"일"+hour+"시"+minute+"분"+second+"초";
+	Cookie cLast = new Cookie("last", last);
+	response.addCookie(cLast);
 %>
 <!DOCTYPE html>
 <html>
