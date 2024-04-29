@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/include/certification.jsp" %>
 <%
 	String hostIp = request.getRemoteAddr();
 	//request.setAttribute("hostIp", hostIp);  // MVC 위에단 아랫단 따로따로 라고 생각

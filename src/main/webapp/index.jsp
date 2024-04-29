@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>  <!-- page : 지시자 -->
+<%
+	int sCount = session.getAttribute("sCount")==null ? 0 : (int) session.getAttribute("sCount");
+	sCount++;
+	session.setAttribute("sCount", sCount);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +28,7 @@
 <div class="container" style="margin-top:30px">
   <div class="row">
     <div class="col-sm-4">
-      <h2>About Me</h2>
+      <h2>About Me(${sMid})</h2>  <!-- session은 EL로 -->
       <h5>Photo of me:</h5>
       <div class="fakeimg">Fake Image</div>
       <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
@@ -46,7 +51,7 @@
       <hr class="d-sm-none">
     </div>
     <div class="col-sm-8">
-      <h2>TITLE HEADING</h2>
+      <h2>TITLE HEADING(view: ${sCount})</h2>
       <h5>Title description, Dec 7, 2017</h5>
       <div class="fakeimg">Fake Image</div>
       <p>Some text..</p>
