@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>길동이네 집</title>
+  <title>Greenhouse</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%@ include file = "../../include/bs4.jsp" %>
@@ -28,7 +28,7 @@
 <div class="container" style="margin-top:30px">
   <div class="row">
     <div class="col-sm-4">
-    	<h4>마지막 방문일자 : ${cLast}</h4>
+    	<h5>마지막 방문일자 : ${cLast}</h4>
       <h2>About Me(${sMid})</h2>  <!-- session은 EL로 -->
       <h5>Photo of me:</h5>
       <div class="fakeimg">Fake Image</div>

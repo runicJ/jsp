@@ -23,7 +23,10 @@ public class T5_StorageTestOk extends HttpServlet {
 		session.setAttribute("sMid", mid);  // 자주 사용  // sendRedirect 사용해야하는지 아니면 forward 사용해야 할지 잘 생각하고 사용
 		
 		// 어플리케이션 생성
-		ServletContext application = session.getServletContext();  // ServletContext라는 Container  // ServletContext 변수명 <= HttpServletRequest>HttpServlet // DI(dependency injection) 의존성 주입  // IOC
+		//ServletContext application = session.getServletContext();  // ServletContext라는 Container  // ServletContext 변수명 <= HttpServletRequest>HttpServlet // DI(dependency injection) 의존성 주입  // IOC
+		//ServletContext application = request.getSession().getServletContext();
+		ServletContext application =request.getServletContext();  // 서블릿에서는 내장객체가 아니기 때문에 HttpServletRequest > HttpServlet 써야지 사용할 수 있다.
+		
 		application.setAttribute("aMid", mid);
 		
 		response.sendRedirect(request.getContextPath() + "/study/0427_storage/t5_StorageTest.jsp");

@@ -16,16 +16,16 @@
 			} */
 		}
 	}
-	Calendar today = Calendar.getInstance();
+/*  	Calendar today = Calendar.getInstance();
 	int year = today.get(Calendar.YEAR);
 	int month = today.get(Calendar.MONTH);
 	int date = today.get(Calendar.DAY_OF_MONTH);
 	int hour = today.get(Calendar.HOUR);
 	int minute = today.get(Calendar.MINUTE);
 	int second = today.get(Calendar.SECOND);
-	String last = year+"년"+(month+1)+"월"+date+"일"+hour+"시"+minute+"분"+second+"초";
+	String last = year+"년 "+(month+1)+"월 "+date+"일 "+hour+"시 "+minute+"분 "+second+"초";
 	Cookie cLast = new Cookie("last", last);
-	response.addCookie(cLast);
+	response.addCookie(cLast); */
 %>
 <!DOCTYPE html>
 <html>

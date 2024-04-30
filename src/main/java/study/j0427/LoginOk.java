@@ -39,6 +39,7 @@ public class LoginOk extends HttpServlet {
 			response.addCookie(cookieMid);
 			
 			Cookie cookieLast = new Cookie("cLast", last);
+			System.out.println("last : " + last);
 			cookieLast.setPath("/");
 			response.addCookie(cookieLast);
 			

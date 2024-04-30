@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xmlns="https://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="https://xmlns.jcp.org/xml/ns/javaee https://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>javaclass</display-name>
+  <!-- 파일의 우선순위 -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
@@ -12,7 +13,7 @@
   
   <!--
   <servlet>
-    <servlet-name>Test8</servlet-name>
+    <servlet-name>test8</servlet-name>
     <servlet-class>study.j0424.Test8</servlet-class>
   </servlet>
   <servlet-mapping>
@@ -20,8 +21,22 @@
     <url-pattern>/T8</url-pattern>
   </servlet-mapping>
   -->
-  
-</web-app>
+	<!-- 위에 있는거 controller임(현재도 유지보수시 사용), 지금은 annotation 쓰고 있지만 -->
+	<!-- url 통해서 이렇게 맵핑 url mapping하는 pattern -->
+	<!-- 자바로 들어가서 여기로 접속 xml // 이름을 줘야 쓸 수 있음  // 자바 안에서 쓰는 이름(웹서버를 통해 들어오려면 서블릿과 url 맵핑시켜야함 -->
 
-<!-- url 통해서 이렇게 맵핑 url mapping하는 pattern -->
-<!-- 자바로 들어가서 여기로 접속 xml // 이름을 줘야 쓸 수 있음  // 자바 안에서 쓰는 이름(웹서버를 통해 들어오려면 서블릿과 url 맵핑시켜야함 -->
+	<!-- Filter 처리(Controller 앞단에서 제어(처리)한다.) // 쓸 곳 위치는 관계없음 -->
+	<filter>
+		<!-- 소문자로 첫글자 쓰는게 일반적인 약속 -->
+		<filter-name>filterTest</filter-name>
+		<!-- filter class 정의 // package명.class명 -->
+		<filter-class>filter.FilterTest</filter-class>
+	</filter>
+		<!-- 인터넷에 있는 것과 매칭 시킨다 -->
+	<filter-mapping>
+		<filter-name>filterTest</filter-name>
+		<!-- /javaclass/뭐로 들어올지 모르니까 일단 와일드카드(*) -->
+		<url-pattern>/*</url-pattern>  
+	</filter-mapping>
+</web-app>
+<!-- /* filterTest => filterTest(filter.FilterTest) -->
