@@ -91,10 +91,40 @@
 	</c:forEach>
 	<br/>
 	
-	<div>
+	<h5>
 	시작단과 끝단을 입력받고(항상 시작단이 작은 숫자가 오도록 처리),
 	한행에 처리할 단의 수를 입력받은 후, 조건에 맞도록 구구단을 출력하시오.
+	</h5>
+	<div>
+		<form>
+			<p><input type="number" name="su1" value="1" class="form-control" required/></p>
+			<p><input type="number" name="su2" value="1" class="form-control" required/></p>
+			<p><input type="number" name="col" value="1" class="form-control" required/></p>
+			<p><input type="submit" value="구구단 출력" class="btn btn-success form-control" /><p>
+		</form>
+		<c:if test="${su1>su2}">
+			alert("시작단에 더 큰 수를 입력하셨습니다! 다시 입력해 주세요");
+		</c:if>
+		<c:if test="${su1<=su2}">
+			<table>
+			<c:forEach var="i" begin="${param.su1}" end="${param.su2}">
+				<c:choose>
+					<c:when test="${su2%col==0}">
+					<tr>
+					</c:when>
+					* ${i}단 *<br/>
+				<c:forEach var="j" begin="1" end="9">
+						<td>${i} * ${j} = ${i*j}<br/></td></tr>
+					<c:otherwise>
+						<td>${i} * ${j} = ${i*j}<br/></td>
+					</c:otherwise>
+				</c:forEach>
+				</c:choose>
+			</c:forEach>
+			</table>
+		</c:if>
 	</div>
+	<div id="demo"></div>
 	<br/>
 	
 	<h5>3. 저장된 그림 5장을 출력하시오.</h5>
@@ -168,18 +198,45 @@
 	</c:forEach>
 	<br/><br/>
 	
-	<h5>9. 앞의 사용법 2번에 저장한 cards의 내용 중, '국민카드'는 파랑색, '삼성카드'는 빨간색, 첫번째 카드의 배경색은 노랑, 마지막 카드의 배경색은 하늘색</h5>  <!-- 이중 for문 안에서 if로 돌리기 -->
+	<h5>9. 앞의 사용법 2번에 저장한 cards의 내용 중, '국민카드'는 파랑색, '삼성카드'는 빨간색, 
+	첫번째 카드의 배경색은 노랑, 마지막 카드의 배경색은 하늘색</h5>
 	<c:forEach var="card" items="${cards}" varStatus="st">
-		<c:if test="${st.first && card=='국민'}"><span style="background-color:yellow;color:blue;">${card}</span></c:if>
-		<c:if test="${st.first && card=='삼성'}"><span style="background-color:yellow;color:red;">${card}</span></c:if>
-		<c:if test="${st.first && card!='국민' && card!='삼성'}"><span style="background-color:yellow;">${card}</span></c:if>
-		<c:if test="${st.last && card=='국민'}"><span style="background-color:skyblue;color:blue;">${card}</span></c:if>
-		<c:if test="${st.last && card=='삼성'}"><span style="background-color:skyblue;color:red;">${card}</span></c:if>
-		<c:if test="${st.last && card!='국민' && card!='삼성'}"><span style="background-color:skyblue">${card}</span></c:if>
-		<c:if test="${!st.first && !st.last && card=='국민'}"><font color="blue">${card}</font></c:if>
-		<c:if test="${!st.first && !st.last && card=='삼성'}"><font color="red">${card}</font></c:if>
-		<c:if test="${!st.first && !st.last && card!='국민' && card!='삼성'}">${card}</c:if>
+	<c:if test="${st.first && card=='국민'}"><span style="background-color:yellow;color:blue;">${card}</span></c:if>
+	<c:if test="${st.first && card=='삼성'}"><span style="background-color:yellow;color:red;">${card}</span></c:if>
+	<c:if test="${st.first && card!='국민' && card!='삼성'}"><span style="background-color:yellow;">${card}</span></c:if>
+	<c:if test="${st.last && card=='국민'}"><span style="background-color:skyblue;color:blue;">${card}</span></c:if>
+	<c:if test="${st.last && card=='삼성'}"><span style="background-color:skyblue;color:red;">${card}</span></c:if>
+	<c:if test="${st.last && card!='국민' && card!='삼성'}"><span style="background-color:skyblue">${card}</span></c:if>
+	<c:if test="${!st.first && !st.last && card=='국민'}"><font color="blue">${card}</font></c:if>
+	<c:if test="${!st.first && !st.last && card=='삼성'}"><font color="red">${card}</font></c:if>
+	<c:if test="${!st.first && !st.last && card!='국민' && card!='삼성'}">${card}</c:if>
 	</c:forEach>
+	</br>
+	 
+	<h5>9. 앞의 사용법 2번에 저장한 cards의 내용 중, '국민카드'는 파랑색, '삼성카드'는 빨간색, 
+	첫번째 카드의 배경색은 노랑, 마지막 카드의 배경색은 하늘색</h5>
+	<c:forEach var="card" items="${cards}" varStatus="st">
+	<c:set var="bgColor" value="" />
+	<c:set var="txtColor" value="" />
+	<c:choose>
+	<c:when test="${card == '국민'}">
+	<c:set var="txtColor" value="blue"/>
+	</c:when>
+	<c:when test="${card == '삼성'}">
+	<c:set var="txtColor" value="red"/>
+	</c:when>
+	</c:choose>
+	<c:if test="${st.first}">
+	       <c:set var="bgColor" value="yellow"/>
+	    </c:if>
+	    <c:if test="${st.last}">
+	        <c:set var="bgColor" value="skyblue"/>
+	    </c:if>
+	    <span style="background-color:${bgColor};color:${txtColor};">
+	        ${card}
+	    </span>
+	</c:forEach>
+
 </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />

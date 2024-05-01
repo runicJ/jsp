@@ -38,16 +38,19 @@
 			      <a class="dropdown-item" href="<%=request.getContextPath() %>/study/0429_JSTL/el1.jsp">EL연습</a>
 			      <a class="dropdown-item" href="<%=request.getContextPath() %>/study/0429_JSTL/jstl1.jsp?jumsu=85&code=K">JSTL연습1</a>
 			      <a class="dropdown-item" href="<%=request.getContextPath() %>/study/0430_web_xml/filter/t1_Filter.jsp">Filter한글연습</a>
+			      <%-- <a class="dropdown-item" href="<%=request.getContextPath() %>/study/0430_web_xml/filter/t2_Certification.jsp">인증코드발행(관리자)</a> --%>  <!-- 원래 관리자창에 있어야 하는 것 -->
+			      <a class="dropdown-item" href="<%=request.getContextPath() %>/study/0430_web_xml/init/t03_Init.jsp">초기값확인</a>
+			      <a class="dropdown-item" href="<%=request.getContextPath() %>/study/database/LoginList">데이터베이스연습</a>
 			    </div>
   		</div>
       </li>
 <%		} %>
       <li class="nav-item">
 <%		if(!mid_.equals("")) { %>
-        <a class="nav-link" href="${pageContext.request.contextPath}/j0427/Logout">Logout</a>
-        <li><a class="nav-link ml-3" href="#">${sMid} 님 환영합니다!(마지막 방문일자: $)</a></li>
+        <a class="nav-link" href="${pageContext.request.contextPath}/database/Logout">Logout</a>
+        <li><a class="nav-link ml-3" href="#">${sMid} 님 환영합니다!</a></li>
 <%		} else { %>
-        <a class="nav-link" href="<%=request.getContextPath() %>/study/0428_Login/login.jsp">Login</a>
+        <a class="nav-link" href="<%=request.getContextPath() %>/study/database/login.jsp">Login</a>
 <%		} %>
       </li>
     </ul>

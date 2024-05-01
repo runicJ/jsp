@@ -115,30 +115,54 @@
 		4-4.str변수의 'o'문자의 2번째 위치값만 출력하시오?<br/>
 		<c:set var="cnt" value="0" />
 		<c:forEach var="i" begin="0" end="${fn:length(str)-1}">
-			<c:if test="${fn:substring(str,i,i+1) == 'o'}">
-				<c:set var="cnt" value="${cnt + 1}" />
-				<c:if test="${cnt == 2}">
-					${cnt}번째 'o'의 위치값은? ${i}<br/>
-				</c:if>
-			</c:if>
+		<c:if test="${fn:substring(str,i,i+1) == 'o'}">
+		<c:set var="cnt" value="${cnt + 1}" />
+		<c:if test="${cnt == 2}">
+		${cnt}번째 'o'의 위치값은? ${i}<br/>
+		</c:if>
+		</c:if>
 		</c:forEach>
 		<br/>
-		
+				 
 		4-5.str변수의 'o'문자의 마지막 위치값만 출력하시오?<br/>
 		<c:set var="cnt" value="0" />
 		<c:forEach var="i" begin="0" end="${fn:length(str)-1}">
-			<c:if test="${fn:substring(str,i,i+1) == 'o'}">
-				<c:set var="cnt" value="${cnt + 1}" />
-				
-			</c:if>
+		<c:if test="${fn:substring(str,i,i+1) == 'o'}">
+		<c:set var="lastIndexOf" value="${i}" />
+		</c:if>
 		</c:forEach>
+		마지막 'o'의 위치값은? ${lastIndexOf}<br/>
 		<br/>
 		
+		4-4. str변수의 'o'문자의 2번째 위치값만 출력하시오?<br/>
+		- (1) str 변수에 기억된 문자중 'o'의 위치를 찾아서 변수에 기억시켜둔다. :
+    <c:set var="position1" value="${fn:indexOf(str,'o')}"/> <font color='red'><b>${position1}</b></font><br/>
+    - (2) substring()을 사용한, 첫번째로 만나는 'o'의 문자 뒤의 모든값을 변수에 담는다 :
+    <c:set var="str1" value="${fn:substring(str,fn:indexOf(str,'o')+1,fn:length(str))}"/>
+    <font color='red'><b>${str1}</b></font><br/>
+    - (3) 이어서 저장되어 있는 값중에서 'o'문자의 위치를 변수에 담는다. : 
+    <c:set var="position2" value="${fn:indexOf(str1,'o')}"/><font color='red'><b>${position2}</b></font><br/>
+    - (4) 처음에 저장된 위치와 2번째 저장된 위치를 더하고 +1 시키면 2번째 'o'의 위치가 된다. : 
+    <font color='red'><b>${position1 + position2 + 1}</b></font><br/>
+    4-4-2. 4-4의 두번째방법(문법5의 방법사용 : substringAfter()) : 
+    <font color='red'><b>${fn:indexOf(str,fn:substringAfter(fn:substringAfter(str,'o'),'o'))-1}</b></font><br/><br/>
+    <br/>
+		<br/>
+		
+		4-5. str변수의 'o'문자의 마지막 위치값을 출력하시오?<br/>
+    split()함수 사용하기 : <br/>
+    <c:set var="strTemps" value="${fn:split(str,'o')}"/>
+    <c:set var="strTempsLength" value="${fn:length(strTemps)}"/>
+    마지막 'o'문자뒤의 모든 문자열? ${strTemps[strTempsLength-1]}<br/>
+    마지막 'o'문자의 위치? <font color='red'><b>${(fn:length(str)-1) - (fn:length(strTemps[strTempsLength-1]))}</b></font>
+		<br/>
+		 
 		5.문자열추출(substringBefore()) / substringAfter())<br/>
 		문자 'o' 앞의 문자열을 출력? ${fn:substringBefore(str,'o')}<br/>
 		문자 'o' 뒤의 문자열을 출력? ${fn:substringAfter(str,'o')}<br/>
 		~~~~ 2번째 'o'의 위치값을 출력??? ~~~~<br/>
-		<%-- ${fn:indexOf(fn:substringAfter(str,'o'),'o')} --%><br/>
+		${fn:indexOf(fn:substringAfter(str,'o'),'o')}<br/>
+		${fn:indexOf(fn:substringAfter(str,'o'),'o') + fn:length(fn:substringBefore(str,'o')) + 1}<br/>
 		<hr/>
 		
 		6.문자열분리(split(변수, 분리할문자(열))) : 문자열 분리 후에는 분리된 문자들이 모두 변수에 담아줘야한다. 즉, 이 변수는 배열(?)이 된다.<br/>

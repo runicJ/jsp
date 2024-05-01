@@ -21,7 +21,7 @@ public class LoginOk extends HttpServlet {
 		
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 		String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd");
-		String last = request.getParameter("last")==null ? "" : request.getParameter("last");
+//		String last = request.getParameter("last")==null ? "" : request.getParameter("last");
 		
 		PrintWriter out = response.getWriter();  // out.print 사용 위해서
 		if((mid.equals("admin") && pwd.equals("1234")) ||(mid.equals("atom") && pwd.equals("1234"))) {
@@ -38,10 +38,10 @@ public class LoginOk extends HttpServlet {
 			}
 			response.addCookie(cookieMid);
 			
-			Cookie cookieLast = new Cookie("cLast", last);
-			System.out.println("last : " + last);
-			cookieLast.setPath("/");
-			response.addCookie(cookieLast);
+//			Cookie cookieLast = new Cookie("cLast", last);
+//			System.out.println("last : " + last);
+//			cookieLast.setPath("/");
+//			response.addCookie(cookieLast);
 			
 			// 필요한 정보를 session에 저장처리한다.
 			HttpSession session = request.getSession();
