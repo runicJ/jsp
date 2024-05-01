@@ -21,7 +21,7 @@
   <h2>JSTP function연습</h2>
   <div class="text-right">
   	<button type="button" onclick="location.href='jstl1.jsp';" class="btn btn-success btn-sm">JSTL core라이브러리</button>
-  	<button type="button" onclick="javascript:location.href='jstl2.jsp';" class="btn btn-primary btn-sm">JSTL 반복문</button>
+  	<button type="button" onclick="location.href='jstl2.jsp';" class="btn btn-primary btn-sm">JSTL 반복문</button>
   	<button type="button" onclick="location.href='jstl3_vo.jsp';" class="btn btn-info btn-sm">JSTL 반복문응용</button>
   	<button type="button" onclick="location.href='jstl5_format.jsp';" class="btn btn-secondary btn-sm">JSTL Formatting</button>
 	</div>

@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>  <!-- page : 지시자 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="ctp" value="${pageContext.request.contextPath}" />
 <%
 	int sCount = session.getAttribute("sCount")==null ? 0 : (int) session.getAttribute("sCount");
 	sCount++;
@@ -28,10 +30,34 @@
 <div class="container" style="margin-top:30px">
   <div class="row">
     <div class="col-sm-4">
-    	<h5>마지막 방문일자 : ${cLast}</h4>
-      <h2>About Me(${sMid})</h2>  <!-- session은 EL로 -->
-      <h5>Photo of me:</h5>
-      <div class="fakeimg">Fake Image</div>
+    	<h5>마지막 방문일자 : ${cLast}</h5>
+      <c:choose>
+	      <c:when test="${sMid != null}">
+	      	<h2>About Me(${sMid})</h2>  <!-- session은 EL로 -->
+		      <h5>가입한 회원</h5>
+		      <table class="table table-hover text-center">
+		      	<tr class="table-dark text-dark">
+		      		<th>번호</th>
+		      		<th>아이디</th>
+		      		<th>성명</th>
+		      	</tr>
+		      	<c:forEach var="vo" items="${vos}" varStatus="st">
+		      		<tr>
+		      			<td>${vo.idx}</td>
+		      			<td>${vo.mid}</td>
+		      			<td>${vo.name}</td>
+		      		</tr>
+		      	</c:forEach>
+		      	<tr><td colspan="3" class="m-0 p-0"></td></tr>
+		      </table>
+		      </c:when>
+	      <c:otherwise>
+	      	<h2>About Me(guest)</h2>
+	      	<div>
+	      		<img src="${ctp}/images/whiteCat.jpg" width="360px" />
+	      	</div>
+	      </c:otherwise>
+      </c:choose>
       <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
       <h3>Some Links</h3>
       <p>Lorem ipsum dolor sit ame.</p>

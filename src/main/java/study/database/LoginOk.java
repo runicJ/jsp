@@ -47,6 +47,7 @@ public class LoginOk extends HttpServlet {
 			out.println("<script>");
 			out.println("alert('"+mid+"님 로그인 되었습니다.');");
 			out.println("location.href='"+request.getContextPath()+"/study/database/LoginList';");
+//			out.println("location.href='"+request.getContextPath()+"/study/database/JoinList';");
 			out.println("</script>");
 		}
 		else {

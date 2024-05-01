@@ -22,7 +22,7 @@
       </tr>
       <tr>
         <th>아이디</th>
-        <td><input type="text" name="mid" value="${mid}" autofocus required class="form-control"/></td>
+        <td><input type="text" name="mid" placeholder="아이디를 입력하세요" autofocus required class="form-control"/></td>
       </tr>
       <tr>
         <th>비밀번호</th>

@@ -17,7 +17,7 @@
 <div class="container">
   <h2>JSTL(Java Standard Tag Library)</h2>
   <div class="text-right">
-  	<button type="button" onclick="location.href='jstl1.jsp';" class="btn btn-success btn-sm">JSTL core라이브러리</button>  <!-- 기본(표준)이 button이고 javascript: 안써도 됨 -->
+  	<button type="button" onclick="location.href='jstl1.jsp';" class="btn btn-success btn-sm">JSTL core라이브러리</button>  <!-- 기본(표준)이 button이고 javascript : 안써도 됨 -->
   	<button type="button" onclick="location.href='jstl3_vo.jsp';" class="btn btn-primary btn-sm">JSTL 반복문</button>
   	<button type="button" onclick="location.href='jstl4_function.jsp';" class="btn btn-info btn-sm">JSTL 함수</button>
   	<button type="button" onclick="location.href='jstl5_format.jsp';" class="btn btn-secondary btn-sm">JSTL Formatting</button>
