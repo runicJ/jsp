@@ -22,7 +22,7 @@ public class LoginOk extends HttpServlet {
 		LoginDAO dao = new LoginDAO();  // 객체 생성 후 db 연동 여부 확인 가능(LoginDAO)
 		
 //		LoginVO vo = new LoginVO();
-		LoginVO vo = dao.getLoginIdCheck(mid, pwd);  // 위에 보다 이렇게 쓰는 것이 좋다.
+		LoginVO vo = dao.getLoginIdCheck(mid, pwd);  // 위에 보다 이렇게 쓰는 것이 좋다.  // vo로 가져오면 정보를 전부 가져올 수 있음
 		//System.out.println("vo : " + vo);
 		
 		PrintWriter out = response.getWriter();
@@ -40,10 +40,14 @@ public class LoginOk extends HttpServlet {
 				cookieMid.setMaxAge(0);
 			}
 			response.addCookie(cookieMid);
-			
+						
 			// 필요한 정보를 session에 저장처리한다.
 			HttpSession session = request.getSession();
-			session.setAttribute("sMid", mid);
+			session.setAttribute("sMid", mid);  // 세션에 많이 담으면 무거워지므로
+			
+			// 회원의 성명을 세션에 저장하기 위해 DB에서 가져온 name을 세션에 저장처리한다.
+			session.setAttribute("sName", vo.getName());
+			
 			out.println("<script>");
 			out.println("alert('"+mid+"님 로그인 되었습니다.');");
 			out.println("location.href='"+request.getContextPath()+"/study/database/LoginList';");
