@@ -60,6 +60,7 @@
         <td colspan="2">
           <input type="button" value="숫자비밀번호" onclick="fCheck(1)" class="btn btn-success mr-2"/>
           <input type="button" value="문자비밀번호" onclick="fCheck(2)" class="btn btn-success mr-2"/>
+          <input type="button" value="조합비밀번호" onclick="fCheck(3)" class="btn btn-warning mr-2"/>
         </td>
       </tr>
     </table>
