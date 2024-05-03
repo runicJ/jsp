@@ -115,11 +115,19 @@ public class Passcheck extends HttpServlet {
 			
 			encPwd = intPwd ^ key;
 			
-			strPwd = key + String.valueOf(encPwd);
+			strPwd = String.valueOf(encPwd);
 			
+			String dbSavePwd = strPwd.length() + key + strPwd;
 			// 암호화된 코드와 salt키를 합쳐서 DB에 저장처리한다.
-			System.out.println("인코딩(암호화)된 비밀번호(DB에 저장될 비밀본호) : " + strPwd);
+			System.out.println("인코딩(암호화)된 비밀번호(DB에 저장될 비밀본호) : " + dbSavePwd);
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			System.out.println("DB에서 꺼낸 비밀번호 : " + (dbSavePwd));
+			int keyLength = Integer.parseInt(dbSavePwd.substring(0,1));
+			String saltKey = dbSavePwd.substring(1,keyLength-1);
+			String sourcePassword = dbSavePwd.substring(keyLength);
+			System.out.println("DB에서 분리한 saltKey : " + saltKey);
+			System.out.println("DB에서 분리한 DATA : " + sourcePassword);
+			
 			
 			// 다시 로그인할때 DB의 비밀번호를 가져와서 복호화 시켜준다.
 			long decPwd;
