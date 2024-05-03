@@ -20,6 +20,9 @@ public class GuestInputOk extends HttpServlet {
 		String content = request.getParameter("content")==null ? "" : request.getParameter("content");
 		String hostIp = request.getParameter("hostIp")==null ? "" : request.getParameter("hostIp");
 		
+		name = name.replace("<", "&lt;");  // 방명록 성명에 태그 못 쓰도록 함  // 태그가 아니라 문자로 적용이 되도록 함
+		name = name.replace(">", "&gt;");
+		
 		GuestVO vo = new GuestVO();
 		
 		vo.setName(name);

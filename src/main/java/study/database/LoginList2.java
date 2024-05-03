@@ -11,19 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet("/database/SortList")
-public class SortList extends HttpServlet{
+//@WebServlet("/study/database/LoginList")
+public class LoginList2 extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String sort = request.getParameter("sort")==null ? "" : request.getParameter("sort");
-		
 		LoginDAO dao = new LoginDAO();
 		
-		ArrayList<LoginVO> vos = dao.getSortList(sort);
-//		System.out.println("sort : " + sort);
+		//ArrayList<LoginVO> vos = dao.getLoginList();  // 자료 가져오는 것  // 여러개 vos Array나 ArrayList
+		//System.out.println("vos : " + vos);  // vos의 자료가 다 나옴  // 확인 후에 주석 처리할 것
 		
-		request.setAttribute("vos", vos);
-		request.setAttribute("sort", sort);  // 이 값을 보내서 EL로 써서 뭐로 정렬했는지 고정시킴
+		//request.setAttribute("vos", vos);
 		
 		String viewPage = "/study/database/loginMain.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

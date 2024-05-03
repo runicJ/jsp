@@ -91,11 +91,13 @@ public class LoginDAO {
 	}
 
 	// 전체 회원 정보 검색
-	public ArrayList<LoginVO> getLoginList() {
+	public ArrayList<LoginVO> getLoginList(String sort, int startIndexNo, int pageSize) {
 		ArrayList<LoginVO> vos = new ArrayList<LoginVO>();
 		try {
-			sql = "select * from hoewon order by name";
+			sql = "select * from hoewon order by " + sort + " limit ?,?";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startIndexNo);
+			pstmt.setInt(2, pageSize);
 			rs = pstmt.executeQuery();  // ?가 없으니 바로 실행
 			
 			while(rs.next()) {  // 여러 건이 나올 수 있으니 while로 비교
@@ -283,8 +285,23 @@ public class LoginDAO {
 	public ArrayList<LoginVO> getSortList(String sort) {
 		ArrayList<LoginVO> vos = new ArrayList<LoginVO>();
 		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select * from hoewon order by "+sort+"");
+			sql = "select * from hoewon order by " + sort;  // O  // 넘어온 값은 ?로 쓸 수 있지만, 변수명(필드명)은 ?로 쓸 수 없음 '+sort'로 써야함
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+//			sql = "select * from hoewon order by ?";  // X
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, sort);
+//			pstmt.setString(1, "sort");
+//			pstmt.setString(1, ""+sort+"");
+//			rs = pstmt.executeQuery();
+			
+//			pstmt = conn.prepareStatement(sql);  // O
+//			pstmt = conn.prepareStatement(sort);
+//			rs = pstmt.executeQuery("select * from hoewon order by "+sort+"");
+			
+//			stmt = conn.createStatement();  // O
+//			rs = stmt.executeQuery("select * from hoewon order by "+sort+"");
 			
 			while(rs.next()) {
 				vo = new LoginVO();
@@ -303,6 +320,23 @@ public class LoginDAO {
 			rsClose();
 		}
 		return vos;
+	}
+
+	// 전체 회원 건수를 구한다.
+	public int getTotRecCnt() {
+		int totRecCnt = 0;
+		try {
+			sql = "select count(*) as cnt from hoewon";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();  // 값이 무조건 오기 때문에 if 안해도 됨(null이어도 값이 0으로 옴)
+			totRecCnt = rs.getInt("cnt");  // 숫자 0써도 되는데 변수명 쓰는 것이 좋음
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return totRecCnt;
 	}
 	
 }

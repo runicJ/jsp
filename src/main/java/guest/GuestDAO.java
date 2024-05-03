@@ -59,11 +59,13 @@ public class GuestDAO {
 	}
 
 	// 방명록 전체 자료 리스트 처리
-	public ArrayList<GuestVO> getGuestList() {
+	public ArrayList<GuestVO> getGuestList(int startIndexNo, int pageSize) {
 		ArrayList<GuestVO> vos = new ArrayList<GuestVO>();
 		try {
-			sql = "select * from guest order by idx desc";
+			sql = "select * from guest order by idx desc limit ?,?";  // limit 시작인덱스, 개수
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startIndexNo);
+			pstmt.setInt(2, pageSize);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {  // 1개가 아닐 수 있으므로 여러개일 경우 while
@@ -120,5 +122,21 @@ public class GuestDAO {
 			pstmtClose();
 		}
 		return res;
+	}
+
+	public int getTotRecCnt() {
+		int totRecCnt = 0;
+		try {
+			sql = "select count(*) as cnt from guest";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			rs.next();  // 값이 무조건 오기 때문에 if 안해도 됨(null이어도 값이 0으로 옴)
+			totRecCnt = rs.getInt("cnt");  // 숫자 0써도 되는데 변수명 쓰는 것이 좋음
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return totRecCnt;
 	}
 }

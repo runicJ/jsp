@@ -24,16 +24,25 @@
   		}
   	}
   	
-  	function selectSort() {
+/*   	function selectSort() {
   		let sort = document.getElementById("sort").value;
-  		if(sort.trim() == "") {
+   		if(sort == "") {
   			alert("정렬 항목을 선택하세요.");
   			document.getElementById("sort").focus();
   		}
   		else {
   			location.href = "${ctp}/database/SortList?sort="+sort;
-  		}
-  	}
+   		}
+  	} */
+  	function selectSort() {
+			let sort = document.getElementById("sort").value;
+			location.href = '${ctp}/study/database/LoginList?sort='+sort;
+		}
+  	
+/*   	function sortCheck() {
+			let sortKey = document.getElementById("sortKey").value;
+			location.href = '${ctp}/study/database/LoginList?sortKey='+sortKey;
+		} */
   </script>
 </head>
 <body>
@@ -43,15 +52,39 @@
 <div class="container">
   <h2 class="text-center">회 원 메 인 방</h2>
   <hr/>
+  <div class="text-right mb-3">
+  	<c:if test="${pag > 1}">
+			<a href="${ctp}/study/database/LoginList?pag=1" title="첫페이지">◁◁</a>  <!-- 같은 위치 이므로 ${ctp}를 안적어도 되긴함 -->
+			<a href="${ctp}/study/database/LoginList?pag=${pag-1}" title="이전페이지">◀</a>  <!-- 나중에 폰트어썸 버튼처리 -->
+		</c:if>
+		${pag}/${totPage}
+		<c:if test="${pag < totPage}">
+			<a href="${ctp}/study/database/LoginList?pag=${pag+1}" title="다음페이지">▶</a>
+			<a href="${ctp}/study/database/LoginList?pag=${totPage}" title="마지막페이지">▷▷</a>
+		</c:if>
+  </div>
   <div>
 		<input type="button" value="전체조회" onclick="location.href='${ctp}/study/database/LoginList';" class="btn btn-success btn-sm mb-2 float-left" />  <!-- location.href(이름) -->
-  	<select id="sort" name="sort" onchange="selectSort(this.value)" class="float-right">
-		  <option value="">선택</option>
-		  <option value="name">이름순</option>
-		  <option value="age">나이순</option>
-		  <option value="idx">번호순</option>
+  	<select id="sort" name="sort" onchange="selectSort()" class="float-right">
+		  <%-- <option value="" <c:if test="${sort == ''}">selected</c:if>>선택</option> --%>
+		  <option value="idx" <c:if test="${sort == 'idx'}">selected</c:if>>번호순</option>
+		  <option value="name" <c:if test="${sort == 'name'}">selected</c:if>>이름순</option>
+		  <option value="age" <c:if test="${sort == 'age'}">selected</c:if>>나이순</option>
 		</select>
   </div>
+<%--   <div class="row">
+    <div class="col"><input type="button" value="전체조회" onclick="location.href='${ctp}/study/database/LoginList';" class="btn btn-success btn-sm mb-2"/></div>
+    <div class="col text-right">정렬순서 :&nbsp;
+      <select name="sortKey" id="sortKey" onchange="sortCheck()">
+        <option value="idx"       <c:if test="${sortKey == 'idx'}">selected</c:if>>번호순</option>
+        <option value="idx desc"  <c:if test="${sortKey == 'idx desc'}">selected</c:if>>번호역순</option>
+        <option value="name"      <c:if test="${sortKey == 'name'}">selected</c:if>>성명순</option>
+        <option value="name desc" <c:if test="${sortKey == 'name desc'}">selected</c:if>>성명역순</option>
+        <option value="age"       <c:if test="${sortKey == 'age'}">selected</c:if>>나이순</option>
+        <option value="address"   <c:if test="${sortKey == 'address'}">selected</c:if>>주소순</option>
+      </select>
+    </div>
+  </div> --%>
   <table class="table table-hover text-center">
   	<tr class="table-dark text-dark">
   		<th>번호</th>
