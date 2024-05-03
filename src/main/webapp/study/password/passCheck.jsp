@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+	String msg = request.getParameter("msg")==null ? "" : request.getParameter("msg");
+	pageContext.setAttribute("msg", msg);
+%>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -10,6 +14,8 @@
   <%@ include file = "/include/bs4.jsp" %>
   <script>
   	'use strict';
+  	
+  	if('${msg}' == 'OK') alert("전송완료! 콘솔창을 확인하세요.");
   	
   	function fCheck(idx) {
   		let pwd = myform.pwd.value;

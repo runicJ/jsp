@@ -14,7 +14,7 @@ public class LoginDAO {
 	private Connection conn = null;  // 선언만 해둠 => 필드 개념 // 생성할때(id, pw, url)
 	private PreparedStatement pstmt = null;  // statement도 사용함
 	private ResultSet rs = null;  // sql에 있는거 사용 3개 다 인터페이스
-	private Statement stmt = null;
+	//private Statement stmt = null;
 	
 	String sql = "";
 	LoginVO vo = null;  // 생성x 사용할때 생성
@@ -119,6 +119,7 @@ public class LoginDAO {
 		return vos;
 	}
 
+	// 회원 가입처리
 	public int setLoginInput(LoginVO vo) {
 		int res = 0;
 		try {
@@ -139,6 +140,7 @@ public class LoginDAO {
 		return res;
 	}
 
+	// 최근 가입한 5명의 회원 검색하기
 	public ArrayList<LoginVO> getJoinList() {
 		ArrayList<LoginVO> vos = new ArrayList<LoginVO>();
 		try {

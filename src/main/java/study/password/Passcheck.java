@@ -45,6 +45,7 @@ public class Passcheck extends HttpServlet {
 			long intPwd;
 			String strPwd = "";  // 소문자는 지금 안됨
 			// 입력받은 암호를 한 문자씩 꺼내서 아스키 코드로 변형 뒤, 문자로 누적처리(숫자 65666768(ABCD)를 문자로 해야 누적처리 됨)해서 만들어준다.
+			pwd = pwd.toUpperCase();
 			for(int i=0; i<pwd.length(); i++) {
 				intPwd = (long) pwd.charAt(i);  // 뒤는 char(2) => 타입을 long과 맞춰줘야
 				strPwd += intPwd;
@@ -91,5 +92,7 @@ public class Passcheck extends HttpServlet {
 			System.out.println("로그인 인증 처리한다.");
 			System.out.println("~~~~~~~~~~~~ The End ~~~~~~~~~~~~");
 		}
+		
+		response.sendRedirect(request.getContextPath()+"/study/password/passCheck.jsp?msg="+"OK");  // 받는쪽에서 msg에 OK가 들어오면 처리되도록
 	}
 }

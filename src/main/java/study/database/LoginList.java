@@ -25,7 +25,8 @@ public class LoginList extends HttpServlet {
 //			request.setAttribute("sort", sort);
 //		request.setAttribute("vos", vos);
 		
-		String sort = request.getParameter("sort")==null ? "idx" : request.getParameter("sort");  // 첫 페이지만 모르는 것, 누른 페이지는 알 수 있음 // 다음, 이전 누를때 +1 -1 하면 됨
+//		String sort = request.getParameter("sort")==null ? "idx" : request.getParameter("sort");  // 첫 페이지만 모르는 것, 누른 페이지는 알 수 있음 // 다음, 이전 누를때 +1 -1 하면 됨
+		String sort = request.getParameter("sort");
 		
 		// 아래 값들을 나중엔 vo로 묶을 것
 		// 1. 현재 페이지번호를 구해온다.(첫 화면은 무조건 1페이지=>페이징처리x(다른페이지 눌렀을때 페이지처리한 것)
