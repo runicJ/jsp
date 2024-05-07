@@ -56,6 +56,10 @@
 			    </button>
 			    <div class="dropdown-menu">
 			      <a class="dropdown-item" href="${ctp}/study/password/passCheck.jsp">비밀번호암호화</a>
+			      <a class="dropdown-item" href="${ctp}/mapping/test1">디렉토리매핑연습</a>  <!-- url pattern -->
+			      <a class="dropdown-item" href="${ctp}/mapping/test2.do">확장자매핑연습</a>  <!-- 무조건 뒤에 확장자 써야 -->
+			      <a class="dropdown-item" href="${ctp}/mapping/test3.do3">확장자매핑연습3</a>
+			      <a class="dropdown-item" href="${ctp}/mapping/test4.do4">확장자매핑연습4</a>
 			    </div>
   			</div>
       </li>

@@ -98,7 +98,6 @@ public class Passcheck extends HttpServlet {
 			long intPwd;
 			String strPwd = "";
 			// 입력받은 암호를 한문자씩 꺼내어서 아스키코드로 변형뒤, 문자로 누적처리해서 만들어준다.
-			//pwd = pwd.toUpperCase();
 			for(int i=0; i<pwd.length(); i++) {
 				intPwd = (long) pwd.charAt(i);
 				strPwd += intPwd;
@@ -109,33 +108,28 @@ public class Passcheck extends HttpServlet {
 			
 			// 암호화시킬 salt키를 선정...
 //			long key = 0x1234ABCD;
-			int key = (int)(Math.random()*(99999999 - 10000000 + 1)) + 10000000;
-			System.out.println("randKey : " + key);
-			long encPwd;
+			long saltKey = (int)(Math.random()*10000000) + 1;
+			long encPwd = intPwd ^ saltKey;
 			
-			encPwd = intPwd ^ key;
+			String dbSavePwd = (saltKey+"").length() + (saltKey+"") + encPwd;
 			
-			strPwd = String.valueOf(encPwd);
-			
-			String dbSavePwd = strPwd.length() + key + strPwd;
-			// 암호화된 코드와 salt키를 합쳐서 DB에 저장처리한다.
-			System.out.println("인코딩(암호화)된 비밀번호(DB에 저장될 비밀본호) : " + dbSavePwd);
-			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-			System.out.println("DB에서 꺼낸 비밀번호 : " + (dbSavePwd));
-			int keyLength = Integer.parseInt(dbSavePwd.substring(0,1));
-			String saltKey = dbSavePwd.substring(1,keyLength-1);
-			String sourcePassword = dbSavePwd.substring(keyLength);
-			System.out.println("DB에서 분리한 saltKey : " + saltKey);
-			System.out.println("DB에서 분리한 DATA : " + sourcePassword);
+			// 암호화된 코드와 salt키를 합쳐서 DB에 저장처리한다.(salt길이 + salt + 암호화코드)
+			System.out.println("인코딩(암호화)된 비밀번호(DB에 저장될 비밀번호) : " + dbSavePwd);
+			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 			
 			
 			// 다시 로그인할때 DB의 비밀번호를 가져와서 복호화 시켜준다.
-			long decPwd;
-			intPwd = Long.parseLong(strPwd);
-			decPwd = intPwd ^ key;
+			int keyLength = Integer.parseInt(dbSavePwd.substring(0,1));
+			String strSaltKey = dbSavePwd.substring(1,keyLength+1);
+			String sourcePassword = dbSavePwd.substring(keyLength+1);
+			
+			long intSaltKey = Long.parseLong(strSaltKey);
+			long intSourcePassword = Long.parseLong(sourcePassword);
+			
+			long decPwd = intSourcePassword ^ intSaltKey;
 			System.out.println("디코딩(복호화)된 비밀번호 : " + decPwd);
 			
-			// 복호화된 비밀번호는 숫자이기에 문자료 변환후 2개씩 문자 처리한다.
+			// 복호화된 비밀번호는 숫자이기에 문자로 변환후 2개씩 문자 처리한다.
 			strPwd = String.valueOf(decPwd);
 			
 			String result = "";
