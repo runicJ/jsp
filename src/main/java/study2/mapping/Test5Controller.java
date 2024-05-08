@@ -2,6 +2,7 @@ package study2.mapping;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,5 +28,8 @@ public class Test5Controller extends HttpServlet {
 			command = new Test5ListOkCommand();
 			viewPage += "list.jsp";
 		}
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+		dispatcher.forward(request, response);
 	}
 }

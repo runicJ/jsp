@@ -37,7 +37,7 @@ public class Test4Controller extends HttpServlet {
 		else if(com.equals("inputOk")) {
 			command = new Test4InputOkCommand();  // DB에 저장되는걸 따로 빼서 생성
 			command.execute(request, response);  // execute 메소드가 실행
-			viewPage = "/WEB-INF/common/message.jsp";  // 종착지에서 메시지 뿌릴려고
+			viewPage = "include/message.jsp";  // 종착지에서 메시지 뿌릴려고
 		}
 		else if(com.equals("update")) {
 			command = new Test4UpdateCommand();
@@ -47,7 +47,7 @@ public class Test4Controller extends HttpServlet {
 		else if(com.equals("updateOk")) {
 			command = new Test4UpdateOkCommand();
 			command.execute(request, response);
-			viewPage = "/WEB-INF/common/message.jsp";
+			viewPage = "include/message.jsp";
 		}
 		else if(com.equals("delete")) {
 			command = new Test4DeleteCommand();
@@ -57,7 +57,7 @@ public class Test4Controller extends HttpServlet {
 		else if(com.equals("deleteOk")) {
 			command = new Test4DeleteOkCommand();
 			command.execute(request, response);
-			viewPage = "/WEB-INF/common/message.jsp";
+			viewPage = "include/message.jsp";
 		}
 		else if(com.equals("search")) {
 			command = new Test4SearchCommand();

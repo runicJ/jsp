@@ -11,6 +11,11 @@
   <%@ include file = "/include/bs4.jsp" %>
   <script>
   	'use strict';
+  	
+  	function selectOpt() {
+  		let opt = document.getElementById("opt").value;
+  		location href = opt + ".do5";
+  	}
   </script>
 </head>
 <body>
@@ -18,7 +23,7 @@
 <jsp:include page="/include/nav.jsp" />
 <p><br/></p>
 <div class="container">
-  <select name="opt" id="opt" onchange="">
+  <select name="opt" id="opt" onchange="selectOpt()">
 	  <option value="">선택</option>
 	  <option value="input">회원가입</option>
 	  <option value="update">수정하기</option>

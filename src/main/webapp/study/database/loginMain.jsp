@@ -9,6 +9,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>loginMain.jsp</title>
   <%@ include file = "/include/bs4.jsp" %>
+  <style>
+  	tr {
+  		background-color: #eee;
+  		text-align: center
+  	}
+  </style>
   <script>
   	'use strict';
   	
