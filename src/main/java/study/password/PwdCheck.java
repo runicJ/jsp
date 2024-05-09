@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet("/study/password/Passcheck")
-public class Passcheck extends HttpServlet {
+@WebServlet("/password/PwdCheck")
+public class PwdCheck extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
@@ -27,6 +27,7 @@ public class Passcheck extends HttpServlet {
 			int key = 0x1234ABCD;  // 16진수 정수  // Salt key
 			int encPwd, decPwd;  // encoding(암호화) decoding(복호화)
 			encPwd = Integer.parseInt(pwd) ^ key;  // eor xor => ^
+			String sendPwd = "1234ABCD"+encPwd;
 			
 			System.out.println("인코딩 된 비밀번호 : " + "1234ABCD" + encPwd);  // <= 같은 salt키를 쓰면 안됨(보안에 어떻게 만드느냐에 따라서)
 			System.out.println("앞에서 인코딩(암호화)된 pwd를 DB에 저장 처리한다.");  // 지금은 한단계지만 원래 더 여러 단계를 거침
@@ -38,6 +39,8 @@ public class Passcheck extends HttpServlet {
 			System.out.println("디코딩(복호화) 된 비밀번호 : " + decPwd);
 			System.out.println("로그인 인증 처리한다.");
 			System.out.println("~~~~~~~~~~~~ The End ~~~~~~~~~~~~");
+			
+			response.getWriter().write(sendPwd);
 		}
 		else if(idx == 2) {
 			// 숫자 또는 문자 조합으로 암호화 하는 방법
@@ -91,6 +94,8 @@ public class Passcheck extends HttpServlet {
 			System.out.println("최종 변환된 비밀번호(원본 비번과 비교하세요) : " + result);
 			System.out.println("로그인 인증 처리한다.");
 			System.out.println("~~~~~~~~~~~~ The End ~~~~~~~~~~~~");
+
+			response.getWriter().write(strPwd);
 		}
 		else if(idx == 3) {
 			// 숫자또는 문자 또는 조합으로 암호화 하는 방법 - salt키를 랜덤하게 받아서 처리한다.
@@ -117,7 +122,6 @@ public class Passcheck extends HttpServlet {
 			System.out.println("인코딩(암호화)된 비밀번호(DB에 저장될 비밀번호) : " + dbSavePwd);
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 			
-			
 			// 다시 로그인할때 DB의 비밀번호를 가져와서 복호화 시켜준다.
 			int keyLength = Integer.parseInt(dbSavePwd.substring(0,1));
 			String strSaltKey = dbSavePwd.substring(1,keyLength+1);
@@ -142,8 +146,8 @@ public class Passcheck extends HttpServlet {
 			}
 			System.out.println();
 			System.out.println("최종 변환된 비밀번호(원본 비번과 비교하세요) : " + result);
+
+			response.getWriter().write(dbSavePwd);
 		}
-		
-		response.sendRedirect(request.getContextPath()+"/study/password/passCheck.jsp?msg="+"OK");
 	}
 }

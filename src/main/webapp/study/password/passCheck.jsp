@@ -17,7 +17,7 @@
   	
   	if('${msg}' == 'OK') alert("전송완료! 콘솔창을 확인하세요.");
   	
-  	function fCheck(idx) {
+/*   	function fCheck(idx) {
   		let pwd = myform.pwd.value;
   		if(pwd.trim() == "") {
   			alert("비밀번호를 입력하세요");
@@ -29,6 +29,57 @@
   			myform.submit();
   		}
   	}
+  	
+  	let cnt = 1;
+  	function pwdCheck(idx) {
+  		let pwd = myform.pwd.value;
+  		if(pwd.trim() == "") {
+  			alert("비밀번호를 입력하세요");
+  			myform.pwd.focus();
+  		}
+  
+  		$.ajax({
+            url: "${ctp}/password/PwdCheck",
+            type: "get",
+            data: {pwd : pwd, idx : idx},
+            success: function(res) {
+            	$("#demo").append(cnt + ". " + res + "<br/>");
+            	cnt++;
+            },
+            error: function() {
+                alert("전송 오류");
+            }
+        });
+  	} */
+  	let strPwd = "";  // 전역변수 누적하려고
+    let pwdIdx = 0;
+    function pwdCheck(flag) {
+    	let mid = myform.mid.value;
+    	let pwd = myform.pwd.value;
+    	if(pwd.trim() == "") {
+    		alert("비밀번호를 입력하세요");
+    		myform.pwd.focus();
+    		return false;
+    	}
+    	
+    	$.ajax({
+    		url  : "${ctp}/PassCheckAjax",
+    		type : "get",
+    		data : {
+    			mid : mid,
+    			pwd : pwd,
+    			flag : flag
+    		},
+    		success:function(res) {
+    			pwdIdx++;
+    			strPwd += pwdIdx + " : " + res + "<br/>";
+    			demo.innerHTML = strPwd;
+    		},
+    		error : function() {
+    			alert("전송 오류!!");
+    		}
+    	});
+    }
   </script>
 </head>
 <body style="background-image:linear-gradient(to bottom right, #052430, #e2acd5);">
@@ -63,11 +114,33 @@
           <input type="button" value="조합비밀번호" onclick="fCheck(3)" class="btn btn-warning mr-2"/>
         </td>
       </tr>
+      <tr>
+        <td colspan="2">
+          <input type="button" value="숫자비밀번호(AJAX)" onclick="pwdCheck(1)" class="btn btn-success mr-2"/>
+          <input type="button" value="문자비밀번호(AJAX)" onclick="pwdCheck(2)" class="btn btn-primary mr-2"/>
+          <input type="button" value="조합비밀번호(AJAX)" onclick="pwdCheck(3)" class="btn btn-warning mr-2"/>
+          <input type="button" value="SHA-256" onclick="pwdCheck(4)" class="btn btn-danger"/>
+        </td>
+      </tr>
     </table>
     <input type="hidden" name="idx" />
   </form>
   <br/>
+  <hr>
+  <pre>
+  	<h4>SHA(Secure Hash Algorithm)</h4>  <!-- 보안 코드 -->
+  	: SHA는 단방향식 암호화 기법으로, 암호학적 해시함수들의 모임이다.
+  	일반적으로 복호화 할 수 없도록 만든 알고리즘으로, SHA-2라고도 한다.
+  	해시함수가 출력되는 함축된 문장을 다이제스트(Digest)라고 하는데,
+  	이때 SHA-2가 생성해주는 다이제스트의 출력길이는 256, 512Bit가 있다.
+  	여기서 256Bit의 출력길이를 갖는 SHA-2암호화 기법을 'SHA-256암호화 방식'이라고 한다.
+  </pre>
+  <hr>
   <div>비밀번호를 전송 후 콜솔창에서 암호화된 비밀번호를 확인하세요.</div>
+  <hr/>
+  <h5>암호화된 비밀번호</h5>
+  <div id="demo"></div>
+  <hr/>
 </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />
