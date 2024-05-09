@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.SecurityUtil;
+import common.UuidProcess;
 
 public class MemberJoinOkCommand implements MemberInterface {
 
@@ -50,6 +51,8 @@ public class MemberJoinOkCommand implements MemberInterface {
 		
 		// 비밀번호 암호화(sha256) 256bit 64자리(4로 나눔) - salt키를 만든 후 암호화 시켜준다.(uuid코드 중 앞자리 8자리와 같이 병형처리 후 암호화)
 		SecurityUtil securityUtil = new SecurityUtil();
+		UuidProcess uuidProcess = new UuidProcess();
+		String salt = uuidProcess.toString();
 		pwd = securityUtil.encryptSHA256(pwd);  // 64자리의 암호화된 숫자가 pwd에 담김 // (가입시 입력한 pwd)
 		
 		// 모든 체크가 끝난 자료는 vo에 담아서 DB에 저장처리한다.

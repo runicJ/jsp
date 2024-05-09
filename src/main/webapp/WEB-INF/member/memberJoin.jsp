@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%-- https://tadaktadak-it.tistory.com/96 // https://haaland09009.tistory.com/226 // https://velog.io/@ansalstmd/JSP8.-%EC%9C%A0%ED%9A%A8%EC%84%B1-%EA%B2%80%EC%82%AC --%>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>  <!-- certification 누구나 입장가능하도록 지워놓음 -->
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,39 @@
     'use strict';
     
     let idCheckSw = 0;  // 버튼 활성화 => 1로 바꾸고 아이디 고쳐도 0으로
-    let nickCheckSw = 1;  // 둘다 1이 되어 있어야 submit 되도록
+    let nickCheckSw = 0;  // 둘다 1이 되어 있어야 submit 되도록
+    
+    /* let mid = $("#mid").val().trim();
+		let pwd = $("#pwd").val().trim();
+		let nickName = myform.nickName.value.trim();
+		let name = $("#name").val().trim();
+		let gender = myform.gender.value;
+		
+		if(mid == "") {
+			alert("아이디를 입력하세요");
+			$("#mid").focus();
+			return false;
+		}
+		else if(pwd == "") {
+			alert("비밀번호를 입력하세요");
+			$("#pwd").focus();
+			return false;
+		}  		
+		else if(nickName == "") {
+			alert("닉네임을 입력하세요");
+			$("#nickName").focus();
+			return false;
+		}  		
+		else if(name == "") {
+			alert("이름을 입력하세요");
+			$("#name").focus();
+			return false;
+		}  		
+		else if(email1 == "") {
+			alert("이메일을 입력하세요");
+			$("#email1").focus();
+			return false;
+		} */
     
     function fCheck() {
     	// 유효성 검사.....(정규식-버튼체크-묶어서-담아서 submit)
@@ -81,6 +114,39 @@
 	    			else {
 	    				alert("사용 가능한 아이디입니다.");
 	    				myform.pwd.focus();
+	    			}
+	    		},
+	    		error:function() {
+	    			alert("전송 오류!");
+	    		}
+	    	});
+    	}
+    }
+    
+    // 닉네임 중복체크
+    function nickCheck() {
+    	let nickName = myform.nickName.value;
+    	
+    	if(nickName.trim() == "") {
+    		alert("닉네임을 입력하세요!");
+    		myform.nickName.focus();
+    	}
+    	else {
+    		nickCheckSw = 1;
+    		myform.nickNameBtn
+    		
+	    	$.ajax({
+	    		url : "${ctp}/MemberNickCheck.mem",
+	    		type : "get",
+	    		data : {nickName : nickName},
+	    		success:function(res) {
+	    			if(res != 0) {
+	    				alert("이미 사용중인 닉네임입니다. 다시 입력하세요.");
+	    				myform.nickName.focus();
+	    			}
+	    			else {
+	    				alert("사용 가능한 닉네임입니다.");
+	    				myform.name.focus();
 	    			}
 	    		},
 	    		error:function() {

@@ -52,6 +52,11 @@ public class MemberController extends HttpServlet {  // 4
 			command.excute(request, response);
 			return;  // ajax니까 return으로 해줌!!!!!
 		}
+		else if(com.equals("/MemberNickCheck")) {
+			command = new MemberNickCheckCommand();
+			command.excute(request, response);
+			return;
+		}
 		else if(level > 4) {  // 순서를 잘 설정해야(login, join 뒤에) => Spring에서는 인터셉트에서 설정(지금은 controller에서)
 			request.setAttribute("message", "로그인 후 사용하세요");
 			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");
