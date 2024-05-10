@@ -124,6 +124,7 @@ public class GuestDAO {
 		return res;
 	}
 
+	//방명록글의 총 건수구하기
 	public int getTotRecCnt() {
 		int totRecCnt = 0;
 		try {
@@ -138,5 +139,35 @@ public class GuestDAO {
 			rsClose();
 		}
 		return totRecCnt;
+	}
+
+	//로그인한 회원이 방명록에 올린글 리스트 가져오기
+	public ArrayList<GuestVO> getMemberGuestSearch(String mid, String name, String nickName) {
+		ArrayList<GuestVO> vos = new ArrayList<GuestVO>();
+		try {
+			sql = "select * from guest where name=? or name=? or name=? order by idx desc";  // 게시글의 name이 mid일지도, name일지도, 닉네임일지도  // 자료도 가져옴 // 건수만 하려면 count 하면 됨
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, name);
+			pstmt.setString(3, nickName);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo = new GuestVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setName(rs.getString("name"));
+				vo.setContent(rs.getString("content"));
+				vo.setEmail(rs.getString("email"));
+				vo.setHomePage(rs.getString("homePage"));
+				vo.setVisitDate(rs.getString("visitDate"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
 	}
 }

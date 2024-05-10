@@ -11,8 +11,8 @@
   <script>
     'use strict';
     
-    if('${message}' != "NO") alert("${message}");
-    location.href = "${url}";
+    if('${message}' != "NO") alert("${message}");  // NO가 아니면 메시지고
+    location.href = "${url}";  // NO면 url로 바로 보낸다는겨 메시지 없이
   </script>
 </head>
 <body>

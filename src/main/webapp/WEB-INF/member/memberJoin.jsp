@@ -54,24 +54,271 @@
     	// 아이디,닉네임,성명,이메일,홈페이지,전화번호,비밀번호 등등....
     	
     	// 정규식을 이용한 유효성검사처리.....
+    	let regMid = /^[a-zA-Z0-9_]{4,20}$/;	// 아이디는 4~20의 영문 대/소문자와 숫자와 밑줄 가능
+      let regNickName = /^[가-힣]+$/;					// 닉네임은 한글만 가능
+      let regName = /^[가-힣a-zA-Z]+$/;				// 이름은 한글/영문 가능
+      
+/*       let regMid = /^[a-zA-Z0-9_]{4,20}$/;
+		  let regPwd = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W_]).{4,20}$/; 
+      let regNickName = /^[a-zA-Z0-9가-힣]{2,10}$/;
+      let regName = /^[a-zA-Z가-힣]{2,10}$/; 
+      let regEmail = /^[a-zA-Z0-9]([-_]?[a-zA-Z0-9])*$/i;
+      let regHomePage = /(https?:\/\/)?([a-zA-Z\d-]+)\.([a-zA-Z\d-]{2,8})([\/\w\.-]*)*\/?$/;
+      let regTel = /\d{2,3}-\d{3,4}-\d{4}$/; */
+      
+/*       let regMid = /^[\w]{4,20}$/;
+      let regPwd = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).{4,20}$/;
+      let regNickName = /^[가-힣\w]{2,7}$/;
+      let regName = /^[가-힣]{2,5}$/;
+      let regEmail = /^[a-zA-Z0-9]([-_]?[a-zA-Z0-9])*$/;
+      let regHomePage = /(https?:\/\/)?([a-zA-Z\d-]+)\.([a-zA-Z\d-]{2,8})([\/\w\.-]*)*\/?$/
+      let regTel = /\d{2,3}-\d{3,4}-\d{4}$/; */
+      
+/*       function fCheck() {
+        // 유효성 검사.....
+        // 아이디,닉네임,성명,이메일,홈페이지,전화번호,비밀번호 등등....
+        
+        // 검사를 끝내고 필요한 내역들을 변수에 담아 회원가입처리한다.
+        
+        let email1 = myform.email1.value.trim();
+        let email2 = myform.email2.value;
+        let email = email1 + '@' + email2;
+        
+        let tel1 = myform.tel1.value;
+        let tel2 = myform.tel2.value.trim();
+        let tel3 = myform.tel3.value.trim();
+        let tel = tel1 + '-' + tel2 + '-' + tel3;
+        
+        let postcode = myform.postcode.value + " ";
+        let roadAddress = myform.roadAddress.value + " ";
+        let detailAddress = myform.detailAddress.value + " ";
+        let extraAddress = myform.extraAddress.value + " ";
+        let address = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress;
+        
+        // 정규식을 이용한 유효성 검사처리
+        let pwd = myform.pwd.value.trim();
+        let pwdReg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&^])[A-Za-z\d@$!%*#?&^]{8,16}$/;
+        
+        let name = myform.name.value.trim();
+        let nameReg = /^[가-힣]{2,4}$/;
+        
+        let emailReg = /^[a-zA-Z0-9-_]{4,12}$/;
+        let tel2Reg = /^[\d]{3,4}$/;
+        let tel3Reg = /^[\d]{4,4}$/;
+        
+        let homePage = myform.homePage.value.trim();
+        let homePageReg = /^https?:\/\/(.+)?\.([a-zA-Z]+)?\/?([\?#].*)?$/;
+        
+        if(!pwdReg.test(pwd)){
+            document.getElementById("hidden-pwd-msg").style.display = "block";
+            myform.pwd.value = "";
+            myform.pwd.focus();
+        }
+        else if(!nameReg.test(name)){
+            document.getElementById("hidden-pwd-msg").style.display = "none";
+            document.getElementById("hidden-name-msg").style.display = "block";
+            myform.name.value = "";
+            myform.name.focus();
+        }
+        else if(!emailReg.test(email1)){
+            document.getElementById("hidden-pwd-msg").style.display = "none";
+            document.getElementById("hidden-name-msg").style.display = "none";
+            document.getElementById("hidden-email-msg").style.display = "block";
+            myform.email1.value = "";
+            myform.email1.focus();
+        }
+        else if(!tel2Reg.test(tel2)){
+            document.getElementById("hidden-pwd-msg").style.display = "none";
+            document.getElementById("hidden-name-msg").style.display = "none";
+            document.getElementById("hidden-email-msg").style.display = "none";
+            document.getElementById("hidden-tel-msg").style.display = "block";
+            myform.tel2.value = "";
+            myform.tel2.focus();
+        }
+        else if(!tel3Reg.test(tel3)){
+            document.getElementById("hidden-pwd-msg").style.display = "none";
+            document.getElementById("hidden-name-msg").style.display = "none";
+            document.getElementById("hidden-email-msg").style.display = "none";
+            document.getElementById("hidden-tel-msg").style.display = "block";
+            myform.tel3.value = "";
+            myform.tel3.focus();
+        }
+        else if(!homePageReg.test(homePage)){
+            document.getElementById("hidden-pwd-msg").style.display = "none";
+            document.getElementById("hidden-name-msg").style.display = "none";
+            document.getElementById("hidden-email-msg").style.display = "none";
+            document.getElementById("hidden-tel-msg").style.display = "none";
+            document.getElementById("hidden-homePage-msg").style.display = "block";
+            myform.homePage.value = "";
+            myform.homePage.focus();
+        }
+        else if(idCheckSw == 0){
+            alert("아이디 중복체크를 해주세요!");
+            document.getElementById("midBtn").focus();
+        }
+        else if(nickCheckSw == 0) {
+            alert("닉네임 중복체크를 해주세요!");
+            document.getElementById("nickNameBtn").focus();
+        }
+        else {
+            document.getElementById("hidden-homePage-msg").style.display = "none";
+            myform.email.value = email;
+            myform.tel.value = tel;
+            myform.address.value = address;
+            $("#mid").removeAttr("disabled");
+            $("#nickName").removeAttr("disabled");
+            
+            myform.submit();
+        }
+    }
+    
+    // 아이디 중복체크
+    function idCheck() {
+        let mid = myform.mid.value;
+        let midReg = /^[a-zA-Z0-9-_]{4,12}$/;
+        
+        if(mid.trim() == ""){
+            alert("아이디를 입력하세요!");
+            myform.mid.focus();
+        }
+        else if(!midReg.test(mid)){
+            document.getElementById("hidden-mid-msg").style.display = "block";
+            myform.mid.value = "";
+            myform.mid.focus();
+        }
+        else {
+            document.getElementById("hidden-mid-msg").style.display = "none";
+            $.ajax({
+                url : "${ctp}/MemberIdCheck.mem",
+                type : "get",
+                data : {mid : mid},
+                success : function(res) {
+                    if(res != 0){
+                        alert("이미 사용중인 아이디입니다.");
+                        myform.mid.focus();
+                    }
+                    else {
+                        let ans = confirm‎("사용 가능한 아이디입니다.\n사용하시겠습니까?");
+                        if(ans) {
+                            idCheckSw = 1;
+                            $("#mid").attr("disabled", true);
+                            $("#midBtn").attr("disabled", true);
+                        }
+                    }
+                },
+                error : function() {
+                    alert("전송 오류");
+                }
+            });
+        }
+    }
+    
+    // 닉네임 중복체크
+        function nickCheck() {
+        let nickName = myform.nickName.value;
+        let nickNameReg = /^[a-zA-Z가-힣0-9]{1,8}$/;
+        
+        if(nickName.trim() == ""){
+            alert("닉네임을 입력하세요!");
+            myform.nickName.focus();
+        }
+        else if(!nickNameReg.test(nickName)){
+            document.getElementById("hidden-nickName-msg").style.display = "block";
+            myform.nickName.value = "";
+            myform.nickName.focus();
+        }
+        else {
+            document.getElementById("hidden-nickName-msg").style.display = "none";
+            $.ajax({
+                url : "${ctp}/MemberNickCheck.mem",
+                type : "get",
+                data : {nickName : nickName},
+                success : function(res) {
+                    if(res != 0){
+                        alert("이미 사용중인 닉네임입니다.");
+                        myform.nickName.focus();
+                    }
+                    else {
+                        let ans = confirm‎("사용 가능한 닉네임입니다.\n사용하시겠습니까?");
+                        if(ans) {
+                            nickCheckSw = 1;
+                            $("#nickName").attr("disabled", true);
+                            $("#nickNameBtn").attr("disabled", true);
+                        }
+                    }
+                },
+                error : function() {
+                    alert("전송 오류");
+                }
+            });
+        }
+    }
+    
+    // 다시작성 눌렀을 때 버튼 활성화
+    function resetForm() {
+        $("#nickName").removeAttr("disabled");
+        $("#nickNameBtn").removeAttr("disabled");
+        $("#mid").removeAttr("disabled");
+        $("#midBtn").removeAttr("disabled");
+        myform.reset();
+        $("#mid").focus();
+    } */
     	
     	// 검사를 끝내고 필요한 내역들을 변수에 담아 회원가입 처리한다.
     	// 변수에 저장(위에서 해도됨)
+    	let mid = myform.mid.value.trim();
+    	let pwd = myform.pwd.value.trim();
+    	let nickName = myform.nickName.value;
+    	let name = myform.name.value;
     	
     	let email1 = myform.email1.value.trim();
     	let email2 = myform.email2.value;  // 콤보상자 선택 trim()안해도 됨
     	let email = email1 + "@" + email2;  // 결합 , 구분자 넣기
-
-    	let tel1 = myform.tel1.value;
-    	let tel2 = myform.tel1.value.trim();
-    	let tel3 = myform.tel1.value.trim();
-    	let tel = tel1 + "-" + tel2 + "-" + tel3;
     	
     	let postcode = myform.postcode.value + " ";  // 공백 한칸으로 내용이 있는 것 처럼  // / 넣을 것 // db에 null 허용 설정 값이 없으면 ////로 들어가도록
     	let roadAddress = myform.roadAddress.value + " ";
     	let detailAddress = myform.detailAddress.value + " ";
     	let extraAddress = myform.extraAddress.value + " ";
     	let address = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress + "/";  // 위에서 공백을 주지 않으면 값이 없을 경우 나중에 /기준으로 split 했을때(////) 안 나눠짐 하나로 봄(front에서 해주기)
+    	
+    	if(!regMid.test(mid)) {
+    		alert("아이디는 4~20자리의 영문 소/대문자와 숫자, 언더바(_)만 사용가능합니다.");
+    		myform.mid.focus();
+    		return false;
+    	}
+    	else if(pwd.length < 4 && pwd.length > 20) {
+        alert("비밀번호는 4~20 자리로 작성해주세요.");
+        myform.pwd.focus();
+        return false;
+      }
+      else if(!regNickName.test(nickName)) {
+        alert("닉네임은 한글만 사용가능합니다.");
+        myform.nickName.focus();
+        return false;
+      }
+      else if(!regName.test(name)) {
+        alert("성명은 한글과 영문대소문자만 사용가능합니다.");
+        myform.name.focus();
+        return false;
+      }
+  		// 이메일 주소형식체크
+  		
+  		// 홈페이지 주소형식체크
+  		
+  		// 전화번호 형식 체크
+  		let tel1 = myform.tel1.value;
+    	let tel2 = myform.tel2.value.trim();
+    	let tel3 = myform.tel3.value.trim();
+    	let tel = tel1 + "-" + tel2 + "-" + tel3;
+    	
+  		if(tel2 != "" && tel3 != "") {
+  			// 전화번호 형식 정규화 체크
+  		}
+  		else {
+  			tel2 = " ";
+  			tel3 = " ";
+  			tel = tel1 + "-" + tel2 + "-" + tel3;
+  		}
     	
     	if(idCheckSw == 0) {
     		alert("아이디 중복체크 버튼을 눌러주세요");
@@ -89,7 +336,7 @@
     		myform.submit();  // MemberJoinOk로 넘김
     	}
     }
-    
+		
     // 아이디 중복체크
     function idCheck() {
     	let mid = myform.mid.value;
@@ -100,7 +347,6 @@
     	}
     	else {
     		idCheckSw = 1;
-    		myform.midBtn
     		
 	    	$.ajax({
 	    		url : "${ctp}/MemberIdCheck.mem",
@@ -133,7 +379,6 @@
     	}
     	else {
     		nickCheckSw = 1;
-    		myform.nickNameBtn
     		
 	    	$.ajax({
 	    		url : "${ctp}/MemberNickCheck.mem",
@@ -155,6 +400,17 @@
 	    	});
     	}
     }
+    
+    $(function(){
+    	$("#mid").on("blur", () => {
+    		idCheckSw = 0;
+    	});
+    	
+    	$("#nickName").on("blur", () => {
+    		nickCheckSw = 0;
+    	});
+    	
+    });
   </script>
 </head>
 <body>

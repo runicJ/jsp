@@ -21,7 +21,7 @@ public class MemberVO {  // 2
 	private int point;
 	private int level;
 	private int visitCnt;
-	private String startDate;
+	private String startDate;  // 날짜형식을 문자형식으로 바꿔놓음(timeStamp X)
 	private String lastDate;
 	private int todayCnt;
 	

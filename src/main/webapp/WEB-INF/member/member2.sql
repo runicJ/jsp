@@ -14,7 +14,7 @@ create table member2 (
   homePage  varchar(60),								/* 홈페이지(블로그)주소 */
   job			  varchar(20),								/* 직업 */
   hobby		  varchar(100),								/* 취미(2개이상 선택가능, 구분자는 '/'로 처리한다. */
-  photo		  varchar(100) default 'noimage.jpg', /* 회원 사진 */
+  photo		  varchar(100) default 'noImage.jpg', /* 회원 사진 */
   content   text,												/* 회원 소개 */
   userInfor char(3) default '공개',				/* 회원 정보 공개여부(공개/비공개(아이디,닉네임)) */
   userDel   char(2)  default 'NO',			/* 회원 탈퇴신청여부(NO:현재 활동중, OK:탈퇴신청중(1개월보관)) */

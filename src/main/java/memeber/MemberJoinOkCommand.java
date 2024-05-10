@@ -1,6 +1,7 @@
 package memeber;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -49,11 +50,21 @@ public class MemberJoinOkCommand implements MemberInterface {
 			return;
 		}
 		
-		// 비밀번호 암호화(sha256) 256bit 64자리(4로 나눔) - salt키를 만든 후 암호화 시켜준다.(uuid코드 중 앞자리 8자리와 같이 병형처리 후 암호화)
+		vo = dao.getMemberNickCheck(nickName);
+		if(vo.getNickName() != null) {
+			request.setAttribute("msg", "이미 사용중인 닉네임 입니다.");
+			request.setAttribute("url", "MemberJoin.mem");
+			return;
+		}
+		
+		// 비밀번호 암호화(sha256) 256bit 64자리(4로 나눔) - salt키를 만든 후 암호화 시켜준다.(uuid코드 중 앞자리 8자리와 같이 병형처리 후 암호화시킨다.)
+		// uuid를 통한 salt키 만들기(앞에서 8자리를 가져왔다.)
+		String salt = UUID.randomUUID().toString().substring(0,8);  // 문자화 해서 담음
+		
 		SecurityUtil securityUtil = new SecurityUtil();
-		UuidProcess uuidProcess = new UuidProcess();
-		String salt = uuidProcess.toString();
-		pwd = securityUtil.encryptSHA256(pwd);  // 64자리의 암호화된 숫자가 pwd에 담김 // (가입시 입력한 pwd)
+		pwd = securityUtil.encryptSHA256(salt + pwd);  // 64자리의 암호화된 숫자가 pwd에 담김 // (가입시 입력한 pwd)
+		
+		pwd = salt + pwd;  // DB저장할 때 salt키 안 만듦(기존 pw에 합쳐서 저장)
 		
 		// 모든 체크가 끝난 자료는 vo에 담아서 DB에 저장처리한다.
 		vo = new MemberVO();

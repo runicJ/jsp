@@ -60,12 +60,45 @@ public class MemberController extends HttpServlet {  // 4
 		else if(level > 4) {  // 순서를 잘 설정해야(login, join 뒤에) => Spring에서는 인터셉트에서 설정(지금은 controller에서)
 			request.setAttribute("message", "로그인 후 사용하세요");
 			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");
-			viewPage += "/include/message.jsp";
+			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/MemberMain")) {  // 로그인하면 필요한걸 다 담아서 memberMain으로 보냄
 			command = new MemberMainCommand();  // 경로명, 클래스명 대문자
 			command.excute(request, response);
-			viewPage += "/memberMain.jsp";  // 소문자
+			viewPage += "/memberMain.jsp";  // jsp는 소문자
+		}
+		else if(com.equals("/MemberList")) {
+			command = new MemberListCommand();
+			command.excute(request, response);
+			viewPage += "/memberList.jsp";
+		}
+		else if(com.equals("/MemberSearch")) {
+			command = new MemberSearchCommand();
+			command.excute(request, response);
+			viewPage += "/memberSearch.jsp";
+		}
+		else if(com.equals("/MemberPwdCheck")) {  // 화면만 띄우는 거니까 내용 가져올 필요없음 command
+			viewPage += "/memberPwdCheck.jsp";
+		}
+		else if(com.equals("/MemberPwdCheckAjax")) {
+			command = new MemberPwdCheckAjaxCommand();
+			command.excute(request, response);
+			return;  // ajax는 viewPage가 필요없으므로 return
+		}
+		else if(com.equals("/MemberPwdChangeCheck")) {
+			command = new MemberPwdChangeCheckCommand();
+			command.excute(request, response);
+			viewPage = "/include/message.jsp";  // 비밀번호가 변경되었습니다. 메시지 보내야함
+		}
+		else if(com.equals("/MemberPwdCheckOk")) {
+			command = new MemberPwdCheckOkCommand();
+			command.excute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/MemberUpdate")) {
+			command = new MemberUpdateCommand();
+			command.excute(request, response);
+			viewPage += "/memberUpdate.jsp";  // view를 가져가야함(회원 수정창에 해당 회원의 모든 정보를 넣어서 보여줌)
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
