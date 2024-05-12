@@ -93,14 +93,15 @@
 	    		type : "get",
 	    		data : {nickName : nickName},
 	    		success:function(res) {
-	    			if(res != 0) {
-	    				alert("이미 사용중인 닉네임입니다. 다시 입력하세요.");
-	    				myform.nickName.focus();
-	    			}
-	    			else {
-	    				alert("사용 가능한 닉네임입니다.");
-	    				myform.name.focus();
-	    			}
+                    if(res != '0') {
+                        if('${sNickName}'==nickName) {
+                            alert("이전 닉네임(${sNickName}과 똑같은 닉네임입니다.)")
+                        } else {
+                            alert("이미 사용중인 닉네임 입니다. 다시 입력하세요.");
+                        }
+                        myform.nickName.focus();
+                    }
+                    else alert("사용 가능한 닉네임 입니다.");
 	    		},
 	    		error:function() {
 	    			alert("전송 오류!");
@@ -126,7 +127,8 @@
     <br/>
     <div class="form-group">
       아이디 :  <!-- vo, session에 있는거 필요 x -->
-      <input type="text" class="form-control" id="mid" name="mid" value="${vo.mid}" disabled />
+      <%-- <input type="text" class="form-control" id="mid" name="mid" value="${vo.mid}" disabled /> --%>  <!-- 이렇게 하면 입력안됨!!(readonly 써야함) -->
+      <input type="text" class="form-control" id="mid" name="mid" value="${vo.mid}" readonly />
     </div>
     <div class="form-group">
       <label for="nickName">닉네임 : &nbsp; &nbsp;<input type="button" id="nickNameBtn" value="닉네임 중복체크" class="btn btn-secondary btn-sm" onclick="nickCheck()"/></label>

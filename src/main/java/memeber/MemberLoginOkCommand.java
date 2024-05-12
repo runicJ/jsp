@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import common.SecurityUtil;
+import guest.GuestDAO;
 
 public class MemberLoginOkCommand implements MemberInterface {
 
@@ -32,7 +33,7 @@ public class MemberLoginOkCommand implements MemberInterface {
 		}
 		
 		// 저장된 비밀번호에서 salt키를 분리시켜서 다시 암호화 시킨 후 맞는지 비교처리한다.
-		// salt키 분리
+		// salt키 분리  // 먼저 salt키로 무작위 수를 만들고 회원가입시 입력한 비번과 합쳐서 sha256으로 암호처리, DB에 저장할때 암호처리된 비밀번호 앞에 만든 salt키를 붙여서 저장/ 로그인시 DB에 저장된 pw의 salt키(8자리) 분리하고 로그인할때 입력한 pw와 합쳐서 sha256 암호화 한다음 DB에 저장된 것과 비교
 		String salt = vo.getPwd().substring(0,8);
 		
 		SecurityUtil security = new SecurityUtil();
@@ -72,6 +73,33 @@ public class MemberLoginOkCommand implements MemberInterface {
 
 		// 2번처리 : 자동 정회원 등업시키기
 		// 조건 : 방명록에 5회 이상 글을 올렸을 시 '준회원'에서 '정회원'으로 자동 등업처리한다.(단, 방명록의 글은 1일 여러번 등록해도 1회로 처리한다.)
+		GuestDAO gDao = new GuestDAO();
+		int guestCnt = gDao.getMemberGuestCount(mid, vo.getName(), vo.getNickName());
+		//System.out.println("guestCnt : " + guestCnt);
+		if(vo.getLevel() == 1) {
+			if(guestCnt >= 5) {
+				vo.setLevel(2);
+			}
+			else vo.setLevel(1);
+		}
+		
+		/*
+		 * // 숙제 - 자동 정회원 등업시키기 // 조건 : 방명록에 5회 이상 글을 올렸을 시 '준회원'에서 '정회원'으로 자동 등업처리한다.
+		 * (단, 방명록의 글은 하루에 여러번 등록해도 1회로 처리한다. GuestDAO gDao = new GuestDAO();
+		 * ArrayList<GuestVO> gVos = gDao.getMemberGuestSearch(mid, vo.getName(),
+		 * vo.getNickName());
+		 * 
+		 * Set<String> guestTime = new HashSet<>(); // 중복된 날짜를 제거하기 위해 HashSet 사용
+		 * for(GuestVO gVo : gVos) { guestTime.add(gVo.getVisitDate().substring(0, 10));
+		 * }
+		 * 
+		 * int guestCnt = guestTime.size();
+		 * 
+		 * if(guestCnt >= 5) { vo.setLevel(2); } dao.setLoginUpdate(vo); }
+		 * 가져온 방명록 정보에서 방문 날짜(visitDate)를 추출하여 중복을 제거하기 위해 HashSet에 저장합니다. 
+		 * 방문 날짜는 문자열 형식으로 "YYYY-MM-DD HH:MM:SS"이므로 substring() 메서드를 사용하여 날짜 부분만 추출합니다.
+		 * HashSet의 크기를 통해 방명록에 등록된 고유한 날짜 수를 계산합니다. 이를 통해 회원이 방명록에 등록한 총 글 수를 알 수 있습니다
+		 */
 		
 		// 3번처리 : 방문포인트와 카운트를 증가처리한 내용을 vo에 모두 담았다면 DB 자신의 레코드에 변경된 사항들을 갱신 처리해준다.
 		dao.setLoginUpdate(vo);
@@ -108,3 +136,69 @@ public class MemberLoginOkCommand implements MemberInterface {
 	}
 
 }
+
+/*
+ * 1 *
+HashSet은 Java에서 제공하는 Set 인터페이스를 구현한 클래스 중 하나입니다. Set은 중복을 허용하지 않고 순서를 보장하지 않는 자료구조입니다. 
+HashSet은 이러한 Set의 특징을 그대로 따르면서 해시 테이블을 사용하여 요소를 저장하기 때문에 매우 빠른 검색 속도를 제공합니다.
+
+예를 들어보겠습니다. 친구 목록을 관리하는 프로그램을 만든다고 가정해봅시다. 이 프로그램에서는 한 명의 친구가 여러 번 등록되더라도 중복으로 처리하지 않아야 합니다. 
+이때 HashSet을 사용하면 효율적으로 중복을 제거할 수 있습니다.
+
+import java.util.HashSet;
+
+public class Main {
+    public static void main(String[] args) {
+        HashSet<String> friendSet = new HashSet<>();
+        
+        // 친구 목록에 중복된 이름을 추가해도 HashSet은 중복을 허용하지 않습니다.
+        friendSet.add("John");
+        friendSet.add("Alice");
+        friendSet.add("John"); // 중복된 요소이므로 무시됩니다.
+        friendSet.add("Bob");
+        friendSet.add("Alice"); // 중복된 요소이므로 무시됩니다.
+        
+        // HashSet의 크기를 출력하면 중복이 제거된 친구의 수를 알 수 있습니다.
+        System.out.println("친구 목록의 크기: " + friendSet.size()); // 출력: 친구 목록의 크기: 3
+        
+        // HashSet을 반복문으로 순회하면 요소의 순서는 보장되지 않습니다.
+        for (String friend : friendSet) {
+            System.out.println(friend);
+        }
+    }
+}
+이 코드에서는 HashSet을 사용하여 친구 목록을 관리합니다. HashSet은 중복된 요소를 허용하지 않으므로 "John", "Alice"와 같이 중복된 이름을 여러 번 추가해도 중복이 제거됩니다. 
+이후 HashSet의 크기를 출력하면 중복이 제거된 친구의 수를 알 수 있습니다.
+
+HashSet을 반복문으로 순회할 때는 요소의 순서가 보장되지 않습니다. 따라서 출력 결과는 요소가 추가된 순서와 다를 수 있습니다.
+
+ * 2 *
+HashSet은 자바의 컬렉션 프레임워크에서 Set 인터페이스를 구현한 클래스 중 하나입니다. Set은 순서가 없고 중복을 허용하지 않는 데이터의 집합을 나타냅니다. 
+HashSet은 이러한 Set의 특성을 가지면서 내부적으로 해시 테이블을 사용하여 데이터를 저장합니다.
+
+예를 들어, 게시판의 방명록에는 각 사용자가 방문한 날짜가 기록되어 있습니다. 회원이 여러 번 방문했더라도 하루에 여러 번 방문한 경우에는 하루에 중복되는 날짜는 한 번으로만 계산해야 합니다. 
+이때 HashSet을 사용하면 중복된 날짜를 간편하게 제거할 수 있습니다.
+
+import java.util.HashSet;
+
+public class HashSetExample {
+    public static void main(String[] args) {
+        HashSet<String> uniqueDates = new HashSet<>();
+        
+        // 방문 날짜 추가
+        uniqueDates.add("2024-05-10");
+        uniqueDates.add("2024-05-10"); // 중복된 값이므로 무시됨
+        uniqueDates.add("2024-05-11");
+        uniqueDates.add("2024-05-12");
+        uniqueDates.add("2024-05-12"); // 중복된 값이므로 무시됨
+        
+        // 중복이 제거된 방문 날짜 출력
+        System.out.println("중복이 제거된 방문 날짜:");
+        for (String date : uniqueDates) {
+            System.out.println(date);
+        }
+    }
+}
+이 예제에서는 HashSet을 사용하여 방문한 날짜를 저장하고, 중복된 값이 무시되는 것을 확인할 수 있습니다. 따라서 uniqueDates에는 중복이 제거된 방문 날짜만 남게 됩니다.
+HashSet을 이용하면 중복된 값 제거와 같은 작업을 간단하게 처리할 수 있습니다.
+*/

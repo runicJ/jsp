@@ -160,14 +160,15 @@ public class MemberDAO {  // 3
 		return vo;
 	}
 
-	//로그인시에 처리할 내용들을 업데이트 시켜준다.
+	//로그인시에 처리할 내용들을 업데이트 시켜준다.(다시 로그인 해야함)
 	public void setLoginUpdate(MemberVO vo) {
 		try {
-			sql = "update member2 set point=?, lastDate=now(), visitCnt=visitCnt+1, todayCnt=? where mid = ?";
+			sql = "update member2 set point=?, lastDate=now(), visitCnt=visitCnt+1, todayCnt=?, level=? where mid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, vo.getPoint());
 			pstmt.setInt(2, vo.getTodayCnt());
-			pstmt.setString(3, vo.getMid());
+			pstmt.setInt(3, vo.getLevel());
+			pstmt.setString(4, vo.getMid());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());

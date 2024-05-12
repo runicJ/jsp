@@ -170,4 +170,27 @@ public class GuestDAO {
 		}
 		return vos;
 	}
+	
+	// 방명록 글 갯수
+	public int getMemberGuestCount(String mid, String name, String nickName) {
+		int guestCnt = 0;
+		try {
+			sql = "select count(df) as cnt from (select date_format(visitDate,  '%Y%m%d') as df from guest where name=? or name=? or name=? group by df) as groupBy";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, name);
+			pstmt.setString(3, nickName);
+			rs = pstmt.executeQuery();
+//			rs.next();
+//			guestCnt = rs.getInt("cnt");
+	        if (rs.next()) {
+	        	guestCnt = rs.getInt("cnt");
+	        }
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return guestCnt;
+	}
 }
