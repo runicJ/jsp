@@ -175,7 +175,7 @@ public class GuestDAO {
 	public int getMemberGuestCount(String mid, String name, String nickName) {
 		int guestCnt = 0;
 		try {
-			sql = "select count(df) as cnt from (select date_format(visitDate,  '%Y%m%d') as df from guest where name=? or name=? or name=? group by df) as groupBy";
+			sql = "select count(df) as cnt from (select date_format(visitDate, '%Y%m%d') as df from guest where name=? or name=? or name=? group by df) as groupBy";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
 			pstmt.setString(2, name);

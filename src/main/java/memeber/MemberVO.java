@@ -25,12 +25,14 @@ public class MemberVO {  // 2
 	private String lastDate;
 	private int todayCnt;
 	
+	private int deleteDiff;
+	
 	public MemberVO() {}
 		
 	public MemberVO(int idx, String mid, String pwd, String nickName, String name, String gender, String birthday,
 			String tel, String address, String email, String homePage, String job, String hobby, String photo, String content,
 			String userInfor, String userDel, int point, int level, int visitCnt, String startDate, String lastDate,
-			int todayCnt) {
+			int todayCnt, int deleteDiff) {
 		super();
 		this.idx = idx;
 		this.mid = mid;
@@ -55,6 +57,7 @@ public class MemberVO {  // 2
 		this.startDate = startDate;
 		this.lastDate = lastDate;
 		this.todayCnt = todayCnt;
+		this.deleteDiff = deleteDiff;
 	}
 
 	public int getIdx() {
@@ -195,13 +198,23 @@ public class MemberVO {  // 2
 	public void setTodayCnt(int todayCnt) {
 		this.todayCnt = todayCnt;
 	}
-	
+
+	public int getDeleteDiff() {
+		return deleteDiff;
+	}
+
+	public void setDeleteDiff(int deleteDiff) {
+		this.deleteDiff = deleteDiff;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberVO [idx=" + idx + ", mid=" + mid + ", pwd=" + pwd + ", nickName=" + nickName + ", name=" + name
 				+ ", gender=" + gender + ", birthday=" + birthday + ", tel=" + tel + ", address=" + address + ", email=" + email
 				+ ", homePage=" + homePage + ", job=" + job + ", hobby=" + hobby + ", photo=" + photo + ", content=" + content
 				+ ", userInfor=" + userInfor + ", userDel=" + userDel + ", point=" + point + ", level=" + level + ", visitCnt="
-				+ visitCnt + ", startDate=" + startDate + ", lastDate=" + lastDate + ", todayCnt=" + todayCnt + "]";
+				+ visitCnt + ", startDate=" + startDate + ", lastDate=" + lastDate + ", todayCnt=" + todayCnt + ", deleteDiff="
+				+ deleteDiff + "]";
 	}
+	
 }

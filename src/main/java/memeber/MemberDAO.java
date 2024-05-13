@@ -265,5 +265,21 @@ public class MemberDAO {  // 3
 		}
 		return res;
 	}
+
+	// 회원 탈퇴 신청처리...
+	public int setMemberDeleteUpdate(String mid) {
+		int res = 0;
+		try {
+			sql = "update member2 set userDel='OK', level=99 where mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			res = pstmt.executeUpdate();  // 완전히 삭제하지 않고 업데이트 시킴
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
 	
 }

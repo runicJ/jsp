@@ -73,6 +73,7 @@ public class MemberUpdateOkCommand implements MemberInterface {
 		int res = dao.setMemberUpdateOk(vo);
 		
 		if(res != 0) {
+			session.setAttribute("sNickName", vo.getNickName());  // 세션에 넣어서 덮어쓴다.(회원수정 시 바뀐사항)
 			request.setAttribute("message", "회원 정보가 수정되었습니다.");
 			request.setAttribute("url", "MemberMain.mem");
 		}

@@ -20,14 +20,14 @@
 <%-- <%		if(!mid_.equals("")) { %> --%>
 		<c:if test="${level <= 4}">  <!-- jstl 여기서 등급에 따라 보여줄 부분 설정 -->
       <li class="nav-item">
-        <a class="nav-link" href="#">Board</a>
+        <a class="nav-link" href="BoardList.bo">Board</a>
       </li>
     </c:if>
     <c:if test="${level <= 4 && level > 1 || level == 0}">  <!-- else if가 없기 때문에 이렇게 쓰는거고, 99때문에 앞에 <=4 작성 -->
       <li class="nav-item">
         <a class="nav-link" href="#">PDS</a>  <!-- posting data system 자료실 -->
       </li>    
-      <li class="nav-item mr-2">
+      <li class="nav-item">
         <!-- <a class="nav-link" href="study.jsp">Study</a> -->
         <div class="dropdown">
 			    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">
@@ -52,7 +52,7 @@
 			    </div>
   			</div>
       </li>
-      <li class="nav-item mr-2">
+      <li class="nav-item">
         <!-- <a class="nav-link" href="study.jsp">Study</a> -->
         <div class="dropdown">
 			    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">Study2</button>
@@ -86,7 +86,7 @@
 			      </c:if>
 			      <a class="dropdown-item" href="MemberPwdCheck.mem">회원정보수정</a>  <!-- 준회원 if 외의 것 -->
 			      <a class="dropdown-item" href="MemberDelete.mem">회원탈퇴</a>
-			      <c:if test="${sLevel == 0}"><a class="dropdown-item" href="#">관리자메뉴</a></c:if>
+			      <c:if test="${sLevel == 0}"><a class="dropdown-item" href="AdminMain.ad">관리자메뉴</a></c:if>
 			    </div>
   			</div>
       </li>

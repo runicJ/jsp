@@ -85,6 +85,10 @@
     		alert("닉네임을 입력하세요!");
     		myform.nickName.focus();
     	}
+    	else if(nickName.trim() == '${sNickName}') {  // 자바스크립트임(nickName.equals('${sNickName}')) X
+    		nickCheckSw = 1;
+    		return false;  // 닉네임이 같으면 굳이 중복체크하러 보낼 필요가 없음
+    	}
     	else {
     		nickCheckSw = 1;
     		

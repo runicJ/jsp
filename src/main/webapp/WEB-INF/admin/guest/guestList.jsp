@@ -9,7 +9,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>guestList2.jsp</title>
+  <title>guestList.jsp</title>
   <%@ include file = "/include/bs4.jsp" %>
   <style>
   	th {
@@ -35,8 +35,6 @@
   </script>
 </head>
 <body>
-<jsp:include page="/include/header.jsp" />
-<jsp:include page="/include/nav.jsp" />
 <p><br/></p>
 <div class="container">
   <h2 class="text-center">방 명 록 리 스 트(기본 페이징 처리)</h2>
@@ -132,6 +130,5 @@
 <!-- 블록페이지 끝 -->
 </div>
 <p><br/></p>
-<jsp:include page="/include/footer.jsp" />
 </body>
 </html>

@@ -22,6 +22,7 @@
 	<div class="row">
     <div class="col">
 	  	<p>현재 <b><font color="blue">${mVo.nickName}</font>(<font color="red">${strLevel}</font>)</b> 님이 로그인 중이십니다.</p>
+	  	<%-- <p>현재 <b><font color="blue">${mVo.nickName}</font>(<font color="red">${strLevel}</font>)</b> 님이 로그인 중이십니다.</p> --%>
 	  	<p>총 방문횟수 : <b>${mVo.visitCnt}</b> 회</p>
 	  	<p>오늘 방문횟수 : <b>${mVo.todayCnt}</b> 회</p>
 	  	<p>총 보유 포인트 : <b>${mVo.point}</b> 점</p>

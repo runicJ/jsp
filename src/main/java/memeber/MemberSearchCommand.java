@@ -16,7 +16,9 @@ public class MemberSearchCommand implements MemberInterface {
 		
 		MemberVO vo = dao.getMemberIdCheck(mid);  // 한 건이면 vo로 한 건 가져오는 것
 		
-		request.setAttribute("vo", vo);  // 기차에 실어주기
+		vo.setAddress("(우) " + vo.getAddress().replace("/", " "));;
+		
+		request.setAttribute("vo", vo);  // 기차(request 저장소)에 실어주기
 	}
 
 }

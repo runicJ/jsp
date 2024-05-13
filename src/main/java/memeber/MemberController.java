@@ -105,6 +105,14 @@ public class MemberController extends HttpServlet {  // 4
 			command.excute(request, response);
 			viewPage = "/include/message.jsp";
 		}
+		else if(com.equals("/MemberDelete")) {
+			viewPage += "/memberPwdDeleteCheck.jsp";
+		}
+		else if(com.equals("/MemberDeleteCheckOk")) {
+			command = new MemberDeleteCheckOkCommand();
+			command.excute(request, response);
+			viewPage = "/include/message.jsp";  // 메시지로 보내는게 맞겠죠
+		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

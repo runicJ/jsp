@@ -35,3 +35,7 @@ desc member2;
 insert into member2 value (default,'admin','1234','관리맨','관리자','남자',default,'010-1234-4567','050/서울시/그린아파트/100동/101호','abc@atom.com','http://www.atom.com','학생','등산',default,'관리자입니다.',default,default,default,0,default,default,default,default);
 
 select * from member2;
+
+ALTER TABLE member2 AUTO_INCREMENT = 1;
+
+select lastDate, now(), timestampdiff(day, lastDate, now()) as deleteDiff from member2;  /* 날짜비교(시간단위로 비교해줌) 뒤에서 앞을 뺌(now()-lastDate) // dateadd */
