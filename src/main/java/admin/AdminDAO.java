@@ -132,6 +132,7 @@ public class AdminDAO {
 		return res;
 	}
 
+	// 회원 DB에서 삭제처리하기
 	public int MemberDeleteOk(int idx) {
 		int res = 0;
 		try {
@@ -147,6 +148,7 @@ public class AdminDAO {
 		return res;
 	}
 
+	// 신규회원 건수
 	public int getNewMemberCnt() {
 		int mCount = 0;
 		try {

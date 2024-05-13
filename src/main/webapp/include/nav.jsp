@@ -62,7 +62,7 @@
 			      <a class="dropdown-item" href="${ctp}/mapping/test2.do">확장자매핑연습</a>  <!-- 무조건 뒤에 확장자 써야 -->
 			      <a class="dropdown-item" href="${ctp}/mapping/test3.do3">확장자매핑연습3</a>
 			      <a class="dropdown-item" href="${ctp}/mapping/test4.do4">확장자매핑연습4</a>
-			      <a class="dropdown-item" href="${ctp}/mapping/test5.do5">확장자매핑연습5</a>
+			      <%-- <a class="dropdown-item" href="${ctp}/mapping/test5.do5">확장자매핑연습5</a> --%>
 			      <a class="dropdown-item" href="${ctp}/ajaxTest1.st">AJAX연습(일반)</a>  <!-- lastIndex에서 /기준으로 자르면 // 확장자 뭘하건 관계없음 -->
 			      <a class="dropdown-item" href="${ctp}/ajaxTest2.st">AJAX연습(응용)</a>
 			      <a class="dropdown-item" href="${ctp}/ajaxTest3.st">AJAX연습(회원관리)</a>

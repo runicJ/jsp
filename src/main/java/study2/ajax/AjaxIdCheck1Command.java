@@ -27,6 +27,7 @@ public class AjaxIdCheck1Command implements StudyInterface {
 			// PrintWriter out = response.getWriter();
 			// out.println(name);  // 이렇게 하면 브라우저 화면에 그냥 출력 => 그러나 demo에 찍어야함
 			// out.write(name);  // 문자값만 넘김(header에 writer해서 가져감) == request.setAttribute와 같음
+			
 			response.getWriter().write(name);  // id를 같이 안넘겼으므로 pram.으로 받은 것 setAttribute에서 
 		}
 	}

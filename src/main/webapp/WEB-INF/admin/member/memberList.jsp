@@ -95,7 +95,7 @@
   	<div class="col"><input type="checkbox" name="userInfor" id="userInfor" onclick="userCheck()" />&nbsp;비공개회원보기</div>
   	<div class="col">
   		<select name="levelItem" id="levelItem" onchange="levelItemCheck()">
-  			<option value="999" ${level>4 ? "selected" : ""}>전체보기</option>
+  			<option value="999" ${level > 4 ? "selected" : ""}>전체보기</option>
   			<option value="1" <c:if test="${level==1}">selected</c:if>>준회원</option>
   			<option value="2" <c:if test="${level==2}">selected</c:if>>정회원</option>
   			<option value="3" <c:if test="${level==3}">selected</c:if>>우수회원</option>
@@ -121,6 +121,7 @@
 	  		<th>현재레벨</th>
 	  	</tr>
 	  	<c:forEach var="vo" items="${vos}" varStatus="st">
+	  		<c:if test="${vo.userInfor == '공개' || (vo.userInfor != '공개' && sLevel == 0)}">
 	  		<c:if test="${vo.userDel == 'OK'}"><c:set var="active" value="탈퇴신청"/></c:if>  <!-- 부트4에선 active 예약어 -->
 	  		<c:if test="${vo.userDel != 'OK'}"><c:set var="active" value="활동중"/></c:if>  <!-- 배타적 -->
 	  		<tr>
@@ -151,6 +152,7 @@
 		  			</form>
 		  		</td>
 	  		</tr>
+	  		</c:if>
 	  	</c:forEach>
 	  	<tr><td colspan="9" class="m-0 p-0"></td></tr>
   	</table>

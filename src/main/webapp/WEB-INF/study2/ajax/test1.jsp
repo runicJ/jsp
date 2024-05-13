@@ -39,8 +39,9 @@
   		
   		xhr.onreadystatechange = function() {
   			if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {  // 브라우저에 보낸 상태가 정상이고, 정상처리하면 200이 옴  // 500은 코드 잘못썼을때 
-  				console.log(xhr.responseText);
-  				demo.innerHTML = xhr.responseText;  // response에 넘어온 텍스트(response.getWriter().write(name))
+  				//console.log(xhr.responseText);
+  				//demo.innerHTML = xhr.responseText;  // response에 넘어온 텍스트(response.getWriter().write(name))
+  				document.getElementById("demo").innerHTML = xhr.responseText;
   			}
   		}
   	}
@@ -52,7 +53,7 @@
   		if(flag == "0") return false;
   		
   		fetch("${ctp}/ajaxIdCheck1.st?mid="+mid)
-  			.then((res) => res.json())  // json으로 변경하려면 키:value 형식으로 바꿔야함 => java의 hashMap // 현재는 오류
+  			//.then((res) => res.json())  // json으로 변경하려면 키:value 형식으로 바꿔야함 => java의 hashMap // 현재는 오류
   			.then((res) => console.log("res : ", res))  // 성공해서 돌아오면 값을 찍어봄
   			.catch((error) => console.log("error : ", error));
   	}
@@ -150,9 +151,9 @@
 			</div>
 		</form>
 		<hr>
-			출력결과 : <div id="demo"><b>${param.name}</b></div>  <!-- 눈에 보이게 사용 -->
-			<!-- ${param}은 request의 parameter를 직접 참조하는 것이고.. 모델에 넣어주신 값은 그냥.. ${model명}을 사용하시면 됩니다.
-			id로 넣어주셨기 때문에.. ${id}로 참조하시면 되는 것이죠.. -->
+			<div id="demo"><font color='blue'>출력결과 : <b>${param.name}</b></font></div>  <!-- 눈에 보이게 사용 -->
+			<!-- $ {param}은 request의 parameter를 직접 참조하는 것이고.. 모델에 넣어주신 값은 그냥.. $ {model명}을 사용하시면 됩니다.
+			id로 넣어주셨기 때문에.. $ {id}로 참조하시면 되는 것이죠.. -->
 		<hr>
 	</div>
 	<hr>
