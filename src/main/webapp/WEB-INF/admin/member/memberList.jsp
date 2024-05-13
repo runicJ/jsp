@@ -86,6 +86,68 @@
   			});
   		}
   	}
+  	
+/*   	$('#all_select').click(function() {
+  	    if ($("input:checkbox[id='all_select']").prop("checked")) {
+  	        $("input[type=checkbox]").prop("checked", true);
+  	    } else {
+  	        $("input[type=checkbox]").prop("checked", false);
+  	    }
+  	});
+  	
+  	$('#reverse_select').click(function() {
+  	    $("input[type=checkbox]").each(function(){
+  	        $(this).prop("checked", !$(this).prop("checked"));
+  	    });
+  	}); */
+  	
+  	function allCheck() {
+        let isChecked = $("#all_select").prop("checked");
+        $("input[name=itemCheck]").prop("checked", isChecked);
+    }
+    
+    function updateAllMemberLevel(e) {
+ 
+        let levelB = e.value;
+        let checkItems = document.querySelectorAll('input[name=itemCheck]:checked');
+ 
+        if (checkItems.length === 0) {
+            alert("선택하신 회원이 없습니다.");
+            return false;
+        }
+        
+        let ans = confirm("선택한 회원의 등급을 변경하시겠습니까?");
+        if (!ans) {
+            location.reload();
+            return false;
+        }
+        
+        let strIdx =""
+            checkItems.forEach(function(checkItem) {
+                strIdx += checkItem.value+"/";
+            });
+ 
+        $.ajax({
+            url: "MemberLevelChange.ad",
+            type: "GET",
+            data: {
+                level: levelB,
+                strIdx : strIdx
+            },
+            success: function(res) {
+                if (res !== "0") {
+                    alert("등급 수정 완료!");
+                    location.reload();
+                } else {
+                    alert("등급 수정 실패");
+                }
+            },
+            error: function() {
+                alert("전송오류!");
+            }
+        });
+ 
+    }
   </script>
 </head>
 <body>
@@ -107,8 +169,23 @@
   <hr>
 	<div id="totalList">
 	  <h3 class="text-center">전체 회원 리스트</h3>
+	  	<div class="d-flex justify-content-between align-items-center mb-2">
+  			<div><input type="button" value="선택반전" name="reverse_select" id="reverse_select" /></div>
+	  		<div>
+	            <select name="levelSelected" id="levelSelected" class="mr-2">
+	                <option disabled selected>등급선택</option>
+	                <option value="1">준회원</option>
+	                <option value="2">정회원</option>
+	                <option value="3">우수회원</option>
+	                <option value="0">탈퇴신청회원</option>
+	                <option value="99">관리자</option>
+	            </select>
+	            <input type="submit" class="btn btn-outline-info btn-sm" value="등급일괄변경" onclick="updateAllMemberLevel()">
+	        </div>
+	    </div>
 	  <table class="table table-hover text-center">  <!-- 페이징 처리하는 부분 // 정렬하는 부분 넣어주기 -->
 	  	<tr class="table-dark text-dark">
+	  		<th><div class="checkbox"><input type="checkbox" id="all_select"><span></span></div></th>
 	  		<th>번호</th>
 	  		<th>아이디</th>
 	  		<th>닉네임</th>
@@ -125,6 +202,7 @@
 	  		<c:if test="${vo.userDel == 'OK'}"><c:set var="active" value="탈퇴신청"/></c:if>  <!-- 부트4에선 active 예약어 -->
 	  		<c:if test="${vo.userDel != 'OK'}"><c:set var="active" value="활동중"/></c:if>  <!-- 배타적 -->
 	  		<tr>
+	  			<td><input type="checkbox" name="itemCheck" value="${vo.idx}"/></td>
 	  			<td>${vo.idx}</td>
 	  			<td><a href="MemberSearch.mem?mid=${vo.mid}">${vo.mid}</a></td>  <!-- 개인 회원 정보보기 링크준 것 // 해당 클릭한 아이디의 정보만 보는 것이기 때문에 쿼리스트링으로 어떤건지 보내줘야 함 -->
 	  			<td>${vo.nickName}</td>
@@ -154,7 +232,7 @@
 	  		</tr>
 	  		</c:if>
 	  	</c:forEach>
-	  	<tr><td colspan="9" class="m-0 p-0"></td></tr>
+	  	<tr><td colspan="10" class="m-0 p-0"></td></tr>
   	</table>
   </div>
   <div id="userDisplay">

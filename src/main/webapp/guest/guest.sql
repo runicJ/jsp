@@ -18,6 +18,6 @@ select * from guest;
 
 select count(df) as cnt from (select date_format(visitDate,  '%Y%m%d') as df from guest where name='atom1234' or name='아톰맨' or name='아톰' group by df) as groupBy;
 
-select count(date_format(visitDate,  '%Y%m%d') as cnt from guest where  name='atom1234' or name='아톰맨' or name='아톰';
+select count(date_format(visitDate,  '%Y%m%d')) as cnt from guest where name='atom1234' or name='아톰맨' or name='아톰';
 
 /* 업무설계 -> DB -> VO -> DAO */
