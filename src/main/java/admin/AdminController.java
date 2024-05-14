@@ -10,8 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import admin.board.BoardContentCommand;
+import admin.board.BoardListCommand;
 import admin.guest.GuestListCommand;
+import admin.member.MemberDeleteOkCommand;
 import admin.member.MemberLevelChangeCommand;
+import admin.member.MemberLevelSelectCheckCommand;
 import admin.member.MemberListCommand;
 
 @SuppressWarnings("serial")  // 필터 통과하고 제일 먼저 들어옴
@@ -59,6 +63,26 @@ public class AdminController extends HttpServlet {  // 4
 			command = new MemberLevelChangeCommand();
 			command.excute(request, response);
 			return;  // ajax니까 return
+		}
+		else if(com.equals("/MemberDeleteOk")) {
+			command = new MemberDeleteOkCommand();
+			command.excute(request, response);
+			return;
+		}
+		else if(com.equals("/MemberLevelSelectCheck")) {
+			command = new MemberLevelSelectCheckCommand();
+			command.excute(request, response);
+			return;
+		}
+		else if(com.equals("/BoardList")) {
+			command = new BoardListCommand();
+			command.excute(request, response);
+			viewPage += "/board/boardList.jsp";
+		}
+		else if(com.equals("/BoardContent")) {
+			command = new BoardContentCommand();
+			command.excute(request, response);
+			viewPage += "/board/boardContent.jsp";
 		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

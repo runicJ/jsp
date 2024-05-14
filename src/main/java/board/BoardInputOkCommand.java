@@ -12,7 +12,7 @@ public class BoardInputOkCommand implements BoardInterface {
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 		String nickName = request.getParameter("nickName")==null ? "" : request.getParameter("nickName");
-		String title = request.getParameter("title")==null ? "" : request.getParameter("mid");
+		String title = request.getParameter("title")==null ? "" : request.getParameter("title");
 		String content = request.getParameter("content")==null ? "" : request.getParameter("content");
 		String hostIp = request.getParameter("hostIp")==null ? "" : request.getParameter("hostIp");
 		String openSw = request.getParameter("openSw")==null ? "" : request.getParameter("openSw");	
@@ -21,6 +21,7 @@ public class BoardInputOkCommand implements BoardInterface {
 		
 		vo.setMid(mid);
 		vo.setNickName(nickName);
+		title = title.replace("<", "&lt;").replace(">", "&gt;");  // 글제목에 태그 넣는 것 방지
 		vo.setTitle(title);
 		vo.setContent(content);
 		vo.setHostIp(hostIp);

@@ -40,12 +40,47 @@ public class BoardController extends HttpServlet {  // 4
 			viewPage += "/boardList.jsp";
 		}
 		else if(com.equals("/BoardInput")) {
-			viewPage += "/boardInput.jsp";
+			viewPage += "/boardInput.jsp";  // command에 가서 가져올 것이 없는 경우(만약에 홈페이지 이메일 등 있는 경우 필요) = view에서 session으로 아이디를 가져오기 때문에
 		}
 		else if(com.equals("/BoardInputOk")) {
 			command = new BoardInputOkCommand();
 			command.excute(request, response);
 			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/BoardContent")) {
+			command = new BoardContentCommand();
+			command.excute(request, response);
+			viewPage += "/boardContent.jsp";
+		}
+		else if(com.equals("/BoardUpdate")) {
+			command = new BoardUpdateCommand();
+			command.excute(request, response);
+			viewPage += "/boardUpdate.jsp";  // 수정하는 곳으로 보냄
+		}
+		else if(com.equals("/BoardUpdateOk")) {
+			command = new BoardUpdateOkCommand();
+			command.excute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/BoardDelete")) {
+			command = new BoardDeleteCommand();
+			command.excute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/BoardGoodCheck")) {
+			command = new BoardGoodCheckCommand();
+			command.excute(request, response);
+			return;
+		}
+		else if(com.equals("/BoardGoodCheck2")) {  // 세션처리(중복불허)
+			command = new BoardGoodCheck2Command();
+			command.excute(request, response);
+			return;
+		}
+		else if(com.equals("/BoardGoodCheckPlusMinus")) {
+			command = new BoardGoodCheckPlusMinusCommand();
+			command.excute(request, response);
+			return;
 		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

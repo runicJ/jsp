@@ -16,9 +16,19 @@ create table board (
 );
 
 desc board;
-
 drop table board;
 
 insert into board values (default,'admin','관리맨','게시판 서비스를 시작합니다.','즐거운 게시판 생활이 되세요.',default,'192.168.50.57',default,default,default);
 
 select * from board;
+select * from board where idx = 9;  /* 현재글 - idx,title content에서 이 변수가 이미 사용중 같으면 사용할 수 없음 => 이전글 다음글 같은 페이지 */
+select idx,title from board where idx > 9 order by idx limit 1;  /* 다음글 // 다음글이 꼭 10번일거란 보장이 없으므로 9번보다 크고 정렬해서 limit 함 */
+select idx,title from board where idx < 9 order by idx desc limit 1;  /* 이전글 - idx랑 title 가져감 */
+
+-- 시간으로 비교해서 필드에 값 저장하기
+select *, timestampdiff(hour, wDate, now()) as hour_diff from board;  /* 옵션, 비교1, 비교데이터2 / 2-1 => 사용하려면 DAO 어디서 나오는지 이건 게시글리스트 */
+
+-- 날짜로 비교해서 필드에 값 저장하기 date_format(visitDate,  '%Y%m%d')
+select *, datediff(wDate, now()) as hour_diff, date_format(wDate, '%Y-%m-%d %H:%i:%s') from board;  /* 날짜만 비교 datediff(날짜를 비교하겠다고 선언했기 때문에 옵션이 필요없음) => - 나오면 지났다는 것 */
+
+--<marquee behavior="alternate" scrollamount="1000">깜박깜박</marquee>

@@ -38,7 +38,7 @@
   		</tr>
   		<tr>
   			<td colspan="2" class="text-center">
-  				<input type="submit" value="글올리기" class="btn btn-success mr-2" />  <!-- 유효성검사 안하려면 위에 required -->
+  				<input type="submit" value="수정하기" class="btn btn-success mr-2" />  <!-- 유효성검사 안하려면 위에 required -->
   				<input type="reset" value="다시입력" class="btn btn-warning mr-2" />
   				<input type="button" value="돌아가기" onclick="location.href='BoardList.bo';" class="btn btn-danger" />
   			</td>

@@ -93,9 +93,9 @@
   	    } else {
   	        $("input[type=checkbox]").prop("checked", false);
   	    }
-  	});
+  	}); */
   	
-  	$('#reverse_select').click(function() {
+/*   	$('#reverse_select').click(function() {
   	    $("input[type=checkbox]").each(function(){
   	        $(this).prop("checked", !$(this).prop("checked"));
   	    });
@@ -105,6 +105,12 @@
         let isChecked = $("#all_select").prop("checked");
         $("input[name=itemCheck]").prop("checked", isChecked);
     }
+  	
+  	function reCheck() {
+	    $("input[name=itemCheck]").each(function(){
+        $(this).prop("checked", !$(this).prop("checked"));
+    	});
+  	}
     
     function updateAllMemberLevel(e) {
  
@@ -170,22 +176,22 @@
 	<div id="totalList">
 	  <h3 class="text-center">전체 회원 리스트</h3>
 	  	<div class="d-flex justify-content-between align-items-center mb-2">
-  			<div><input type="button" value="선택반전" name="reverse_select" id="reverse_select" /></div>
+  			<div><input type="button" value="선택반전" name="reverse_select" id="reverse_select" onclick="reCheck()" class="btn btn-outline-danger btn-sm" /></div>
 	  		<div>
-	            <select name="levelSelected" id="levelSelected" class="mr-2">
-	                <option disabled selected>등급선택</option>
-	                <option value="1">준회원</option>
-	                <option value="2">정회원</option>
-	                <option value="3">우수회원</option>
-	                <option value="0">탈퇴신청회원</option>
-	                <option value="99">관리자</option>
-	            </select>
-	            <input type="submit" class="btn btn-outline-info btn-sm" value="등급일괄변경" onclick="updateAllMemberLevel()">
-	        </div>
+          <select name="level" id="level">
+            <option disabled selected>등급선택</option>
+            <option value="1">준회원</option>
+            <option value="2">정회원</option>
+            <option value="3">우수회원</option>
+            <option value="0">탈퇴신청회원</option>
+            <option value="99">관리자</option>
+          </select>
+          <input type="submit" class="btn btn-outline-info btn-sm" value="등급일괄변경" onclick="updateAllMemberLevel()">
+        </div>
 	    </div>
 	  <table class="table table-hover text-center">  <!-- 페이징 처리하는 부분 // 정렬하는 부분 넣어주기 -->
 	  	<tr class="table-dark text-dark">
-	  		<th><div class="checkbox"><input type="checkbox" id="all_select"><span></span></div></th>
+	  		<th><input type="checkbox" id="all_select" onchange="allCheck()" /></th>
 	  		<th>번호</th>
 	  		<th>아이디</th>
 	  		<th>닉네임</th>
