@@ -15,6 +15,9 @@
   		text-align: center;
   		background-color: #eee;
   	}
+  	.liked {
+    	color: red;
+	}
   </style>
   <script>
   	'use strict';
@@ -46,7 +49,11 @@
     		type : "post",
     		data : {idx : ${vo.idx}},
     		success:function(res) {
-    			if(res != "0") location.reload();
+    			if(res != "0") {
+    				//document.getElementById("liked").querySelector("font").style.color = "red";
+    				document.getElementById("liked").classList.add("liked");
+    				location.reload();
+    			}
     			else alert("이미 좋아요 버튼을 클릭하셨습니다.");
     		},
     		error : function() {
@@ -125,13 +132,14 @@
   		<td colspan="4">
   			<div class="row">
   				<div class="col">
-	  				<input type="button" value="돌아가기" onclick="location.href='BoardList.bo?pag=${pag}&pageSize=${pageSize}';" class="btn btn-warning" />  <!-- controller로 넘겼으니까 command에서 값을 받아야함 --> <!-- 왔던 페이지랑 페이지사이즈를 가져가?검색 기능 있으면 검색분류와 검색어까지 같이 보냄 // 단순히 보기만 하면 history.back(), 수정삭제 하면 이걸로 안도미 -->
+	  				<input type="button" value="돌아가기" onclick="location.href='BoardList.bo?pag=${pag}&pageSize=${pageSize}';" class="btn btn-warning" />  <!-- controller로 넘겼으니까 command에서 값을 받아야함 --> <!-- 왔던 페이지랑 페이지사이즈를 가져가?검색 기능 있으면 검색분류와 검색어까지 같이 보냄 // 단순히 보기만 하면 history.back(), 수정삭제 하면 이걸로 안됨 -->
 		  		</div>
 		  		<div class="col text-center">
 	  				<a href="javascript:goodCheck()"> ❤ </a> ${vo.good} /
 	  				<a href="javascript:goodCheckPlus()"> 💖 </a> &nbsp;
 	  				<a href="javascript:goodCheckMinus()"> 💔 </a> /
-	  				<a href="javascript:goodCheck2()"><font color="blue" size="5">♥</font></a> ${vo.good}
+	  				<%-- <a href="javascript:goodCheck2()"><font color="blue" size="5">♥</font></a> ${vo.good} --%>
+	  				<a href="javascript:goodCheck2()" id="liked"><font size="6"> ♥ </font></a> ${vo.good} /
 	  			</div>
 	  			<div class="col text-right">
 			  		<c:if test="${sNickName == vo.nickName || sLevel == 0}">

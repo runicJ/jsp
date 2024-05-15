@@ -29,7 +29,14 @@ public class BoardGoodCheck2Command implements BoardInterface {
 		}
 		session.setAttribute("sContentGood", contentGood);
 		
-		response.getWriter().write(sw);  // 메시지 전달을 위해 sw 넣어줌
+		// 좋아요를 누른 게시물 idx를 세션에서 가져옴
+//		ArrayList<Integer> likedAt = (ArrayList<Integer>) session.getAttribute("sContentIdx");
+//		if (likedAt == null) likedAt = new ArrayList<Integer>();    // Java에서는 List 인터페이스를 직접 인스턴스화할 수 없으며, 대신 ArrayList 또는 다른 구현체를 사용해야 함. 인터페이스가 단순히 메소드의 선언을 포함하고, 실제로는 구현되지 않은 메소드를 가지기 때문. 따라서 인터페이스를 사용하여 객체를 생성할 수 없고, 대신 구체적인 구현체를 사용해야 함. 보통은 ArrayList, LinkedList 등의 구현체를 사용.
+//		
+//        boolean isLiked = likedAt.contains(idx);
+//        session.setAttribute("isLiked", isLiked);
+		
+		response.getWriter().write(sw);  // 메시지 전달을 위해 sw 넣어줌  // AJAX 요청을 통해 서버로부터 데이터를 비동기적으로 수신할 때 사용
 	}
 
 }

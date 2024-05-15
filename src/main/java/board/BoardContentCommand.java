@@ -2,6 +2,7 @@ package board;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ public class BoardContentCommand implements BoardInterface {
 			contentReadNum.add(imsiContentReadNum);  // 추가시켜야 함(add)
 		}
 		session.setAttribute("sContentIdx", contentReadNum);  // session에도 저장
+		
 		BoardVO vo = dao.getBoardContent(idx);		
 		request.setAttribute("vo", vo);
 		

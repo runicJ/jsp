@@ -39,7 +39,7 @@ public class GuestList extends HttpServlet {
 		int curScrStartNo = totRecCnt - startIndexNo;
 		
 		// 블록페이징처리...(시작블록을 0으로 처리했다.)
-		// 1. 블록의 크키결정(여기선 3으로 결정했다.)
+		// 1. 블록의 크기결정(여기선 3으로 결정했다.)
 		int blockSize = 3;
 		
 		// 2. 현재 페이지가 속한 블록번호를 구한다.(예: 총 레코드 수가 38개일 경우, 1페이지 분량 5개라면, 총 페이지 수는 8개이다.

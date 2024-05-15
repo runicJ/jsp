@@ -31,11 +31,11 @@
   		<td><c:if test="${sLevel != 1}"><a href="BoardInput.bo" class="btn btn-success btn-sm">글쓰기</a></c:if></td>  <!-- 세션 들어가서 준회원이면 안보이게 준회원은 읽을 수만 있게 -->
   		<td class="text-right">
   			<select name="pageSize" id="pageSize" onchange="pageSizeCheck()">  <!-- ajax로 할 필요 없음 -->
-  				<option ${pageSize==5 ? "selected" : ""}>5</option>
-  				<option ${pageSize==10 ? "selected" : ""}>10</option>
-  				<option ${pageSize==15 ? "selected" : ""}>15</option>
-  				<option ${pageSize==20 ? "selected" : ""}>20</option>
-  				<option ${pageSize==30 ? "selected" : ""}>30</option>
+  				<option ${pVo.pageSize==5 ? "selected" : ""}>5</option>
+  				<option ${pVo.pageSize==10 ? "selected" : ""}>10</option>
+  				<option ${pVo.pageSize==15 ? "selected" : ""}>15</option>
+  				<option ${pVo.pageSize==20 ? "selected" : ""}>20</option>
+  				<option ${pVo.pageSize==30 ? "selected" : ""}>30</option>
   			</select>
   		</td>
   	</tr>
@@ -70,7 +70,7 @@
 		    <tr>
 		      <td>${vo.idx}</td>
 		      <td class="text-left">
-		        <a href="BoardContent.bo?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a>  <!-- 지금까지 idx만 넘겼지만, 페이지 수, 페이지 사이즈, 검색필드, 검색어 같이 넘겨야함 -->
+		        <a href="BoardContent.bo?idx=${vo.idx}&pag=${pVo.pag}&pageSize=${pVo.pageSize}">${vo.title}</a>  <!-- 지금까지 idx만 넘겼지만, 페이지 수, 페이지 사이즈, 검색필드, 검색어 같이 넘겨야함 -->
 		        <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>  
 		      </td>
 		      <td>${vo.nickName}</td>
@@ -89,14 +89,14 @@
   <!-- 블록페이지 시작 -->  <!-- 0블록: 1/2/3 -->
 	<div class="text-center">
 		<ul class="pagination justify-content-center" style="margin:20px 0">
-			<c:if test="${pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pag=1&pageSize=${pageSize}">첫페이지</a></li></c:if>
-			<c:if test="${curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pag=${(curBlock*blockSize+1)-blockSize}&pageSize=${pageSize}">이전블록</a></li></c:if>  <!-- (curBlock-1)*blockSize +1 -->
-			<c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize)+blockSize}" varStatus="st">  <!-- 처음이니까 curBlock => 0블록 -->
-				<c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="${ctp}/BoardList.bo?pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
-				<c:if test="${i <= totPage && i != pag}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pag=${i}&pageSize=${pageSize}">${i}</a></li></c:if>
+			<c:if test="${pVo.pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pag=1&pageSize=${pVo.pageSize}">첫페이지</a></li></c:if>
+			<c:if test="${pVo.curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pag=${(pVo.curBlock*pVo.blockSize+1)-pVo.blockSize}&pageSize=${pVo.pageSize}">이전블록</a></li></c:if>  <!-- (curBlock-1)*blockSize +1 -->
+			<c:forEach var="i" begin="${(pVo.curBlock*pVo.blockSize)+1}" end="${(pVo.curBlock*pVo.blockSize)+pVo.blockSize}" varStatus="st">  <!-- 처음이니까 curBlock => 0블록 -->
+				<c:if test="${i <= pVo.totPage && i == pVo.pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="${ctp}/BoardList.bo?pag=${i}&pageSize=${pVo.pageSize}">${i}</a></li></c:if>
+				<c:if test="${i <= pVo.totPage && i != pVo.pag}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pag=${i}&pageSize=${pVo.pageSize}">${i}</a></li></c:if>
 			</c:forEach>
-			<c:if test="${curBlock < lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}">다음블록</a></li></c:if>
-			<c:if test="${pag < totPage}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pag=${totPage}&pageSize=${pageSize}">마지막페이지</a></li></c:if>
+			<c:if test="${pVo.curBlock < pVo.lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pag=${(pVo.curBlock+1)*pVo.blockSize+1}&pageSize=${pVo.pageSize}">다음블록</a></li></c:if>
+			<c:if test="${pVo.pag < pVo.totPage}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/BoardList.bo?pag=${pVo.totPage}&pageSize=${pVo.pageSize}">마지막페이지</a></li></c:if>
 		</ul>
 	</div>
 	<!-- 블록페이지 끝 -->
