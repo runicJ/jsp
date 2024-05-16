@@ -353,12 +353,13 @@
 	    		type : "get",
 	    		data : {mid : mid},
 	    		success:function(res) {
-	    			if(res != 0) {
+	    			if(res != '0') {
 	    				alert("이미 사용중인 아이디입니다. 다시 입력하세요.");
 	    				myform.mid.focus();
 	    			}
 	    			else {
 	    				alert("사용 가능한 아이디입니다.");
+	    				$("#midBtn").attr("disabled",true);
 	    				myform.pwd.focus();
 	    			}
 	    		},
@@ -391,6 +392,7 @@
 	    			}
 	    			else {
 	    				alert("사용 가능한 닉네임입니다.");
+	    				$("#nickNameBtn").attr("disabled",true);
 	    				myform.name.focus();
 	    			}
 	    		},

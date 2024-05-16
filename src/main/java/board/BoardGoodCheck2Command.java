@@ -36,6 +36,7 @@ public class BoardGoodCheck2Command implements BoardInterface {
 //        boolean isLiked = likedAt.contains(idx);
 //        session.setAttribute("isLiked", isLiked);
 		
+		request.setAttribute("sw", sw);
 		response.getWriter().write(sw);  // 메시지 전달을 위해 sw 넣어줌  // AJAX 요청을 통해 서버로부터 데이터를 비동기적으로 수신할 때 사용
 	}
 

@@ -7,3 +7,4 @@
 
 <!-- font Awesome 사용하려면 여기에 넣으면 됨 -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/font-awesome.min.css"> -->
+<script src="https://kit.fontawesome.com/df66332deb.js" crossorigin="anonymous"></script>

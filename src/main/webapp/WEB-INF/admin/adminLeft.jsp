@@ -30,7 +30,7 @@
   <div>
   	<h5>회원관리</h5>
   	<div><a href="MemberList.ad" target="adminContent">회원리스트</a></div>  <!-- mem으로 함부로 하면 안됨(관리자가 보는 회원리스트 => 수정/삭제) // 새로 하는게 나음 // 관리자든 멤버든 하나를 깔끔하게 만들고 고쳐서 사용(왔다갔다 하면서 만들면 힘듬) -->
-  	<div><a href="#" target="adminContent">신고리스트</a></div>
+  	<div><a href="ComplaintList.ad" target="adminContent">신고리스트</a></div>
   </div>
   <hr>  
 </div>

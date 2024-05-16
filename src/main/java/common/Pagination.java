@@ -1,38 +1,58 @@
 package common;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import board.BoardDAO;
+import board.BoardVO;
+import pds.PdsDAO;
+
 public class Pagination {
-	
-	public static PaginationVO pageChange(HttpServletRequest request, int pag, int pageSize, int totRecCnt) {  // 메소드 만들어오기(뭐를 넣을지 정하자, 값을 받아와야함, page, pageSize) => 페이지 vo를 만들어 와야함(기존 것 백업 받고 안전하게 해야함)
-		PaginationVO pVo = new PaginationVO();
+
+	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String section, String part) {  // 항상 쓰는 것이니까 static 붙여줌
+		BoardDAO boardDao = new BoardDAO();
+		PdsDAO pdsDao = new PdsDAO();
+		int totRecCnt = 0;
 		
-		pag = pag == 0 ? 1 : pag;  // 현재 페이지 번호(첫 화면은 무조건 1p)
-		pageSize = pageSize == 0 ? 10 : pageSize;  // 한 화면의 레코드 갯수
+		if(section.equals("board")) {
+			totRecCnt = boardDao.getTotRecCnt();	// 게시판의 전체 레코드수 구하기
+		}
+		else if(section.equals("pds")) {
+			//totRecCnt = pdsDao.getTotRecCnt();  // 자료실의 전체 레코드 수 구하기
+		}
 		
-		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) + 1;  // 총 페이지의 수
-		if(pag > totPage) pag = 1;  // 무조건 1페이지로 가도록
+		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) + 1;
+		if(pag > totPage) pag = 1;
+		int startIndexNo = (pag - 1) * pageSize;
+		int curScrStartNo = totRecCnt - startIndexNo;
 		
-		int startIndexNo = (pag - 1) * pageSize;  // 현재 페이지에서 출력할 '시작 인덱스 번호'
+		int blockSize = 3;
+		int curBlock = (pag - 1) / blockSize;
+		int lastBlock = (totPage - 1) / blockSize;
 		
-		int curScrStartNo = totRecCnt - startIndexNo;  // 현재 화면에 표시될 '시작 실제 게시글 번호'
+		List<BoardVO> vos = null;
+		//List<PdsVO> vos = null;
 		
-		int blockSize = 3;  // 블록의 크기
+		if(section.equals("board")) {
+			vos = boardDao.getBoardList(startIndexNo, pageSize);	// 게시판의 전체 자료 가져오기
+		}
+		else if(section.equals("pds")) {
+			//vos = pdsDao.getPdsList(startIndexNo, pageSize);	// 게시판의 전체 자료 가져오기
+		}
 		
-		int curBlock = (pag - 1) / blockSize;  // 현재 페이지가 속한 블록번호
+		request.setAttribute("vos", vos);
 		
-		int lastBlock = (totPage - 1) / blockSize;  // 마지막 블록
+		request.setAttribute("pag", pag);
+		request.setAttribute("pageSize", pageSize);
+		request.setAttribute("totRecCnt", totRecCnt);
+		request.setAttribute("totPage", totPage);
+		request.setAttribute("curScrStartNo", curScrStartNo);
+		request.setAttribute("blockSize", blockSize);
+		request.setAttribute("curBlock", curBlock);
+		request.setAttribute("lastBlock", lastBlock);
 		
-		pVo.setPag(pag);
-		pVo.setPageSize(pageSize);
-		pVo.setTotRecCnt(totRecCnt);
-		pVo.setTotPage(totPage);
-		pVo.setStartIndexNo(startIndexNo);
-		pVo.setCurScrStartNo(curScrStartNo);
-		pVo.setBlockSize(blockSize);
-		pVo.setCurBlock(curBlock);
-		pVo.setLastBlock(lastBlock);
-		
-		return pVo;
+		request.setAttribute("part", part);
 	}
+
 }

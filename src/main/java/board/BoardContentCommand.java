@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import admin.AdminDAO;
+
 public class BoardContentCommand implements BoardInterface {
 
 	@Override
@@ -30,6 +32,17 @@ public class BoardContentCommand implements BoardInterface {
 		}
 		session.setAttribute("sContentIdx", contentReadNum);  // session에도 저장
 		
+		ArrayList<String> contentGood = (ArrayList<String>) session.getAttribute("sContentGood");
+    if(contentGood == null) contentGood = new ArrayList<String>();
+    String imsiContentGood = "boardGood" + idx;
+    
+    String liked = "1";
+    if(!contentGood.contains(imsiContentGood)) {
+    	liked = "0";
+    }
+
+    request.setAttribute("liked", liked);
+		
 		BoardVO vo = dao.getBoardContent(idx);		
 		request.setAttribute("vo", vo);
 		
@@ -41,6 +54,12 @@ public class BoardContentCommand implements BoardInterface {
 		BoardVO nextVo = dao.getPreNextSearch(idx, "nextVo");  // 같은 메소드 써도 된다는 것
 		request.setAttribute("preVo", preVo);
 		request.setAttribute("nextVo", nextVo);  // vo에 담지 않고 nextVo 변수에 바로 담아서 보냄
+		
+		// 신고글 유무 처리하기
+		AdminDAO adminDAO = new AdminDAO();
+		String call_112 = adminDAO.getCall_112("board", idx);
+		
+		request.setAttribute("call_112", call_112);
 	}
 
 }
