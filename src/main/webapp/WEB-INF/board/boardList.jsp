@@ -57,7 +57,7 @@
   	</tr>
   	<%-- <c:set var="curScrStartNo" value="${curScrStartNo}" /> --%>
   	<c:forEach var="vo" items="${vos}" varStatus="st">
-  		<c:if test="${vo.openSw == 'OK' && (vo.complaint == 'NO' || sNickName == vo.nickName || sLevel == 0)}">
+  		<c:if test="${sLevel == 0 || sNickName == vo.nickName || (vo.openSw == 'OK' && vo.complaint == 'NO')}">
 		    <tr>
 		      <td>${fn:length(vos)-st.index}</td>
 		      <td class="text-left">

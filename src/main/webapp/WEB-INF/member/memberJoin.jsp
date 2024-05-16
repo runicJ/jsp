@@ -403,14 +403,17 @@
     	}
     }
     
-    $(function(){
-    	$("#mid").on("blur", () => {
-    		idCheckSw = 0;
-    	});
-    	
-    	$("#nickName").on("blur", () => {
-    		nickCheckSw = 0;
-    	});
+    $(function() {
+        $("#mid").on("blur", () => {
+          idCheckSw = 0;
+          $("#midBtn").attr("disabled", false);
+        });
+
+        $("#nickName").on("blur", () => {
+          nickCheckSw = 0;
+          $("#nickNameBtn").attr("disabled", false);
+        });
+      });
     	
     });
   </script>

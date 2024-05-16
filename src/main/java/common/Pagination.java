@@ -6,16 +6,23 @@ import javax.servlet.http.HttpServletRequest;
 
 import board.BoardDAO;
 import board.BoardVO;
+import guest.GuestDAO;
+import guest.GuestVO;
 import pds.PdsDAO;
 
 public class Pagination {
 
-	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String section, String part) {  // 항상 쓰는 것이니까 static 붙여줌
+	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String section, String part) {  // 항상 쓰는 것이니까 static 붙여줌  // part는 자료실에서 쓰일 것
+		GuestDAO guestDao = new GuestDAO();
 		BoardDAO boardDao = new BoardDAO();
-		PdsDAO pdsDao = new PdsDAO();
+		//PdsDAO pdsDao = new PdsDAO();
+		
 		int totRecCnt = 0;
 		
-		if(section.equals("board")) {
+		if(section.equals("guest")) {
+			totRecCnt = guestDao.getTotRecCnt();
+		}
+		else if(section.equals("board")) {
 			totRecCnt = boardDao.getTotRecCnt();	// 게시판의 전체 레코드수 구하기
 		}
 		else if(section.equals("pds")) {
@@ -30,18 +37,21 @@ public class Pagination {
 		int blockSize = 3;
 		int curBlock = (pag - 1) / blockSize;
 		int lastBlock = (totPage - 1) / blockSize;
-		
-		List<BoardVO> vos = null;
-		//List<PdsVO> vos = null;
-		
-		if(section.equals("board")) {
-			vos = boardDao.getBoardList(startIndexNo, pageSize);	// 게시판의 전체 자료 가져오기
+
+		List<GuestVO> gVos = null;
+		List<BoardVO> bVos = null;
+		//List<PdsVO> pVos = null;
+		if(section.equals("guest")) {
+			gVos = guestDao.getGuestList(startIndexNo, pageSize);
+			request.setAttribute("vos", gVos);
+		}
+		else if(section.equals("board")) {
+			bVos = boardDao.getBoardList(startIndexNo, pageSize);	// 게시판의 전체 자료 가져오기
+			request.setAttribute("vos", bVos);
 		}
 		else if(section.equals("pds")) {
-			//vos = pdsDao.getPdsList(startIndexNo, pageSize);	// 게시판의 전체 자료 가져오기
+			//pVos = pdsDao.getPdsList(startIndexNo, pageSize);	// 게시판의 전체 자료 가져오기
 		}
-		
-		request.setAttribute("vos", vos);
 		
 		request.setAttribute("pag", pag);
 		request.setAttribute("pageSize", pageSize);
