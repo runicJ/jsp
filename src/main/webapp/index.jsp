@@ -4,3 +4,5 @@
 <script>
 	location.href = "${ctp}/Main";
 </script>
+
+<!-- https://ddururiiiiiii.tistory.com/394 -->

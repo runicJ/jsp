@@ -403,7 +403,19 @@
     	}
     }
     
-    $(function() {
+    // 입력창 누르면 스위치 리셋...?
+    window.onload = function(){
+    	mid.addEventListener('click',function(){
+    		idCheckSw = 0;
+    		$("#midBtn").removeAttr("disabled");
+    	});
+    	nickName.addEventListener('click',function(){
+    		nickCheckSw = 0;
+    		$("#nickNameBtn").removeAttr("disabled");
+    	});
+    }
+    
+/*     $(function() {
         $("#mid").on("blur", () => {
           idCheckSw = 0;
           $("#midBtn").attr("disabled", false);
@@ -415,7 +427,7 @@
         });
       });
     	
-    });
+    }); */
   </script>
 </head>
 <body>

@@ -28,6 +28,18 @@
   			}
   		});
   	}
+  	
+  	function modalCheck(title, content, mid, nickName) {
+  		$("#myModal #modalTitle").text(title);
+  		$("#myModal #modalContent").text(content);
+  		$("#myModal #modalNickName").text(nickName);
+  		$("#myModal #modalIdx").text(idx);
+  	}
+  	
+  	function complaintDelete(idx) {
+  		let ans = confirm("현 게시물을 삭제하시겠습니까?");
+  		
+  	}
   </script>
 </head>
 <body>
@@ -50,13 +62,16 @@
 	  	<tr>
 	  		<td>${complaintCnt}</td>
 	  		<td>${vo.part}</td>
-	  		<td>${vo.title}</td>
+	  		<td>
+	        <a href="#" onclick="modalCheck('${vo.title}','${vo.content}','${vo.mid}','${vo.nickName}')" data-toggle="modal" data-target="#myModal">${vo.title}</a>
+	      </td>
 	  		<td>${vo.nickName}</td>
 	  		<td>${vo.cpMid}</td>
 	  		<td class="text-left">${vo.cpContent}</td>
 	  		<td>${vo.cpDate}</td>
 	  		<td>
-	  			<a href="javascript:complaintCheck('${vo.part}','${vo.partIdx}','${vo.complaint}')">${vo.complaint == 'NO' ? '표시중' : '감추기'}</a>  <!-- 숫자니까 $ { vo.partIdx }에 '' 안붙임 헷갈리면 ''다 붙여주기 -->
+	  			<a href="javascript:complaintCheck('${vo.part}','${vo.partIdx}','${vo.complaint}')" class="badge badge-warning">${vo.complaint == 'NO' ? '표시중' : '<font color=white>감춰짐</font>'}</a><br/>  <!-- 숫자니까 $ { vo.partIdx }에 '' 안붙임 헷갈리면 ''다 붙여주기 -->
+	  			<a href="javascript:complaintDelete(${vo.idx})" class="badge badge-danger">삭제</a>
 	  		</td>
   			<c:set var="complaintCnt" value="${complaintCnt - 1}" />
 	  	</tr>
@@ -65,5 +80,31 @@
   </table>
 </div>
 <p><br/></p>
+<!-- 모달에 회원정보 출력하기 -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          작성자 아이디 : <span id="modalMid"></span><hr/>
+          글제목 : <span id="modalTitle"></span><br/>
+          글내용 : <span id="modalContent"></span><hr/>
+          작성자 닉네임 : <span id="modalNickName"></span><br/>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

@@ -11,10 +11,11 @@ public class BoardVO {
 	private String openSw;
 	private String wDate;
 	private int good;
+	private String complaint;
 	
-	private String hour_diff;  // 게시글 24시간 경과유무 체크하는 변수
-	private String date_diff;
-	private String complaint;	
+	private int hour_diff;  // 게시글 24시간 경과유무 체크하는 변수
+	private int date_diff;  // 게시글을 일자 경과유무 체크변수
+	private int replyCnt;	 // 부모글의 댓글수를 저장하는 변수
 	
 	public int getIdx() {
 		return idx;
@@ -76,23 +77,29 @@ public class BoardVO {
 	public void setGood(int good) {
 		this.good = good;
 	}
-	public String getHour_diff() {
-		return hour_diff;
-	}
-	public void setHour_diff(String hour_diff) {
-		this.hour_diff = hour_diff;
-	}
-	public String getDate_diff() {
-		return date_diff;
-	}
-	public void setDate_diff(String date_diff) {
-		this.date_diff = date_diff;
-	}
 	public String getComplaint() {
 		return complaint;
 	}
 	public void setComplaint(String complaint) {
 		this.complaint = complaint;
+	}
+	public int getHour_diff() {
+		return hour_diff;
+	}
+	public void setHour_diff(int hour_diff) {
+		this.hour_diff = hour_diff;
+	}
+	public int getDate_diff() {
+		return date_diff;
+	}
+	public void setDate_diff(int date_diff) {
+		this.date_diff = date_diff;
+	}
+	public int getReplyCnt() {
+		return replyCnt;
+	}
+	public void setReplyCnt(int replyCnt) {
+		this.replyCnt = replyCnt;
 	}
 	
 	@Override

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import admin.AdminInterface;
 import guest.GuestDAO;
@@ -15,6 +16,12 @@ public class GuestListCommand implements AdminInterface {
 
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		int level = (int) session.getAttribute("sLevel");
+		String contentsShow = "";
+		if(level == 0) contentsShow = "adminOK";
+		else contentsShow = (String) session.getAttribute("sMid");
+		
 		GuestDAO dao = new GuestDAO();  // 페이징 처리 전에 DAO를 항상 올리고 시작해야 한다.
 		
 		// 아래 값들을 나중엔 vo로 묶을 것
@@ -26,7 +33,7 @@ public class GuestListCommand implements AdminInterface {
 		int pageSize = request.getParameter("pageSize")==null ? 5 : Integer.parseInt(request.getParameter("pageSize"));  // 3은 기본페이지
 		
 		// 3. 총 레코드 건수를 구한다.(sql명령어 중 count함수 이용)
-		int totRecCnt = dao.getTotRecCnt();
+		int totRecCnt = dao.getTotRecCnt(contentsShow,"","");
 		
 		// 4. 총 페이지 건수를 구한다.
 		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) + 1;  // (totRecCnt/pageSize) => 나누고 값을 정수로
@@ -50,7 +57,7 @@ public class GuestListCommand implements AdminInterface {
 		int lastBlock = (totPage - 1) / blockSize;
 
 		// 한 페이지에 표시할 건수만(pageSize만큼)을 DAO에서 가져온다.
-		ArrayList<GuestVO> vos = dao.getGuestList(startIndexNo, pageSize);  // 기계가 알 수 있는건 인덱스번호  // 조건이 없음 다 가져와야 함  // 값이 여러개니까 ArrayList<제너릭은GuestVO> vos
+		ArrayList<GuestVO> vos = dao.getGuestList(startIndexNo, pageSize, contentsShow, "", "");  // 기계가 알 수 있는건 인덱스번호  // 조건이 없음 다 가져와야 함  // 값이 여러개니까 ArrayList<제너릭은GuestVO> vos
 		
 		// 설정(지정)된 페이지의 모든 자료(변수)들을 viewPage로 넘겨줄 준비를 한다.
 		request.setAttribute("pag", pag);

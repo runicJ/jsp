@@ -18,6 +18,9 @@ public class BoardContentCommand implements BoardInterface {
 		int idx = request.getParameter("idx")==null ? 0 : Integer.parseInt(request.getParameter("idx"));
 		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
 		int pageSize = request.getParameter("pageSize")==null ? 1 : Integer.parseInt(request.getParameter("pageSize"));
+		String flag = request.getParameter("flag")==null ? "" : request.getParameter("flag");
+		String search = request.getParameter("search")==null ? "" : request.getParameter("search");
+		String searchString = request.getParameter("searchString")==null ? "" : request.getParameter("searchString");
 		
 		BoardDAO dao = new BoardDAO();
 		
@@ -60,6 +63,12 @@ public class BoardContentCommand implements BoardInterface {
 		String call_112 = adminDAO.getCall_112("board", idx);
 		
 		request.setAttribute("call_112", call_112);
+		request.setAttribute("flag", flag);
+		request.setAttribute("search", search);
+		request.setAttribute("searchString", searchString);
+		
+		// 댓글 처리
+		ArrayList<BoardReplyVO> replyVos = dao.getBoardReply(idx);  // 해당 게시글의 idx를 가져가기
+		request.setAttribute("replyVos", replyVos);
 	}
-
 }

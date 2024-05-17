@@ -110,6 +110,7 @@
   			alert("신고항목을 선택하세요");
   			return false;
   		}
+  		//if($("input[type=radio][id=complaint7]:checked") && $("#complaintTxt").val() == "")
   		if($("input[type=radio]:checked").val() == "기타" && $("#complaintTxt").val() == "") {  // 기타 check되어 있 && 기타 사유칸이 비어 있다면, [id=complaint7] 필요없음
   			alert("기타 사유를 입력해 주세요");
   			return false;
@@ -142,6 +143,62 @@
   			}
   		});
   	}
+  	
+  	// 댓글달기
+  	function replyCheck() {
+  		let content = $("#content").val();
+  		if(content.trim() == "") {
+  			alert("댓글을 입력하세요");
+  			return false;
+  		}
+  		let query = {  // 값이 많으니까 변수에 담자
+  			boardIdx : ${vo.idx},
+  			mid : '${sMid}',
+  			nickName : '${sNickName}',
+  			hostIp : '${pageContext.request.remoteAddr}',
+  			content : content
+  		}
+  		
+  		$.ajax({
+  			url : "BoardReplyInput.bo",
+  			type : "post",
+  			data : query,  // 여기까지가 전송
+  			success:function(res) {  // 여기부터 받은 값
+  				if(res != "0") {
+  					alert("댓글이 입력되었습니다.");
+  					location.reload();  // 부분 댓글 리로드 처리 하기
+  				}
+  				else alert("댓글 입력 실패!");
+  			},
+  			error:function() {
+  				alert("전송 오류!");
+  			}
+  		});
+  	}
+  	
+  	// 댓글 삭제하기
+	  function replyDelete(idx) {
+	  	let ans = confirm("선택하신 댓글을 삭제하시겠습니까?");
+	  	if(!ans) return false;
+	  	
+	  	$.ajax({  // ans면
+	  		url : "BoardReplyDelete.bo",
+	  		type : "post",
+	  		data : {idx : idx},
+	  		success:function(res) {
+	  			if(res != "0") {
+	  				alert("댓글이 삭제되었습니다.");
+	  				location.reload();  // 항시 리로드
+	  			}
+	  			else {
+	  				alert("댓글 삭제 실패");
+	  			}
+	  		},
+	  		error:function() {
+	  			alert("전송오류!");
+	  		}
+	  	});
+	  }
   </script>
 </head>
 <body>
@@ -169,14 +226,15 @@
   		<td colspan="3">${vo.title}</td>
   	</tr>
   	<tr>
-  		<th>글내용=${call_112}=</th>
+  		<th>글내용</th>
   		<td colspan="3" style="height:220px">${fn:replace(vo.content, newLine, "<br/>")}</td>
   	</tr>
   	<tr>
   		<td colspan="4">
   			<div class="row">
   				<div class="col">
-	  				<input type="button" value="돌아가기" onclick="location.href='BoardList.bo?pag=${pag}&pageSize=${pageSize}';" class="btn btn-warning" />  <!-- controller로 넘겼으니까 command에서 값을 받아야함 --> <!-- 왔던 페이지랑 페이지사이즈를 가져가?검색 기능 있으면 검색분류와 검색어까지 같이 보냄 // 단순히 보기만 하면 history.back(), 수정삭제 하면 이걸로 안됨 -->
+	  				<c:if test="${empty flag}"><input type="button" value="돌아가기" onclick="location.href='BoardList.bo?pag=${pag}&pageSize=${pageSize}';" class="btn btn-warning" /></c:if>  <!-- controller로 넘겼으니까 command에서 값을 받아야함 --> <!-- 왔던 페이지랑 페이지사이즈를 가져가?검색 기능 있으면 검색분류와 검색어까지 같이 보냄 // 단순히 보기만 하면 history.back(), 수정삭제 하면 이걸로 안됨 // list에서 온거면 flag 값 없으니 그냥 비었는지 확인 -->
+	  				<c:if test="${!empty flag}"><input type="button" value="돌아가기" onclick="location.href='BoardSearchList.bo?pag=${pag}&pageSize=${pageSize}&search=${search}&searchString=${searchString}';" class="btn btn-warning" /></c:if>
 		  		</div>
 		  		<div class="col text-center">
 	  				<a href="javascript:goodCheck()"> ❤ </a> ${vo.good} /
@@ -218,8 +276,53 @@
   </table>
 </div>
 <p><br/></p>
+<!-- 댓글 처리(리스트/입력) - 재사용 가능하도록 바깥으로 뺌 -->
+<div class="container">
+	<!-- 댓글 리스트 보여주기 -->
+	<table class="table table-hover text-center">
+		<tr>
+			<th>작성자</th>
+			<th>댓글내용</th>
+			<th>댓글작성일</th>
+			<th>접속IP</th>
+		</tr>
+		<c:forEach var="replyVo" items="${replyVos}" varStatus="st">
+			<tr>
+				<td>
+					${replyVo.nickName}
+					<c:if test="${sMid == replyVo.mid || sLevel == 0}">
+						(<a href="javascript:replyDelete(${replyVo.idx})" title="댓글삭제"><i class="fa-solid fa-xmark"></i></a>)  <!-- 진짜 지울 것인지 거듭 물어봄 => js쓰라는 말 // title 마우스 올리면 뜨는 문구 -->
+					</c:if>
+				</td>
+				<td class="text-left">${fn:replace(replyVo.content,newLine,"<br>")}</td>  <!-- textarea가 아니라 브라우저에 출력하는 것이기 때문에 엔터키 처리를 해야함 newLine 엔터값(위에 set함) -->
+				<td>${fn:substring(replyVo.wDate,0,10)}</td>
+				<td>${replyVo.hostIp}</td>
+			</tr>
+		</c:forEach>
+		<tr><td colspan="4" class="m-0 p-0"></td></tr>
+	</table>
+	
+	<!-- 댓글 입력창 -->
+	<form name="replyForm">
+		<table class="table table-center">
+			<tr>
+				<td style="width:85%" class="text-left">
+					댓글내용 : 
+					<textarea rows="4" name="content" id="content" class="form-control"></textarea>
+				</td>
+				<td style="width:15%">
+					<br>
+					<p>작성자 : ${sNickName}</p>
+					<p><input type="button" value="댓글입력" onclick="replyCheck()" class="btn btn-info btn-sm"></p>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<br>
+</div>
+<!-- 댓글 처리 -->
 
-	<!-- 신고하기 폼 모달창 -->
+<!-- 신고하기 폼 모달창 -->
   <div class="modal fade" id="myModal">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
