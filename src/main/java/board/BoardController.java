@@ -77,6 +77,11 @@ public class BoardController extends HttpServlet {  // 4
 			command.excute(request, response);
 			return;
 		}
+		else if(com.equals("/BoardGoodCheckToggle")) {  // 세션처리(중복불허)
+			command = new BoardGoodCheckToggleCommand();
+			command.excute(request, response);
+			return;
+		}
 		else if(com.equals("/BoardGoodCheckPlusMinus")) {
 			command = new BoardGoodCheckPlusMinusCommand();
 			command.excute(request, response);

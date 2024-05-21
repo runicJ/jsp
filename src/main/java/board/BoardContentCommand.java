@@ -43,9 +43,18 @@ public class BoardContentCommand implements BoardInterface {
     if(!contentGood.contains(imsiContentGood)) {
     	liked = "0";
     }
-
     request.setAttribute("liked", liked);
-		
+    
+    ArrayList<String> contentLike = (ArrayList<String>) session.getAttribute("sContentLike");
+    if(contentLike == null) contentLike = new ArrayList<String>();
+    String imsiContentLike = "boardLike" + idx;
+    
+    String like = "1";
+    if(!contentLike.contains(imsiContentLike)) {
+        like = "0";
+    }
+    request.setAttribute("like", like);
+
 		BoardVO vo = dao.getBoardContent(idx);		
 		request.setAttribute("vo", vo);
 		

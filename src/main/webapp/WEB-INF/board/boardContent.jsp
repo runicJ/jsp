@@ -15,9 +15,6 @@
   		text-align: center;
   		background-color: #eee;
   	}
-  	.liked {
-    	color: red;
-		}
   </style>
   <script>
   	'use strict';
@@ -61,6 +58,21 @@
     		}
     	});
     }
+    
+  	// 좋아요 토글 처리
+  	function goodCheckToggle() {
+      $.ajax({
+          url  : "BoardGoodCheckToggle.bo",
+          type : "post",
+          data : {idx : ${vo.idx}},
+          success:function(res) {                
+            location.reload();
+          },
+          error : function() {
+						alert("전송오류!");
+          }
+      });    
+  	}
 
   	// 좋아요(따봉)수 증가 처리(중복허용)
   	function goodCheckPlus() {
@@ -252,8 +264,9 @@
 	  				<!-- <a href="javascript:goodCheck2()"><font color="blue" size="5">♥</font></a> ${vo.good} -->
 	  				<%-- <a href="javascript:goodCheck2()" id="liked"><font size="6"> ♥ </font></a> ${vo.good} / --%>
 	  				<!-- <i class="fa-regular fa-heart"></i><i class="fa-solid fa-heart"></i> -->
-	  				<a href="javascript:goodCheck2()"><font color="red" size="5">${liked == "1" ? '♥' : '♡'}</font></a> ${vo.good}
+	  				<a href="javascript:goodCheck2()"><font color="red" size="5">${liked == "1" ? '♥' : '♡'}</font></a> ${vo.good} /
 	  				<%-- <a href="javascript:goodCheck2()" id="liked"><font size="5"> ♥ </font></a> ${vo.good} / --%>
+	  				<a href="javascript:goodCheckToggle()"><font color="red" size="5">${like == "1" ? '♥' : '♡'}</font></a>
 	  			</div>
 	  			<div class="col text-right">
 			  		<c:if test="${sNickName == vo.nickName || sLevel == 0}">
@@ -384,13 +397,13 @@
         <!-- Modal body -->
         <div class="modal-body">
           <form name="modalForm BoardReplyEdit" method="post" action="BoardReplyEdit.bo">
-                 <textarea rows="4" name="modalContent" id="modalContent" class="form-control"></textarea>
+              <textarea rows="4" name="modalContent" id="modalContent" class="form-control"></textarea>
               <input type="hidden" name="modalIdx" id="modalIdx" /> 
               <input type="hidden" name="boardIdx" id="boardIdx" /> 
               <input type="hidden" name="pag" id="pag" /> 
               <input type="hidden" name="pagSize" id="pagSize" /> 
               <input type="submit" value="수정하기" class="btn btn-success mr-2"/>
-                    </form> 
+          </form> 
         </div>
         
         <!-- Modal footer -->
