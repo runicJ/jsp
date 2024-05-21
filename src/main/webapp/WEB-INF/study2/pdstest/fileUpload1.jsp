@@ -13,8 +13,8 @@
     
     function fCheck() {
     	let fName = document.getElementById("file").value;
-    	let maxSize = 1024 * 1024 * 10;	// 기본 단위 : Byte,   1024 * 1024 * 10 = 10MByte 허용
-    	let ext = fName.substring(fName.lastIndexOf(".")+1).toLowerCase();
+    	let maxSize = 1024 * 1024 * 10;	// 기본 단위 : Byte,   1024 * 1024 * 10 = 10MByte 허용  // 1의 10승 * 1의 10승 = 1Mb(1024Byte)
+    	let ext = fName.substring(fName.lastIndexOf(".")+1).toLowerCase();  // 확장자 체크
     	
     	if(fName.trim() == "") {
     		alert("업로드할 파일을 선택하세요");
@@ -31,18 +31,19 @@
     	}
     	else {
     		myform.submit();
+    		// alert("전송합니다.");
     	}
     	
     }
     
-    // 선택된 그림 미리보기
-    function imgCheck(e) {
+    // 선택된 그림 미리보기(여러개 넘김=>배열)
+    function imgCheck(e) {  // 뭔가 들어와 있으면 참
     	if(e.files && e.files[0]) {
     		let reader = new FileReader();
-    		reader.onload = function(e) {
+    		reader.onload = function(e) {  // 익명함수(reader에 의해서 작업이 뭔가 바뀌면 익명함수를 실행해 주세요)
     			document.getElementById("demoImg").src = e.target.result;
     		}
-    		reader.readAsDataURL(e.files[0]);
+    		reader.readAsDataURL(e.files[0]);  // 그림 미리보기(그림파일만 가능)
     	}
     }
   </script>
@@ -56,10 +57,10 @@
   <p>COS라이브러리를 이용한 파일 업로드</p>
   <div>(http://www.servlets.com/cos/)</div>
   <hr/>
-  <form name="myform" method="post" action="FileUpload1Ok.st" enctype="multipart/form-data">
+  <form name="myform" method="post" action="FileUpload1Ok.st" enctype="multipart/form-data">  <!-- 확장자 패턴 // 웹에서 데이터 무조건 multipart/form-data  -->
     파일명 : 
-    <input type="file" name="fName" id="file" onchange="imgCheck(this)" class="form-control-file border mb-2" />
-    <input type="button" value="파일전송" onclick="fCheck()" class="btn btn-success form-control"/>
+    <input type="file" name="fName" id="file" onchange="imgCheck(this)" class="form-control-file border mb-2" />  <!-- 파일태그 value가 있지만 file속성 안의 value는 읽지 않음(js로 처리) (value = "atom.jpg" 넣었었음) -->
+    <input type="button" value="파일전송" onclick="fCheck()" class="btn btn-success form-control"/>  <!-- 프론트에서 체크 // 백에서도 체크 둘다 해야함 -->
     <!-- <input type="submit" value="파일전송" class="btn btn-success form-control"/> -->
     <input type="hidden" name="nickName" value="${sNickName}"/>
   </form>

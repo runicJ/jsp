@@ -58,12 +58,12 @@
   <p>COS라이브러리를 이용한 파일 업로드</p>
   <div>(http://www.servlets.com/cos/)</div>
   <hr/>
-  <form name="myform" method="post" action="FileUpload4Ok.st" enctype="multipart/form-data">
+  <form name="myform" method="post" action="FileUpload4Ok.st" enctype="multipart/form-data">  <!-- 확장자 패턴 // 웹에서 데이터 무조건 multipart/form-data  -->
     파일명 : 
     <div>
-    	<input type="file" name="fName" id="file" multiple class="form-control-file border mb-2" />
+    	<input type="file" name="fName" id="file" multiple class="form-control-file border mb-2" />  <!-- 다중 박스가 필요없어짐 -->
     </div>
-    <input type="button" value="파일전송" onclick="fCheck()" class="btn btn-success form-control"/>
+    <input type="button" value="파일전송" onclick="fCheck()" class="btn btn-success form-control"/>  <!-- 프론트에서 체크 // 백에서도 체크 둘다 해야함 -->
     <input type="hidden" name="nickName" value="${sNickName}"/>
     <input type="hidden" name="fNames" id="fNames"/>  <!-- hidden으로 추가 -->
   </form>

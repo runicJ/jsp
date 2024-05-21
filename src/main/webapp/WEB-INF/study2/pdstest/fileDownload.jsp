@@ -109,10 +109,10 @@
   </div>
   <hr/>
   <form name="myform">
-	  <c:forEach var="file" items="${files}" varStatus="st">
+	  <c:forEach var="file" items="${files}" varStatus="st">  <!-- 향상된 for문과 같은 forEach -->
 	    <input type="checkbox" name="fileFlag" id="fileFlag${st.index}" value="${file}"/>
-	    ${st.count} : <a href="${ctp}/images/pdstest/${file}" download="${file}">${file}</a>
-	    <input type="button" value="삭제" onclick="fileDelete('${file}')" class="btn btn-danger btn-sm"/>
+	    ${st.count} : <a href="${ctp}/images/pdstest/${file}" download="${file}">${file}</a>  <!-- 절대경로 // download html 프론트 명령-->
+	    <input type="button" value="삭제" onclick="fileDelete('${file}')" class="btn btn-danger btn-sm"/>  <!-- file명 같이 넘김 el 문자니까 ''로 -->
 	    <input type="button" value="자바다운로드" onclick="location.href='JavaFileDownload.st?file=${file}';" class="btn btn-secondary" />  <!-- 바로 보냄 처리하고 ajax처럼 끝내버러(메시지처리 해도됨) --><!-- 쿼리스트링 방식으로 위에 넘어온 file명 같이 넘김 -->
 	    <br/>
 	    <c:set var="fNameArr" value="${fn:split(file,'.')}"/>

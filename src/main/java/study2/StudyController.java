@@ -39,7 +39,7 @@ public class StudyController extends HttpServlet {
 		com = com.substring(com.lastIndexOf("/")+1, com.lastIndexOf("."));  // 집중화 끝
 		
 		// 인증....처리.....
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();  // 세션을 열음
 		int level = session.getAttribute("sLevel")==null ? 999 : (int) session.getAttribute("sLevel");
 		
 		if(level > 4) {

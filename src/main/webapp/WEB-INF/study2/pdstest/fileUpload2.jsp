@@ -15,10 +15,10 @@
     	let fName1 = document.getElementById("file1").value;
     	let fName2 = document.getElementById("file2").value;
     	let fName3 = document.getElementById("file3").value;
-    	let ext1 = fName1.substring(fName1.lastIndexOf(".")+1).toLowerCase();
+    	let ext1 = fName1.substring(fName1.lastIndexOf(".")+1).toLowerCase();  // 확장자 체크
     	let ext2 = fName2.substring(fName2.lastIndexOf(".")+1).toLowerCase();
     	let ext3 = fName3.substring(fName3.lastIndexOf(".")+1).toLowerCase();
-    	let maxSize = 1024 * 1024 * 10;	// 기본 단위 : Byte,   1024 * 1024 * 10 = 10MByte 허용
+    	let maxSize = 1024 * 1024 * 10;	// 기본 단위 : Byte,   1024 * 1024 * 10 = 10MByte 허용  // 1의 10승 * 1의 10승 = 1Mb(1024Byte)
     	
     	if(fName1.trim() == "" || fName2.trim() == "" || fName3.trim() == "") {
     		alert("업로드할 파일을 선택하세요");
@@ -43,6 +43,7 @@
     	}
     	else {
     		myform.submit();
+    		// alert("전송합니다.");
     	}
     	
     }
@@ -57,12 +58,12 @@
   <p>COS라이브러리를 이용한 파일 업로드</p>
   <div>(http://www.servlets.com/cos/)</div>
   <hr/>
-  <form name="myform" method="post" action="FileUpload2Ok.st" enctype="multipart/form-data">
+  <form name="myform" method="post" action="FileUpload2Ok.st" enctype="multipart/form-data">  <!-- 확장자 패턴 // 웹에서 데이터 무조건 multipart/form-data  -->
     파일명 : 
-    <input type="file" name="fName1" id="file1" class="form-control-file border mb-2" />
+    <input type="file" name="fName1" id="file1" class="form-control-file border mb-2" />  <!-- 파일태그 value가 있지만 file속성 안의 value는 읽지 않음(js로 처리) (value = "atom.jpg" 넣었었음) -->
     <input type="file" name="fName2" id="file2" class="form-control-file border mb-2" />
     <input type="file" name="fName3" id="file3" class="form-control-file border mb-2" />
-    <input type="button" value="파일전송" onclick="fCheck()" class="btn btn-success form-control"/>
+    <input type="button" value="파일전송" onclick="fCheck()" class="btn btn-success form-control"/>  <!-- 프론트에서 체크 // 백에서도 체크 둘다 해야함 -->
     <!-- <input type="submit" value="파일전송" class="btn btn-success form-control"/> -->
     <input type="hidden" name="nickName" value="${sNickName}"/>
   </form>
