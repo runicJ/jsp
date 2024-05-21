@@ -9,13 +9,14 @@ import board.BoardVO;
 import guest.GuestDAO;
 import guest.GuestVO;
 import pds.PdsDAO;
+import pds.PdsVO;
 
 public class Pagination {
 
 	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String contentsShow, String section, String part) {  // 관리자는 adminOK 아니면 일반사용자(contentShow) // 항상 쓰는 것이니까 static 붙여줌  // part는 자료실에서 쓰일 것
 		GuestDAO guestDao = new GuestDAO();
 		BoardDAO boardDao = new BoardDAO();
-		//PdsDAO pdsDao = new PdsDAO();
+		PdsDAO pdsDao = new PdsDAO();
 		
 		// part의 값이 넘어올 경우는 search/searchString 의 값이 넘어올 경우와, _ 가 있다.  // 자료실 배울때 _ 채움
 		String search = "", searchString = "";  // 선언
@@ -29,6 +30,7 @@ public class Pagination {
 				searchString = part.split("/")[1];
 			}
 		}
+		// pds는 part가 직접 넘어옴
 		
 		int totRecCnt = 0;
 		
@@ -49,7 +51,7 @@ public class Pagination {
 			}
 		}
 		else if(section.equals("pds")) {
-			//totRecCnt = pdsDao.getTotRecCnt();  // 자료실의 전체 레코드 수 구하기
+			totRecCnt = pdsDao.getTotRecCnt(part);  // 자료실의 전체 레코드 수 구하기
 		}
 		
 		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) + 1;
@@ -63,18 +65,17 @@ public class Pagination {
 
 		List<GuestVO> gVos = null;
 		List<BoardVO> bVos = null;
-		//List<PdsVO> pVos = null;
-//		if(section.equals("guest")) {
-//			if(part == null || part.equals("")) {
-//				gVos = guestDao.getGuestList(startIndexNo, pageSize contentsShow, "", "");	 // null 보단 공백으로 // 게시판의 전체 자료 가져오기
-//			}
-//			else {
-////				search = part.split("/")[0];
-////				searchString = part.split("/")[1];
-//				gVos = guestDao.getGuestList(startIndexNo, pageSize contentsShow, search, searchString);
-//			}
-//			request.setAttribute("vos", gVos);
-//		}
+		List<PdsVO> pVos = null;
+		
+		if(section.equals("guest")) {
+			if(part == null || part.equals("")) {
+				gVos = guestDao.getGuestList(startIndexNo, pageSize, contentsShow, "", "");	 // null 보단 공백으로 // 게시판의 전체 자료 가져오기
+			}
+			else {
+				gVos = guestDao.getGuestList(startIndexNo, pageSize, contentsShow, search, searchString);
+			}
+			request.setAttribute("vos", gVos);
+		}
 		if(section.equals("board")) {
 			if(part == null || part.equals("")) {
 				bVos = boardDao.getBoardList(startIndexNo, pageSize, contentsShow, "", "");	 // null 보단 공백으로 // 게시판의 전체 자료 가져오기
@@ -86,8 +87,9 @@ public class Pagination {
 			}
 			request.setAttribute("vos", bVos);
 		}
-		else if(section.equals("pds")) {
-			//pVos = pdsDao.getPdsList(startIndexNo, pageSize, contentShow);	// 게시판의 전체 자료 가져오기
+		if(section.equals("pds")) {
+			pVos = pdsDao.getPdsList(startIndexNo, pageSize, part);	// 게시판의 전체 자료 가져오기
+			request.setAttribute("vos", pVos);
 		}
 		
 		request.setAttribute("pag", pag);
@@ -99,7 +101,7 @@ public class Pagination {
 		request.setAttribute("curBlock", curBlock);
 		request.setAttribute("lastBlock", lastBlock);
 		
-		if(part != null && !part.equals("")) {
+		if(section.equals("board") && part != null && !part.equals("")) {
 			String searchTitle = "";
 			if(search.equals("title")) searchTitle = "글제목";
 			else if(search.equals("nickName")) searchTitle = "작성자";
@@ -109,6 +111,9 @@ public class Pagination {
 			request.setAttribute("searchTitle", searchTitle);
 			request.setAttribute("searchString", searchString);
 			request.setAttribute("searchCount", totRecCnt);
+		}
+		else if(section.equals("pds")) {
+			request.setAttribute("part", part);
 		}
 	}
 

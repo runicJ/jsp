@@ -25,7 +25,7 @@
     </c:if>
     <c:if test="${level <= 4 && level > 1 || level == 0}">  <!-- else if가 없기 때문에 이렇게 쓰는거고, 99때문에 앞에 <=4 작성 -->
       <li class="nav-item">
-        <a class="nav-link" href="#">PDS</a>  <!-- posting data system 자료실 -->
+        <a class="nav-link" href="PdsList.pds">PDS</a>  <!-- posting data system 자료실 -->
       </li>    
       <li class="nav-item">
         <!-- <a class="nav-link" href="study.jsp">Study</a> -->
@@ -70,6 +70,7 @@
 			      <a class="dropdown-item" href="${ctp}/study/database/login.jsp">로그인연습</a>
 			      <a class="dropdown-item" href="${ctp}/Modal1.st">모달연습1</a>
 			      <a class="dropdown-item" href="${ctp}/Modal2.st">모달연습2</a>
+			      <a class="dropdown-item" href="FileUpload.st">파일업로드</a>
 			    </div>
   			</div>
       </li>

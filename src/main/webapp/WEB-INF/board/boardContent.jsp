@@ -199,6 +199,15 @@
 	  		}
 	  	});
 	  }
+  	
+    // 댓글 수정하기
+    function replyEdit(modalIdx, content, boardIdx, pag, pagSize) {
+      $("#myModal2 #modalIdx").val(modalIdx);
+      $("#myModal2 #modalContent").val(content);
+      $("#myModal2 #boardIdx").val(boardIdx);
+      $("#myModal2 #pag").val(pag);
+      $("#myModal2 #pagSize").val(pagSize);
+  	}
   </script>
 </head>
 <body>
@@ -289,10 +298,11 @@
 		<c:forEach var="replyVo" items="${replyVos}" varStatus="st">
 			<tr>
 				<td>
-					${replyVo.nickName}
 					<c:if test="${sMid == replyVo.mid || sLevel == 0}">
 						(<a href="javascript:replyDelete(${replyVo.idx})" title="댓글삭제"><i class="fa-solid fa-xmark"></i></a>)  <!-- 진짜 지울 것인지 거듭 물어봄 => js쓰라는 말 // title 마우스 올리면 뜨는 문구 -->
+						<c:if test="${sNickName == replyVo.nickName}"><a href="#" onclick="replyEdit('${replyVo.idx}','${fn:replace(replyVo.content, newLine, '<br/>')}','${vo.idx}','${pag}','${pageSize}')" data-toggle="modal" data-target="#myModal2"><i class="fa-solid fa-pen-to-square"></i></a></c:if>
 					</c:if>
+          ${replyVo.nickName}
 				</td>
 				<td class="text-left">${fn:replace(replyVo.content,newLine,"<br>")}</td>  <!-- textarea가 아니라 브라우저에 출력하는 것이기 때문에 엔터키 처리를 해야함 newLine 엔터값(위에 set함) -->
 				<td>${fn:substring(replyVo.wDate,0,10)}</td>
@@ -349,6 +359,38 @@
         		<hr>
         		<input type="button" value="확인" onclick="complaintCheck()" class="btn btn-danger from-control" />
         	</form>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+<!-- 댓글 수정 폼 모달창 -->
+  <div class="modal fade" id="myModal2">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">댓글 수정창</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form name="modalForm BoardReplyEdit" method="post" action="BoardReplyEdit.bo">
+                 <textarea rows="4" name="modalContent" id="modalContent" class="form-control"></textarea>
+              <input type="hidden" name="modalIdx" id="modalIdx" /> 
+              <input type="hidden" name="boardIdx" id="boardIdx" /> 
+              <input type="hidden" name="pag" id="pag" /> 
+              <input type="hidden" name="pagSize" id="pagSize" /> 
+              <input type="submit" value="수정하기" class="btn btn-success mr-2"/>
+                    </form> 
         </div>
         
         <!-- Modal footer -->

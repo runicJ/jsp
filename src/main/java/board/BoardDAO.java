@@ -402,4 +402,21 @@ public class BoardDAO {
 		}
 		return res;
 	}
+
+  // 댓글 수정처리 
+  public int setBoardReplyEdit(BoardReplyVO vo) {
+      int res = 0;
+      try {
+          sql = "update boardreply set content=?, wDate=now() where idx = ?";
+          pstmt = conn.prepareStatement(sql);
+          pstmt.setString(1, vo.getContent());
+          pstmt.setInt(2, vo.getIdx());
+          res = pstmt.executeUpdate();
+      } catch (SQLException e) {
+          System.out.println("SQL 오류 : " + e.getMessage());
+      } finally {
+          pstmtClose();            
+      }
+      return res;
+  }
 }

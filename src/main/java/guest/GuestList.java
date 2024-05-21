@@ -17,17 +17,12 @@ import common.Pagination;
 public class GuestList extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		int level = (int) session.getAttribute("sLevel");
-		String contentsShow = "";
-		if(level == 0) contentsShow = "adminOK";
-		else contentsShow = (String) session.getAttribute("sMid");
 		
 		// 페이징 처리 시작
 		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
 		int pageSize = request.getParameter("pageSize")==null ? 5 : Integer.parseInt(request.getParameter("pageSize"));
 		
-		Pagination.pageChange(request, pag, pageSize, contentsShow, "guest", "");
+		Pagination.pageChange(request, pag, pageSize, "", "guest", "");
 		  	
   	String viewPage = "/guest/guestList.jsp";
   	RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

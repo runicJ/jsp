@@ -97,7 +97,12 @@ public class BoardController extends HttpServlet {  // 4
 			command.excute(request, response);
 			return;
 		}
-		
+	  else if(com.equals("/BoardReplyEdit")) {
+       command = new BoardReplyEditCommand();
+       command.excute(request, response);
+       viewPage = "/include/message.jsp";
+	  }
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}
