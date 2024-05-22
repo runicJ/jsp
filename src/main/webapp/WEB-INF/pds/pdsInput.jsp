@@ -30,14 +30,14 @@
     	let fileSize = 0;
     	for(let i=1; i<=cnt; i++) {
     		let imsiName = 'fName' + i;  // id 첫번째 것
-    		if(isNaN(document.getElementById(imsiName))) {  // isNaN 숫자냐 값이 있는가
+    		if(isNaN(document.getElementById(imsiName))) {  // isNaN 숫자가 아니냐? 즉 문자냐? 문자면 값을 가져와서 밑에 누적하고 있음
     			let fName = document.getElementById(imsiName).value;
     			if(fName != "") {
     				fileSize += document.getElementById(imsiName).files[0].size;
 			    	let ext = fName.substring(fName.lastIndexOf(".")+1).toLowerCase();
 			    	if(ext != 'jpg' && ext != 'gif' && ext != 'png' && ext != 'zip' && ext != 'hwp' && ext != 'ppt' && ext != 'pptx' && ext != 'doc' && ext != 'pdf' && ext != 'xlsx' && ext != 'txt') {
 			    		alert("업로드 가능한 파일은 'jpg/gif/png/zip/hwp/ppt/pptx/doc/pdf/xlsx/txt'만 가능합니다.");
-			    		return false;
+			    		return false;  // 확장자가 하나라도 안맞으면 탈주
 			    	}
     			}
     		}
@@ -86,7 +86,7 @@
 <jsp:include page="/include/nav.jsp" />
 <p><br/></p>
 <div class="container">
-  <form name="myform" method="post" action="PdsInputOk.pds" enctype="multipart/form-data">
+  <form name="myform" method="post" action="PdsInputOk.pds" class="was-validated" enctype="multipart/form-data">  <!-- was-validated 필수입력 빨간색 체크 -->
   	<h2 class="text-center">자 료 올 리 기</h2>  <!-- 하나로 해서 배열처리 말고 동적폼 사용 -->
   	<br>
   	<div>
@@ -114,13 +114,13 @@
     </div>
     <div class="mb-2">
     	공개여부 : 
-    	<input type="radio" name="openSw" value="공개" onclick="pwdCheck1()" checked class="mr-3" />공개
-    	<input type="radio" name="openSw" value="비공개" onclick="pwdCheck2()" class="mr-3" />비공개
+    	<input type="radio" name="openSw" value="공개" onclick="pwdCheck1()" checked />공개 &nbsp;&nbsp;
+    	<input type="radio" name="openSw" value="비공개" onclick="pwdCheck2()" />비공개
     	<div id="pwdDemo" style="display:none"><input type="password" name="pwd" id="pwd" value="1234" /></div>
     </div>
     <div>
     	<input type="button" value="자료올리기" onclick="fCheck()" class="btn btn-success" />
-    	<input type="reset" value="다시쓰기" class="btn btn-success" />
+    	<input type="reset" value="다시쓰기" class="btn btn-warning" />
     	<input type="button" value="돌아가기" onclick="location.href='PdsList.pds?part=${part}';" class="btn btn-info" />
     </div>
     <input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}" />

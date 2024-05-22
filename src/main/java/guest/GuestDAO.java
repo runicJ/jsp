@@ -59,7 +59,7 @@ public class GuestDAO {
 	}
 
 	// 방명록 전체 자료 리스트 처리
-	public ArrayList<GuestVO> getGuestList(int startIndexNo, int pageSize, String contentsShow, String search, String searchString) {
+	public ArrayList<GuestVO> getGuestList(int startIndexNo, int pageSize) {
 		ArrayList<GuestVO> vos = new ArrayList<GuestVO>();
 		try {
 			sql = "select * from guest order by idx desc limit ?,?";  // limit 시작인덱스, 개수
@@ -125,7 +125,7 @@ public class GuestDAO {
 	}
 
 	//방명록글의 총 건수구하기
-	public int getTotRecCnt(String contentsShow, String string, String searchString) {
+	public int getTotRecCnt() {
 		int totRecCnt = 0;
 		try {
 			sql = "select count(*) as cnt from guest";

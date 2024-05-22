@@ -65,7 +65,7 @@
           url  : "BoardGoodCheckToggle.bo",
           type : "post",
           data : {idx : ${vo.idx}},
-          success:function(res) {                
+          success:function() {                
             location.reload();
           },
           error : function() {
@@ -262,10 +262,10 @@
 	  				<a href="javascript:goodCheckPlus()"> 💖 </a> &nbsp;
 	  				<a href="javascript:goodCheckMinus()"> 💔 </a> /
 	  				<!-- <a href="javascript:goodCheck2()"><font color="blue" size="5">♥</font></a> ${vo.good} -->
-	  				<%-- <a href="javascript:goodCheck2()" id="liked"><font size="6"> ♥ </font></a> ${vo.good} / --%>
+	  				<!-- <a href="javascript:goodCheck2()" id="liked"><font size="6"> ♥ </font></a> ${vo.good} / -->
 	  				<!-- <i class="fa-regular fa-heart"></i><i class="fa-solid fa-heart"></i> -->
 	  				<a href="javascript:goodCheck2()"><font color="red" size="5">${liked == "1" ? '♥' : '♡'}</font></a> ${vo.good} /
-	  				<%-- <a href="javascript:goodCheck2()" id="liked"><font size="5"> ♥ </font></a> ${vo.good} / --%>
+	  				<!-- <a href="javascript:goodCheck2()" id="liked"><font size="5"> ♥ </font></a> ${vo.good} / -->
 	  				<a href="javascript:goodCheckToggle()"><font color="red" size="5">${like == "1" ? '♥' : '♡'}</font></a>
 	  			</div>
 	  			<div class="col text-right">

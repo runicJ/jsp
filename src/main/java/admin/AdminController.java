@@ -20,6 +20,8 @@ import admin.member.MemberDeleteOkCommand;
 import admin.member.MemberLevelChangeCommand;
 import admin.member.MemberLevelSelectCheckCommand;
 import admin.member.MemberListCommand;
+import admin.review.ReviewDeleteCommand;
+import admin.review.ReviewInputOkCommand;
 
 @SuppressWarnings("serial")  // 필터 통과하고 제일 먼저 들어옴
 @WebServlet("*.ad")  // 확장자 패턴으로
@@ -38,6 +40,16 @@ public class AdminController extends HttpServlet {  // 4
 		
 		if(com.equals("/BoardComplaintInput")) {
 			command = new BoardComplaintInputCommand();
+			command.excute(request, response);
+			return;
+		}
+		else if(com.equals("/ReviewInputOk")) {
+			command = new ReviewInputOkCommand();
+			command.excute(request, response);
+			return;
+		}
+		else if(com.equals("/ReviewDelete")) {
+			command = new ReviewDeleteCommand();
 			command.excute(request, response);
 			return;
 		}
@@ -102,7 +114,7 @@ public class AdminController extends HttpServlet {  // 4
 			command.excute(request, response);
 			return;
 		}
-
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}

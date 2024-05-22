@@ -307,6 +307,7 @@ public class BoardDAO {
 
 	// 좋아요 수 증가/감소 처리
 	public void setBoardGoodCheckPlusMinus(int idx, int goodCnt) {
+		System.out.println("goodCnt : " + goodCnt);
 		try {
 			sql = "update board set good = good + ? where idx = ?";
 			pstmt = conn.prepareStatement(sql);

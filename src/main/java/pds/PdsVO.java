@@ -16,6 +16,9 @@ public class PdsVO {
 	private String hostIp;
 	private String content;
 	
+	private int hour_diff;  // 게시글 24시간 경과유무 체크하는 변수
+	private int date_diff;  // 게시글을 일자 경과유무 체크변수
+	
 	public int getIdx() {
 		return idx;
 	}
@@ -40,11 +43,11 @@ public class PdsVO {
 	public void setfName(String fName) {
 		this.fName = fName;
 	}
-	public String getFSName() {
+	public String getfSName() {
 		return fSName;
 	}
-	public void setFSName(String fsName) {
-		this.fSName = fsName;
+	public void setfSName(String fSName) {
+		this.fSName = fSName;
 	}
 	public int getfSize() {
 		return fSize;
@@ -100,11 +103,25 @@ public class PdsVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public int getHour_diff() {
+		return hour_diff;
+	}
+	public void setHour_diff(int hour_diff) {
+		this.hour_diff = hour_diff;
+	}
+	public int getDate_diff() {
+		return date_diff;
+	}
+	public void setDate_diff(int date_diff) {
+		this.date_diff = date_diff;
+	}
 	
 	@Override
 	public String toString() {
 		return "PdsVO [idx=" + idx + ", mid=" + mid + ", nickName=" + nickName + ", fName=" + fName + ", fSName=" + fSName
 				+ ", fSize=" + fSize + ", title=" + title + ", part=" + part + ", fDate=" + fDate + ", downNum=" + downNum
-				+ ", openSw=" + openSw + ", pwd=" + pwd + ", hostIp=" + hostIp + ", content=" + content + "]";
+				+ ", openSw=" + openSw + ", pwd=" + pwd + ", hostIp=" + hostIp + ", content=" + content + ", hour_diff="
+				+ hour_diff + ", date_diff=" + date_diff + "]";
 	}
+	
 }

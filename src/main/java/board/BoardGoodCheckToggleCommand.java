@@ -18,7 +18,7 @@ public class BoardGoodCheckToggleCommand implements BoardInterface {
             
      HttpSession session = request.getSession();
      ArrayList<String> contentLike = (ArrayList<String>) session.getAttribute("sContentLike");
-
+     if(contentLike == null) contentLike = new ArrayList<String>();  // null 값 체크 해야함 contentLike 객체가 없으면 생성해 주세요
      String imsiContentLike = "boardLike" + idx;
      if(!contentLike.contains(imsiContentLike)) {
          dao.setBoardGoodCheckPlusMinus(idx,+1);

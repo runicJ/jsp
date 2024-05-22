@@ -33,7 +33,7 @@ public class GuestListCommand implements AdminInterface {
 		int pageSize = request.getParameter("pageSize")==null ? 5 : Integer.parseInt(request.getParameter("pageSize"));  // 3은 기본페이지
 		
 		// 3. 총 레코드 건수를 구한다.(sql명령어 중 count함수 이용)
-		int totRecCnt = dao.getTotRecCnt(contentsShow,"","");
+		int totRecCnt = dao.getTotRecCnt();
 		
 		// 4. 총 페이지 건수를 구한다.
 		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) + 1;  // (totRecCnt/pageSize) => 나누고 값을 정수로
@@ -57,7 +57,7 @@ public class GuestListCommand implements AdminInterface {
 		int lastBlock = (totPage - 1) / blockSize;
 
 		// 한 페이지에 표시할 건수만(pageSize만큼)을 DAO에서 가져온다.
-		ArrayList<GuestVO> vos = dao.getGuestList(startIndexNo, pageSize, contentsShow, "", "");  // 기계가 알 수 있는건 인덱스번호  // 조건이 없음 다 가져와야 함  // 값이 여러개니까 ArrayList<제너릭은GuestVO> vos
+		ArrayList<GuestVO> vos = dao.getGuestList(startIndexNo, pageSize);  // 기계가 알 수 있는건 인덱스번호  // 조건이 없음 다 가져와야 함  // 값이 여러개니까 ArrayList<제너릭은GuestVO> vos
 		
 		// 설정(지정)된 페이지의 모든 자료(변수)들을 viewPage로 넘겨줄 준비를 한다.
 		request.setAttribute("pag", pag);

@@ -21,15 +21,15 @@ public class PdsInputOkCommand implements PdsInterface {
 		int maxSize = 1024 * 1024 * 30;
 		String encoding = "UTF-8";
 		
-		MultipartRequest multipartRequest = new MultipartRequest(request, realPath, maxSize, encoding, new DefaultFileRenamePolicy());
+		MultipartRequest multipartRequest = new MultipartRequest(request, realPath, maxSize, encoding, new DefaultFileRenamePolicy());  // 생성과 동시에 업로드 된다.(알아서 넘긴 데이터가 realPath 자리에 알아서 저장이 됨)
 		
-		Enumeration fileNames = multipartRequest.getFileNames();
+		Enumeration fileNames = multipartRequest.getFileNames();  // MultipartRequest 데이터 여러개 열거형으로  // 여러개 올릴 수 있지만 마지막 것만 기억(동적폼으로 해결) => jsp 누적(스프링에서 이렇게 안함)
 		
 		String file = "";
 		String oFileName = "";
 		String fSName = "";
 		
-		while(fileNames.hasMoreElements()) {
+		while(fileNames.hasMoreElements()) {  // 하나씩 꺼내서 값이 있느냐
 			file = (String) fileNames.nextElement();
 			
 			if(multipartRequest.getFilesystemName(file) != null) {
@@ -51,7 +51,7 @@ public class PdsInputOkCommand implements PdsInterface {
 		String hostIp = multipartRequest.getParameter("hostIp")==null ? "" : multipartRequest.getParameter("hostIp");
 		String content = multipartRequest.getParameter("content")==null ? "" : multipartRequest.getParameter("content");
 		
-		// 비밀번호 암호화(SHA256)
+		// 비밀번호 암호화(SHA256) - salt키 적용 처리하지 않음
 		SecurityUtil security = new SecurityUtil();  // 여기서 salt 처리 안했음(프로젝트할때 하나만 넣고 ppt에 넣어놓자)
 		pwd = security.encryptSHA256(pwd);
 		
@@ -60,7 +60,7 @@ public class PdsInputOkCommand implements PdsInterface {
 		vo.setMid(mid);
 		vo.setNickName(nickName);
 		vo.setfName(oFileName);
-		vo.setFSName(fSName);
+		vo.setfSName(fSName);
 		vo.setfSize(fSize);
 		vo.setTitle(title);
 		vo.setPart(part);
