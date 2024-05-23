@@ -18,7 +18,7 @@ public class PdsVO {
 	
 	private int hour_diff;  // 게시글 24시간 경과유무 체크하는 변수
 	private int date_diff;  // 게시글을 일자 경과유무 체크변수
-	
+		
 	public int getIdx() {
 		return idx;
 	}

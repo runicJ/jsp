@@ -61,6 +61,7 @@ public class PdsDAO {
 		pstmtClose();  // 정확히는 if 밖에 써야함
 	}
 
+	//자료실의 전체 레코드 건수
 	public int getTotRecCnt(String part) {
 		int totRecCnt = 0;
 		try {
@@ -176,6 +177,7 @@ public class PdsDAO {
 		}
 	}
 
+  // 자료실 idx로 개별검색처리
 	public PdsVO getPdsIdxSearch(int idx) {
 		PdsVO vo = new PdsVO();
 		try {

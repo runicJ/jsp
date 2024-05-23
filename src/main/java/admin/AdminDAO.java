@@ -167,6 +167,30 @@ public class AdminDAO {
 		}
 		return mCount;
 	}
+	
+	// 각 레벨별 건수 구하기
+	public int getTotRecCnt(int level) {
+		int totRecCnt = 0;
+		try {
+			if(level == 999) {
+				sql = "select count(*) as cnt from member";
+				pstmt = conn.prepareStatement(sql);
+			}
+			else {
+				sql = "select count(*) as cnt  from member where level = ? order by idx desc";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, level);
+			}
+			rs = pstmt.executeQuery();
+			rs.next();
+			totRecCnt = rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();			
+		}
+		return totRecCnt;
+	}
 
 	// 신고내역 저장하기
 	public int setComplaintInput(ComplaintVO vo) {
@@ -210,7 +234,8 @@ public class AdminDAO {
 	public ArrayList<ComplaintVO> getComplaintList() {
 		ArrayList<ComplaintVO> vos = new ArrayList<ComplaintVO>();
 		try {
-			sql = "select date_format(c.cpDate, '%Y-%m-%d %H:%i') as cpDate, c.*, b.title title, b.nickName nickname, b.mid mid, b.complaint complaint from complaint c, board b where c.partIdx = b.idx order by idx desc";
+			sql = "select date_format(c.cpDate, '%Y-%m-%d %H:%i') as cpDate, c.*, b.title title, b.nickName nickname, b.mid mid, b.complaint complaint "
+					+ "from complaint c, board b where c.partIdx = b.idx order by idx desc";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();  // ?가 하나도 없으니까 바로 rs에 담는다
 			
@@ -275,6 +300,7 @@ public class AdminDAO {
 		return res;
 	}
 
+	//리뷰작성 처리하기
 	public int setReviewInputOk(ReviewVO vo) {
 		int res = 0;
 		try {
@@ -299,7 +325,9 @@ public class AdminDAO {
 	public ArrayList<ReviewVO> getReviewSearch(int idx, String part) {
 		ArrayList<ReviewVO> rVos = new ArrayList<ReviewVO>();
 		try {
-			sql = "select * from review where part = ? and partIdx = ? order by idx desc";
+			//sql = "select * from review where part = ? and partIdx = ? order by idx desc";
+			sql = "select * from (select * from review where part = ? and partIdx = ?) as v left join reviewReply r "  // partIdx는 원본글
+					+ "on v.idx = r.reviewIdx order by v.idx desc, r.replyIdx desc";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, part);
 			pstmt.setInt(2, idx);
@@ -316,6 +344,12 @@ public class AdminDAO {
 				vo.setContent(rs.getString("content"));				
 				vo.setrDate(rs.getString("rDate"));
 				
+				vo.setReplyIdx(rs.getInt("replyIdx"));
+				vo.setReplyMid(rs.getString("replyMid"));
+				vo.setReplyNickName(rs.getString("replyNickName"));
+				vo.setReplyRDate(rs.getString("replyRDate"));
+				vo.setReplyContent(rs.getString("replyContent"));
+				
 				rVos.add(vo);
 			}
 		} catch (SQLException e) {
@@ -326,12 +360,32 @@ public class AdminDAO {
 		return rVos;
 	}
 
+	//리뷰 삭제하기
 	public int setReviewDelete(int idx) {
 		int res = 0;
 		try {
 			sql = "delete from review where idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
+
+	//리뷰 댓글 저장하기
+	public int setReviewReplyInputOk(ReviewVO vo) {
+		int res = 0;
+		try {
+			sql = "insert into reviewReply values (default,?,?,?,default,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, vo.getIdx());
+			pstmt.setString(2, vo.getReplyMid());
+			pstmt.setString(3, vo.getReplyNickName());
+			pstmt.setString(4, vo.getReplyContent());
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());

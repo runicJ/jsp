@@ -22,6 +22,7 @@ import admin.member.MemberLevelSelectCheckCommand;
 import admin.member.MemberListCommand;
 import admin.review.ReviewDeleteCommand;
 import admin.review.ReviewInputOkCommand;
+import admin.review.ReviewReplyInputOkCommand;
 
 @SuppressWarnings("serial")  // 필터 통과하고 제일 먼저 들어옴
 @WebServlet("*.ad")  // 확장자 패턴으로
@@ -50,6 +51,11 @@ public class AdminController extends HttpServlet {  // 4
 		}
 		else if(com.equals("/ReviewDelete")) {
 			command = new ReviewDeleteCommand();
+			command.excute(request, response);
+			return;
+		}
+		else if(com.equals("/ReviewReplyInputOk")) {
+			command = new ReviewReplyInputOkCommand();
 			command.excute(request, response);
 			return;
 		}

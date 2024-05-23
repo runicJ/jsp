@@ -113,6 +113,11 @@ public class MemberController extends HttpServlet {  // 4
 			command.excute(request, response);
 			viewPage = "/include/message.jsp";  // 메시지로 보내는게 맞겠죠
 		}
+		else if(com.equals("/MemberChatInput")) {
+			command = new MemberChatInputCommand();
+			command.excute(request, response);
+			return;
+		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

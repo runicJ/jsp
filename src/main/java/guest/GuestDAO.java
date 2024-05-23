@@ -124,7 +124,7 @@ public class GuestDAO {
 		return res;
 	}
 
-	//방명록글의 총 건수구하기
+	// 방명록글의 총 건수구하기
 	public int getTotRecCnt() {
 		int totRecCnt = 0;
 		try {
@@ -141,7 +141,7 @@ public class GuestDAO {
 		return totRecCnt;
 	}
 
-	//로그인한 회원이 방명록에 올린글 리스트 가져오기
+	// 로그인한 회원이 방명록에 올린글 리스트 가져오기
 	public ArrayList<GuestVO> getMemberGuestSearch(String mid, String name, String nickName) {
 		ArrayList<GuestVO> vos = new ArrayList<GuestVO>();
 		try {

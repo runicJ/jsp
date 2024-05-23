@@ -75,6 +75,7 @@
   		});
   	}
   	
+  	// 리뷰 삭제하기
   	function reviewDelete(idx) {
   		let ans = confirm("리뷰를 삭제하시겠습니까?");
   		if(!ans) return false;
@@ -95,12 +96,86 @@
   			}
   		});
   	}
+  	
+  	// 처음 접속 시 '리뷰보기' 버튼을 감추고, '리뷰닫기' 버튼과 '리뷰박스'를 보이게 한다.
+  	//$(document).ready(function(){});  아래와 같음
+  	$(function(){
+  		$("#reviewShowBtn").hide();
+  		$("#reviewHideBtn").show();  		
+  		$("#reviewBox").show();  		
+  	});
+  	
+  	// 리뷰 보이기
+  	function reviewShow() {
+  		$("#reviewShowBtn").hide();
+  		$("#reviewHideBtn").show();  		
+  		$("#reviewBox").show();  		  		
+  	}
+
+  	// 리뷰 감추기
+  	function reviewHide() {
+  		$("#reviewShowBtn").show();
+  		$("#reviewHideBtn").hide();  		
+  		$("#reviewBox").hide();  		
+  	}
+  	
+  	// 리뷰 댓글 달기 폼 보여주기
+  	function reviewReply(idx, nickName, content) {  		
+  		$("#myModal #reviewIdx").val(idx);
+  		$("#myModal #reviewReplyNickName").text(nickName);
+  		$("#myModal #reviewReplyContent").html(content);  // html로 바꾸면 밑에 설정한 엔터키 실제 적용(2번 바꿔야)
+  	}
+  	
+  	// 리뷰 댓글 달기
+  	function reviewReplyCheck() {
+			let replyContent = reviewReplyForm.replyContent.value;  // 입력한 댓글 내용
+			let reviewIdx = reviewReplyForm.reviewIdx.value;
+			
+			if(replyContent.trim() == "") {
+				alert("리뷰 댓글을 입력하세요");
+				return false;
+			}
+			
+			let query = {
+					reviewIdx : reviewIdx,
+					replyMid : '${sMid}',
+					replyNickName : '${sNickName}',
+					replyContent : replyContent,
+			}
+			
+			$.ajax({
+				url : "ReviewReplyInputOk.ad",
+				type : "post",
+				data : query,
+				success:function(res) {
+					if(res != "0") {
+						alert("댓글이 등록되었습니다.");  // 부분리로드 해도 되지만 부분리로드는 내용이 많을때 처리하는 것이 좋음
+						location.reload();
+					}
+					else alert("댓글 등록 실패~~");
+				},
+				error : function() {
+					alert("전송 오류!");
+				}
+			});
+  	}
   </script>
   <style>
   	th {
   		background-color: #eee;
   		width: 15%;
   	}
+  	h6 {
+		  position: fixed;  /* 위치고정 */
+		  right: 1rem;
+		  bottom: -50px;
+		  transition: 0.7s ease;
+		}
+   	.on {  /* 버튼에 관한것 마우스 올리면 */
+		  opacity: 0.8;
+		  cursor: pointer;
+		  bottom: 0;
+		}
   	
   	/* 별점 스타일 설정하기 */
   	#starForm fieldset {
@@ -123,6 +198,10 @@
   	#starForm input[type=radio]:checked ~ label {  /* 체크가 되어있는 곳에서 라벨까지 */
   		text-shadow: 0 0 0 rgba(250, 200, 0, 0.98);
   	}
+  	
+  	#reviewReplyForm {
+      font-size: 11pt;
+    }
   </style>
 </head>
 <body>
@@ -207,23 +286,38 @@
   </div>
   <hr>
   <div id="reviewBox">
+		<c:set var="imsiIdx" value="0" />  <!-- 임시로 변수하나 줌 // 0은 없으니까 값으로 먼저 줌 -->
   	<c:forEach var="vo" items="${rVos}" varStatus="st">
-  		<div class="row">
-  			<div class="col ml-2">
-  				<b>${vo.nickName}</b>
-  				<span style="font-size:11px">${fn:substring(vo.rDate,0,10)}</span>  <!-- font로 하면 맘대로 조절이 안됨 -->
-  				<c:if test="${vo.mid == sMid || sLevel == 0}"><a href="javascript:reviewDelete(${vo.idx})" title="리뷰삭제" class="badge badge-danger">x</a></c:if>
-  			</div>
-  			<div class="col text-right mr-2">
-  				<c:forEach var="i" begin="1" end="${vo.star}" varStatus="iSt">  <!-- 위에 st 사용 inlineSt -->
-  					<font color="gold">★</font>
-  				</c:forEach>
-  				<c:forEach var="i" begin="1" end="${5 - vo.star}" varStatus="iSt">☆</c:forEach>
-  			</div>
-  		</div>
-			<div class="row border m-1 p-2" style="border-radius:5px">
-        ${fn:replace(vo.content, newLine, '<br/>')}
-			</div>
+  		<c:if test="${imsiIdx != vo.idx}">  <!-- 리뷰가 새로운 것이 왔다 => 이때 뿌림 -->
+	  		<div class="row">
+	  			<div class="col ml-2">
+	  				<b>${vo.nickName}</b>
+	  				<span style="font-size:11px">${fn:substring(vo.rDate,0,10)}</span>  <!-- font로 하면 맘대로 조절이 안됨 -->
+	  				<c:if test="${vo.mid == sMid || sLevel == 0}"><a href="javascript:reviewDelete(${vo.idx})" title="리뷰삭제" class="badge badge-danger">x</a></c:if>
+	  				<a href="#" onclick="reviewReply('${vo.idx}','${vo.nickName}','${fn:replace(vo.content,newLine,'<br>')}')" title="댓글달기" data-toggle="modal" data-target="#myModal" class="badge badge-secondary">▤</a>  <!-- 내용 2줄이상이면 enter키 처리해야 보임 / 모달창으로 적용 / onclick이니까 어차피 js처리 -->
+	  			</div>
+	  			<div class="col text-right mr-2">
+	  				<c:forEach var="i" begin="1" end="${vo.star}" varStatus="iSt">  <!-- 위에 st 사용 inlineSt -->
+	  					<font color="gold">★</font>
+	  				</c:forEach>
+	  				<c:forEach var="i" begin="1" end="${5 - vo.star}" varStatus="iSt">☆</c:forEach>
+	  			</div>
+	  		</div>
+				<div class="row border m-1 p-2" style="border-radius:5px">
+	        ${fn:replace(vo.content, newLine, '<br/>')}
+				</div>
+			</c:if>
+			<c:set var="imsiIdx" value="${vo.idx}" />  <!-- vo.idx 리뷰의 idx를 imsi에 넣어줌 -->
+			<c:if test="${!empty vo.replyContent}">  <!-- 댓글이 비어있지 않으면 -->
+				<div class="d-flex text-secondary">
+					<div class="mt-2 ml-3">└─▶ </div>
+					<div class="mt-2 ml-2">${vo.replyNickName}
+						<span style="font-size:11px">${fn:substring(vo.replyRDate,0,10)}</span>  <!-- 한줄로 끝낼거라서 span으로 줌 -->
+						<c:if test="${vo.replyMid == sMid || sLevel == 0}"><a href="javascript:reviewReplyDelete(${vo.replyIdx})" title="댓글삭제" class="badge badge-danger">x</a></c:if>
+						<br>${vo.replyContent}
+					</div>
+				</div>
+			</c:if>
 			<hr>
   	</c:forEach>
   </div>
@@ -244,9 +338,47 @@
 	
 	<!-- 위로가기 버튼 -->
 	<%-- <a href="#topMenu"><img src="${ctp}/images/arrow_top.gif" title="위로 이동" /></a> --%>
-	<h6 id="topBtn" class="text-right mr-3"><img src="${ctp}/images/arrowTop.gif" title="위로 이동" /></h6>
+	<h6 id="topBtn" class="text-right mr-3"><img src="${ctp}/images/arrowTop.gif" title="위로 이동" /></h6>  <!-- 글자로 써도됨 그래서 h6 사용 -->
 </div>
 <p><br/></p>
+
+<!-- 댓글달기를 위한 모달처리 -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">>> 리뷰에 댓글달기</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+        	<form name="reviewReplyForm" class="was-validated">
+						<table class="table table-bordered">
+							<tr>
+								<th style="width:25%;">리뷰 작성자</th>
+								<td style="width:75%;"><span id="reviewReplyNickName"></span></td>
+							</tr>
+							<tr>
+								<th>리뷰내용</th>  <!-- 첫번째 행에 style 적용하면 아래 같이 적용 -->
+								<td><span id="reviewReplyContent"></span></td>
+							</tr>
+						</table>
+						<hr>
+						댓글 작성자 : ${sNickName}<br>
+						댓글 내용 : <textarea rows="3" name="replyContent" id="replyContent" class="form-control" required></textarea>
+						<input type="button" value="리뷰댓글등록" onclick="reviewReplyCheck()" class="btn btn-success form-control"/>
+						<input type="hidden" name="reviewIdx" id="reviewIdx" />
+        	</form>
+        </div>        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>    
+      </div>
+    </div>
+  </div>
+  
 <jsp:include page="/include/footer.jsp" />
 </body>
 </html>

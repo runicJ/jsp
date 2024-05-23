@@ -39,3 +39,34 @@ select * from member2;
 ALTER TABLE member2 AUTO_INCREMENT = 1;
 
 select lastDate, now(), timestampdiff(day, lastDate, now()) as deleteDiff from member2;  /* 날짜비교(시간단위로 비교해줌) 뒤에서 앞을 뺌(now()-lastDate) // dateadd */
+
+/* 실시간 DB채팅 테이블 설계 */
+create table memberChat(
+	idx  int not null auto_increment primary key,
+	mid  varchar(20) not null,
+	chat  varchar(100) not null
+);
+desc memberChat;
+drop table memberChat;
+
+insert into memberChat values(default,'admin','안녕1');
+insert into memberChat values(default,'soso1234','안녕2');
+insert into memberChat values(default,'admin','안녕3');
+insert into memberChat values(default,'hkd1234','안녕4');
+insert into memberChat values(default,'admin','안녕5');
+insert into memberChat values(default,'admin','안녕6');
+insert into memberChat values(default,'hkd1234','안녕7');
+insert into memberChat values(default,'aris1234','안녕8');
+insert into memberChat values(default,'admin','안녕9');
+insert into memberChat values(default,'admin','안녕10');
+insert into memberChat values(default,'hkd1234','안녕11');
+insert into memberChat values(default,'admin','안녕12');
+insert into memberChat values(default,'admin','안녕13');
+insert into memberChat values(default,'aris1234','안녕14');
+insert into memberChat values(default,'admin','안녕15');
+insert into memberChat values(default,'admin','안녕16');
+insert into memberChat values(default,'aris1234','안녕17');
+insert into memberChat values(default,'admin','안녕18');
+
+select * from memberChat order by idx desc limit 15;  /* 화면에 50개만 나오도록 // 이대로 하면 최신문장이 위로 올라옴 */
+select m.* from (select * from memberChat order by idx desc limit 15) m order by idx;

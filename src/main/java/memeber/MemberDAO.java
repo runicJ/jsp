@@ -160,7 +160,7 @@ public class MemberDAO {  // 3
 		return vo;
 	}
 
-	//로그인시에 처리할 내용들을 업데이트 시켜준다.(다시 로그인 해야함)
+	// 로그인시에 처리할 내용들을 업데이트 시켜준다.(다시 로그인 해야함)
 	public void setLoginUpdate(MemberVO vo) {
 		try {
 			sql = "update member2 set point=?, lastDate=now(), visitCnt=visitCnt+1, todayCnt=?, level=? where mid = ?";
@@ -237,6 +237,7 @@ public class MemberDAO {  // 3
 		return res;
 	}
 
+  // 회원 정보 수정처리
 	public int setMemberUpdateOk(MemberVO vo) {
 		int res = 0;
 		try {
@@ -280,6 +281,43 @@ public class MemberDAO {  // 3
 			pstmtClose();
 		}
 		return res;
+	}
+	
+	// 채팅내용 DB에 저장하기
+	public void setMemberChatInputOk(String mid, String chat) {
+		try {
+			sql = "insert into memberChat values(default,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, chat);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+	}
+	
+	// 채팅내용 DB에서 읽어오기
+	public ArrayList<MemberChatVO> getMemberMessage() {
+		ArrayList<MemberChatVO> vos = new ArrayList<MemberChatVO>();
+		try {
+			sql = "select m.* from (select * from memberChat order by idx desc limit 50) m order by idx";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();  // 담아서 보내는 거니까 rs에 담아서
+			while(rs.next()) {  // 하나 이상이니까
+				MemberChatVO vo = new MemberChatVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setChat(rs.getString("chat"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
 	}
 	
 }
