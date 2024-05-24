@@ -27,7 +27,7 @@
       <li class="nav-item">
         <a class="nav-link" href="PdsList.pds">PDS</a>  <!-- posting data system 자료실 -->
       </li>    
-      <li class="nav-item">
+      <li class="nav-item mr-2">
         <!-- <a class="nav-link" href="study.jsp">Study</a> -->
         <div class="dropdown">
 			    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">
@@ -52,7 +52,7 @@
 			    </div>
   			</div>
       </li>
-      <li class="nav-item">
+      <li class="nav-item mr-2">
         <!-- <a class="nav-link" href="study.jsp">Study</a> -->
         <div class="dropdown">
 			    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">Study2</button>
@@ -74,6 +74,15 @@
 			    </div>
   			</div>
       </li>
+      <li class="nav-item mr-2">
+        <div class="dropdown">
+			    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">Study3</button>
+			    <div class="dropdown-menu">
+			      <a class="dropdown-item" href="Calendar1.st">달력연습1</a>
+			      <a class="dropdown-item" href="Calendar2.st">달력연습2</a>
+			    </div>
+  			</div>
+      </li>
 <%-- <%		} %> --%>
 		</c:if>
 		<c:if test="${level <= 4}">
@@ -83,7 +92,7 @@
 			    <div class="dropdown-menu">
 			      <a class="dropdown-item" href="MemberMain.mem">회원메인방</a>  <!-- 확장자 패턴은 경로를 신경안씀 -->
 			      <c:if test="${level <= 4 && level > 1 || level == 0}">
-				      <a class="dropdown-item" href="#">일정관리</a>
+				      <a class="dropdown-item" href="Schedule.sc">일정관리</a>
 				      <a class="dropdown-item" href="#">메시지관리</a>
 				      <a class="dropdown-item" href="MemberList.mem">회원리스트</a>  <!-- 정회원(정보공개한 회원)  -->
 			      </c:if>

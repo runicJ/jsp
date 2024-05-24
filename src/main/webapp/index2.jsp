@@ -33,7 +33,7 @@
 <%@ include file = "../../include/header.jsp" %>
 
 <!-- 메뉴바(Nav) -->
-<%@ include file = "../../include/nav.jsp" %>  <!-- 지시자 : page(속성), include라는 지시자(문서를 포함) // file = "nav.jsp" 이렇게 하면 현재 위치에 없어서 에러 // 상대경로 지정 -->
+<%@ include file = "/include/nav.jsp" %>  <!-- 지시자 : page(속성), include라는 지시자(문서를 포함) // file = "nav.jsp" 이렇게 하면 현재 위치에 없어서 에러 // 상대경로 지정 -->
 
 <div class="container" style="margin-top:30px">
   <div class="row">
