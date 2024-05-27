@@ -10,6 +10,8 @@ import guest.GuestDAO;
 import guest.GuestVO;
 import pds.PdsDAO;
 import pds.PdsVO;
+import webMessage.WebMessageDAO;
+import webMessage.WebMessageVO;
 
 public class Pagination {
 
@@ -18,9 +20,11 @@ public class Pagination {
 		//GuestDAO guestDao = new GuestDAO();
 		BoardDAO boardDao = new BoardDAO();
 		PdsDAO pdsDao = new PdsDAO();
+		WebMessageDAO WmDao = new WebMessageDAO();
 		
 		// part의 값이 넘어올 경우는 search/searchString 의 값이 넘어올 경우와, _ 가 있다.  // 자료실 배울때 _ 채움
-		String search = "", searchString = "";  // 선언
+		String search = "";  // 선언
+		String searchString = "";
 		if(part != null && !part.equals("")) {
 			if(section.equals("board")) {
 				search = part.split("/")[0];
@@ -30,6 +34,10 @@ public class Pagination {
 //				search = part.split("/")[0];
 //				searchString = part.split("/")[1];
 //			}
+			else if(section.equals("wm")) {
+				search = part.split("/")[0];
+				searchString = part.split("/")[1].toString();
+			}
 		}
 		// pds는 part가 직접 넘어옴
 		
@@ -54,6 +62,14 @@ public class Pagination {
 		else if(section.equals("pds")) {
 			totRecCnt = pdsDao.getTotRecCnt(part);  // 자료실의 전체 레코드 수 구하기
 		}
+		else if(section.equals("wm")) {
+			if(part == null || part.equals("")) {
+				totRecCnt = WmDao.getWmTotRecCnt("", "");
+			}
+			else {
+				totRecCnt = WmDao.getWmTotRecCnt(search, searchString);
+			}
+		}
 		
 		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) + 1;
 		if(pag > totPage) pag = 1;
@@ -67,6 +83,7 @@ public class Pagination {
 		List<GuestVO> gVos = null;
 		List<BoardVO> bVos = null;
 		List<PdsVO> pVos = null;
+		List<WebMessageVO> WmVos = null;
 		
 //		if(section.equals("guest")) {
 //			if(part == null || part.equals("")) {
@@ -91,6 +108,10 @@ public class Pagination {
 		else if(section.equals("pds")) {
 			pVos = pdsDao.getPdsList(startIndexNo, pageSize, part);	// 게시판의 전체 자료 가져오기
 			request.setAttribute("vos", pVos);
+		}
+		else if(section.equals("wm")) {
+			WmVos = WmDao.getMessageList(startIndexNo, pageSize, search, searchString);	// 게시판의 전체 자료 가져오기
+			request.setAttribute("vos", WmVos);
 		}
 		
 		request.setAttribute("pag", pag);
