@@ -34,10 +34,10 @@ public class Pagination {
 //				search = part.split("/")[0];
 //				searchString = part.split("/")[1];
 //			}
-			else if(section.equals("wm")) {
-				search = part.split("/")[0];
-				searchString = part.split("/")[1].toString();
-			}
+//			else if(section.equals("wm")) {
+//				search = part.split("/")[0];
+//				searchString = part.split("/")[1].toString();
+//			}
 		}
 		// pds는 part가 직접 넘어옴
 		
@@ -62,14 +62,14 @@ public class Pagination {
 		else if(section.equals("pds")) {
 			totRecCnt = pdsDao.getTotRecCnt(part);  // 자료실의 전체 레코드 수 구하기
 		}
-		else if(section.equals("wm")) {
-			if(part == null || part.equals("")) {
-				totRecCnt = WmDao.getWmTotRecCnt("", "");
-			}
-			else {
-				totRecCnt = WmDao.getWmTotRecCnt(search, searchString);
-			}
-		}
+//		else if(section.equals("wm")) {
+//			if(part == null || part.equals("")) {
+//				totRecCnt = WmDao.getWmTotRecCnt("", "");
+//			}
+//			else {
+//				totRecCnt = WmDao.getWmTotRecCnt(search, searchString);
+//			}
+//		}
 		
 		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) + 1;
 		if(pag > totPage) pag = 1;
@@ -109,10 +109,10 @@ public class Pagination {
 			pVos = pdsDao.getPdsList(startIndexNo, pageSize, part);	// 게시판의 전체 자료 가져오기
 			request.setAttribute("vos", pVos);
 		}
-		else if(section.equals("wm")) {
-			WmVos = WmDao.getMessageList(startIndexNo, pageSize, search, searchString);	// 게시판의 전체 자료 가져오기
-			request.setAttribute("vos", WmVos);
-		}
+//		else if(section.equals("wm")) {
+//			WmVos = WmDao.getMessageList(startIndexNo, pageSize, search, searchString);	// 게시판의 전체 자료 가져오기
+//			request.setAttribute("vos", WmVos);
+//		}
 		
 		request.setAttribute("pag", pag);
 		request.setAttribute("pageSize", pageSize);

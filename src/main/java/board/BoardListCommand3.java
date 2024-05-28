@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.Pagination;
-import common.Pagination2;
+import common.Pagination3;
 import common.PaginationVO;
 
 public class BoardListCommand3 implements BoardInterface {

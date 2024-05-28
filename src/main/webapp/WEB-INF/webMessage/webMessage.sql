@@ -32,3 +32,5 @@ select * from webMessage;
 
 select *, timestampdiff(hour, sendDate, now()) as hour_diff from webMessage  /* 보낸사람의 보낸날짜(받는사람이 보는 것) */
 where receiveId='aris1234' and (receiveSw='n' or receiveSw='r') order by idx desc;  /* 페이징 처리하면 limit까지 */
+
+select *,timestampdiff(hour, sendDate, now()) as hour_diff from webMessage where receiveId='hkd1234' and (receiveSw='n' or receiveSw='r') order by idx desc limit 0,5;

@@ -12,14 +12,14 @@
   	#leftWindow {
   		float: left;  /* table로 안해서 float 줌 */
   		width: 25%;
-  		height: 500px;
+  		height: 520px;
   		text-align: center;
   		background-color: #ddd;
   	}
   	#rightWindow {
   		float: left;
   		width: 75%;
-  		height: 500px;
+  		height: 520px;
   		text-align: center;
   		background-color: #eee;
   		overflow: auto;  /* 내용이 기준틀을 넘으면 scrollbar가 나오도록 설정 */
@@ -35,7 +35,6 @@
   	
   	function wmDeleteAll() {
   		let ans = confirm("휴지통을 모두 비우시겠습니까?");
-  		
   		if(!ans) return false;
   		
   		$.ajax({

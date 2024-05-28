@@ -80,6 +80,8 @@
 			    <div class="dropdown-menu">
 			      <a class="dropdown-item" href="Calendar1.st">달력연습1</a>
 			      <a class="dropdown-item" href="Calendar2.st">달력연습2</a>
+			      <a class="dropdown-item" href="ScrollStudy.st">스크롤 연습</a>
+			      <a class="dropdown-item" href="ScrollBasic.st">무한 스크롤</a>
 			    </div>
   			</div>
       </li>

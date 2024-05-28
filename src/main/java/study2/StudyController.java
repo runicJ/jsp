@@ -28,6 +28,7 @@ import study2.pdstest.FileUpload2OkCommand;
 import study2.pdstest.FileUpload3OkCommand;
 import study2.pdstest.FileUpload4OkCommand;
 import study2.pdstest.JavaFileDownloadCommand;
+import study2.scrollPage.ScrollPageCommand;
 
 @SuppressWarnings("serial")
 @WebServlet("*.st")
@@ -174,6 +175,19 @@ public class StudyController extends HttpServlet {
 			command = new Calendar2Command();
 			command.execute(request, response);
 			viewPage += "/calendar/calendar2.jsp";
+		}
+		else if(com.equals("ScrollStudy")) {
+			viewPage += "/scrollPage/scrollStudy.jsp";  // 보여주기만 하면 될 것 같아서
+		}
+		else if(com.equals("ScrollBasic")) {
+			command = new ScrollPageCommand();
+			command.execute(request, response);
+			viewPage += "/scrollPage/scrollBasic.jsp";
+		}
+		else if(com.equals("ScrollPage")) {
+			command = new ScrollPageCommand();  // Basic과 똑같은 command 객체
+			command.execute(request, response);
+			viewPage += "/scrollPage/scrollPage.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

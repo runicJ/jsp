@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class WmInputOkCommand implements WebMessageInterface {
 
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String sendId = request.getParameter("sendId")==null ? "" : request.getParameter("sendId");
 		String receiveId = request.getParameter("receiveId")==null ? "" : request.getParameter("receiveId");
 		String title = request.getParameter("title")==null ? "" : request.getParameter("title");

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import common.GetConn;
+import webMessage.WebMessageVO;
 
 public class MemberDAO {  // 3
 	
@@ -318,6 +319,114 @@ public class MemberDAO {  // 3
 			rsClose();
 		}
 		return vos;
+	}
+
+//로그인한 회원이 방명록에 올린 글수 가져오기
+	public int getMemberGuestSearch(String mid, String name, String nickName) {
+		int guestCnt = 0;
+		try {
+			sql = "select count(*) from guest where name=? or name=? or name=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, name);
+			pstmt.setString(3, nickName);
+			rs = pstmt.executeQuery();
+			rs.next();
+			guestCnt = rs.getInt(1);			
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return guestCnt;
+	}
+	
+	// 로그인한 회원이 게시판에 올린글 글수 가져오기
+	public int getMemberBoardSearch(String mid) {
+		int boardCnt = 0;
+		try {
+			sql = "select count(*) from board where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			rs.next();
+			boardCnt = rs.getInt(1);			
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return boardCnt;
+	}
+	
+	// 로그인한 회원이 자료실에 올린글 글수 가져오기
+	public int getMemberPdsSearch(String mid) {
+		int pdsCnt = 0;
+		try {
+			sql = "select count(*) from pds where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			rs.next();
+			pdsCnt = rs.getInt(1);			
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return pdsCnt;
+	}
+
+	// 로그인한 회원에게 전달된 웹메세지중에서 신규(n) 웹메세지 검색처리
+	public ArrayList<WebMessageVO> getMemberWebMessage(String mid) {
+		ArrayList<WebMessageVO> vos = new ArrayList<WebMessageVO>();
+		try {
+			sql = "select *,timestampdiff(hour, sendDate, now()) as hour_diff from webMessage where receiveId=? and receiveSw='n' order by idx desc";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				WebMessageVO vo = new WebMessageVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setTitle(rs.getString("title"));
+				vo.setContent(rs.getString("content"));
+				vo.setSendId(rs.getString("sendId"));
+				vo.setSendSw(rs.getString("sendSw"));
+				vo.setSendDate(rs.getString("sendDate"));
+				vo.setReceiveId(rs.getString("receiveId"));
+				vo.setReceiveSw(rs.getString("receiveSw"));
+				vo.setReceiveDate(rs.getString("receiveDate"));
+				
+				vo.setHour_diff(rs.getInt("hour_diff"));
+				
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
+	}
+
+	// 로그인한 회원의 오늘 일정 개수 구해오기
+	public int getMemberScheduleSearch(String mid, String ymd) {
+		int scheduleCnt = 0;
+		try {
+			sql = "select count(*) from schedule where mid = ? and date_format(sDate,'%Y-%m-%d') = ? order by sDate";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, ymd);
+			rs = pstmt.executeQuery();
+			rs.next();
+			scheduleCnt = rs.getInt(1);			
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return scheduleCnt;
 	}
 	
 }

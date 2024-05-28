@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 public class WmDeleteAllCommand implements WebMessageInterface {
 
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String mid = (String) session.getAttribute("sMid");
 		

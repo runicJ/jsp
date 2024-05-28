@@ -46,33 +46,43 @@ public class WebMessageController extends HttpServlet {  // 4
 		}
 		else if(com.equals("/WebMessage")) {
 			command = new WebMessageCommand();
-			command.excute(request, response);
+			command.execute(request, response);
 			viewPage += "/webMessage.jsp";
 		}
 		else if(com.equals("/WmInputOk")) {
 			command = new WmInputOkCommand();
-			command.excute(request, response);
+			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
 //		else if(com.equals("/WebContent")) {  // 얘는 include로 부름 controller 안탐 controller 타는 곳에 내용을 같이 보냄
 //			command = new WebContentCommand();
-//			command.excute(request, response);
+//			command.execute(request, response);
 //			viewPage = "/webContent.jsp";
 //		}
 		else if(com.equals("/WmDeleteCheck")) {
 			command = new WmDeleteCheckCommand();
-			command.excute(request, response);
+			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/WmDeleteOne")) {
 			command = new WmDeleteOneCommand();
-			command.excute(request, response);
+			command.execute(request, response);
 			return;
 		}
 		else if(com.equals("/WmDeleteAll")) {
 			command = new WmDeleteAllCommand();
-			command.excute(request, response);
+			command.execute(request, response);
 			return;
+		}
+		else if(com.equals("/IdSearchCheck")) {
+			command = new IdSearchCheckCommand();
+			command.execute(request, response);
+			viewPage += "/webMessage.jsp";
+		}
+		else if(com.equals("/WmRestore")) {
+			command = new WmRestoreCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
