@@ -16,7 +16,7 @@ import common.UuidProcess;
 public class MemberJoinOkCommand implements MemberInterface {
 
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String realPath = request.getServletContext().getRealPath("/images/member");  // 경로 마지막 / 안붙여도 됨
 		int maxSize = 1024 * 1024 * 5;
 		String encoding = "UTF-8";
@@ -93,7 +93,7 @@ public class MemberJoinOkCommand implements MemberInterface {
 		vo.setPhoto(photo);
 		vo.setContent(content);
 		vo.setUserInfor(userInfor);
-		
+				
 		int res = dao.setMemberJoinOk(vo);  // vo를 넘김
 		
 		if(res != 0) {  // 0이 아니면 1개라도 처리한 것

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 public class MemberChatInputCommand implements MemberInterface {
 
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();  // 세션 jsp에서 안넘겼으니 여기서 생성
 		String mid = (String) session.getAttribute("sMid");
 		

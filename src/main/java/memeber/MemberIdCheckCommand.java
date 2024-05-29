@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class MemberIdCheckCommand implements MemberInterface {
 
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 		
 		MemberDAO dao = new MemberDAO();

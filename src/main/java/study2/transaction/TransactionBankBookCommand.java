@@ -1,24 +1,26 @@
-package memeber;
+package study2.transaction;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class MemberSearchCommand implements MemberInterface {
+import study2.StudyDAO;
+import study2.StudyInterface;
+
+public class TransactionBankBookCommand implements StudyInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
 		
-		MemberDAO dao = new MemberDAO();
+		StudyDAO dao = new StudyDAO();
 		
-		MemberVO vo = dao.getMemberIdCheck(mid);  // 한 건이면 vo로 한 건 가져오는 것
+		ArrayList<BankBookVO> vos = dao.getBankBookList(mid);
 		
-		vo.setAddress("(우) " + vo.getAddress().replace("/", " "));;
-		
-		request.setAttribute("vo", vo);  // 기차(request 저장소)에 실어주기
+		request.setAttribute("vos", vos);  // response.getWriter() 안씀 hasmore 복잡 / 전날한 것처럼 append 사용
 	}
 
 }

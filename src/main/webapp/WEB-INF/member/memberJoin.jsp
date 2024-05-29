@@ -337,7 +337,7 @@
 	  			return false;
 	  		}	  			
   		}
-  		else return false;
+  		//else return false;
   		
     	// 아이디/닉네임 중복체크
     	if(idCheckSw == 0) {
@@ -352,7 +352,7 @@
     		myform.email.value = email;  // hidden에 묶어서 보내는거 담기
     		myform.tel.value = tel;
     		myform.address.value = address;
-    		
+    		    		    		
     		myform.submit();  // MemberJoinOk로 넘김
     	}
     }
@@ -466,7 +466,7 @@
 <jsp:include page="/include/nav.jsp" />
 <p><br/></p>
 <div class="container">
-  <form name="myform" method="post" action="${ctp}/MemberJoinOk.mem" class="was-validated" enctype="multipart/form-data">  <!-- enctype="multipart/form-data" 잊지말기 -->
+  <form name="myform" method="post" action="MemberJoinOk.mem" class="was-validated" enctype="multipart/form-data">  <!-- enctype="multipart/form-data" 잊지말기 -->
     <h2>회 원 가 입</h2>
     <br/>
     <div class="form-group">

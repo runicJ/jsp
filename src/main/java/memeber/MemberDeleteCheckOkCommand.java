@@ -12,7 +12,7 @@ import common.SecurityUtil;
 public class MemberDeleteCheckOkCommand implements MemberInterface {
 
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd");
 		
 		HttpSession session = request.getSession();

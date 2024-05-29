@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 public class MemberLogoutCommand implements MemberInterface {
 
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
 		String nickName = (String) session.getAttribute("sNickName");  // 로그인되서 온 거니까 null값 처리 안함

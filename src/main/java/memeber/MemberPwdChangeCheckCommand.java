@@ -13,7 +13,7 @@ import common.SecurityUtil;
 public class MemberPwdChangeCheckCommand implements MemberInterface {
 
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String pwd = request.getParameter("pwdCheck")==null ? "" : request.getParameter("pwdCheck");
 		

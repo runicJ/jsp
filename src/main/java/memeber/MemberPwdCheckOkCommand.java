@@ -12,7 +12,7 @@ import common.SecurityUtil;
 public class MemberPwdCheckOkCommand implements MemberInterface {
 
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {  // ajax X
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {  // ajax X
 		String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd");  // 입력한 비밀번호
 		
 		HttpSession session = request.getSession();

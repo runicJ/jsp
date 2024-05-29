@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 public class MemberUpdateCommand implements MemberInterface {
 
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 내정보만 다시 실어서 보내줌(vo)
 		
 		HttpSession session = request.getSession();
