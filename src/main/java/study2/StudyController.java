@@ -210,6 +210,21 @@ public class StudyController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
+		else if(com.equals("Error")) {
+			viewPage += "/error/error.jsp";
+		}
+		else if(com.equals("ErrorJSP")) {
+			viewPage += "/error/errorJSP.jsp";
+		}
+		else if(com.equals("Error400")) {
+			String vo = request.getParameter("vo");
+			System.out.println("vo : " + vo);
+			viewPage += "/error/error404.jsp";
+		}
+		else if(com.equals("Error500")) {
+			System.out.println("5/0 : " + 5/0);  // zero divide error
+			viewPage += "/error/error500.jsp";
+		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

@@ -23,7 +23,7 @@ public class PdsContentCommand implements PdsInterface {
 		
 		PdsVO vo = dao.getPdsIdxSearch(idx);
 		
-		// 해당글의 리뮤내용 가져오기
+		// 해당글의 리뷰내용 가져오기
 		AdminDAO aDao = new AdminDAO();
 		ArrayList<ReviewVO> rVos = aDao.getReviewSearch(idx, "pds");  //review의 part
 		//System.out.println("rVos ; " + rVos);

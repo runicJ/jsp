@@ -63,6 +63,26 @@
 	</context-param>
 	<!-- 정의 해 놓은 것을 등록 -->
 
+	<!-- 전부 예약어 -->
+<!-- 	<error-page>
+		<error-code>400</error-code>
+		<location>/errorMSG/errorMessage404.jsp</location>
+	</error-page>
+	404발생하면 보내줘
+	<location>/errorMSG/errorMessage.jsp</location>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/errorMSG/errorMessage404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>405</error-code>
+		<location>/errorMSG/errorMessage404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/errorMSG/errorMessage500.jsp</location>
+	</error-page> -->
+	<!-- 400에러는 안됨. 객체,객체변수타입(서버에서 정상적으로 처리했다고 보는 것 -->
 
 	<!-- Filter 처리(Controller 앞단에서 제어(처리)한다.) // 쓸 곳 위치는 관계없음 -->
 	<!-- <filter> -->

@@ -1,0 +1,43 @@
+html, body {
+    height: 100%;
+}
+img {
+    border-radius: 1rem;
+}
+/*========스켈레톤 애니메이션 시작========*/
+.item {
+    padding: 0.5rem;
+}
+.item-img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/*스켈레톤 메인 컨테이너*/
+.skeleton_loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /*background: var(--bg-color);*/
+}
+
+/* 스켈레톤 이미지 */
+.skeleton_img {
+    width: 100%;
+    height: 100%;
+}
+
+.skeleton_loading * {
+    background: linear-gradient(120deg, #e5e5e5 30%, #f0f0f0 38%, #f0f0f0 40%, #e5e5e5 48%);
+    border-radius: 1rem;
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    animation: load 1s infinite;
+}
+
+@keyframes load {
+    100% {
+        background-position: -100% 0;
+    }
+}

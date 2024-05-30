@@ -83,6 +83,8 @@
 			      <a class="dropdown-item" href="ScrollStudy.st">스크롤 연습</a>
 			      <a class="dropdown-item" href="ScrollBasic.st">무한 스크롤</a>
 			      <a class="dropdown-item" href="Transaction.st">트랜잭션 연습</a>
+			      <a class="dropdown-item" href="Translator.st">웹 번역</a>
+			      <a class="dropdown-item" href="Error.st">에러페이지</a>
 			    </div>
   			</div>
       </li>
