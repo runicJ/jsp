@@ -36,7 +36,6 @@ public class MemberJoinOkCommand implements MemberInterface {
 		String job = multipartRequest.getParameter("job")==null ? "" : multipartRequest.getParameter("job");
 		//String hobby = request.getParameter("hobby")==null ? "" : request.getParameter("hobby");  // 같은 이름으로 온 건 배열로 넘어옴(값(같은 이름)이 여러개)
 		String photo = multipartRequest.getFilesystemName("fName")==null ? "noImage.jpg" : multipartRequest.getFilesystemName("fName");  // getParameter 앞에서 저장된 이름 -불러온 이름으로 db에 저장하면 의미x // 서버에 저장된 파일시스템 이름으로 저장해야함(똑같은 10.jpg가 있으면 101.jpg로 저장됨 => db에 10.jpg로 저장하면 의미없음, 실제로 저장된 101.jpg로 db에 저장해야함 
-		System.out.println("photo : " + photo);
 		String content = multipartRequest.getParameter("content")==null ? "" : multipartRequest.getParameter("content");
 		String userInfor = multipartRequest.getParameter("userInfor")==null ? "" : multipartRequest.getParameter("userInfor");
 		
