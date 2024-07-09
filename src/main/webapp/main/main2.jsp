@@ -1,13 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="study.database.LoginVO"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="study.database.LoginDAO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>  <!-- page : 지시자 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
+<%
+	int sCount = session.getAttribute("sCount")==null ? 0 : (int) session.getAttribute("sCount");
+	sCount++;
+	session.setAttribute("sCount", sCount);
+	
+  //Main main = new Main()
+  LoginDAO dao = new LoginDAO();
+	ArrayList<LoginVO> recentVos = dao.getRecentFiveMember();
+	pageContext.setAttribute("recentVos", recentVos);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>main.jsp</title>
+  <title>Greenhouse</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%@ include file = "/include/bs4.jsp" %>
+  <%@ include file = "../../include/bs4.jsp" %>
   <link rel="stylesheet" href="${ctp}/css/style.css" />
   <style>
   .fakeimg {
@@ -18,33 +31,49 @@
 </head>
 <body>
 
-
-<%@ include file = "/include/header.jsp" %>
+<%@ include file = "../../include/header.jsp" %>
 
 <!-- 메뉴바(Nav) -->
-<%@ include file = "/include/nav.jsp" %>
+<%@ include file = "/include/nav.jsp" %>  <!-- 지시자 : page(속성), include라는 지시자(문서를 포함) // file = "nav.jsp" 이렇게 하면 현재 위치에 없어서 에러 // 상대경로 지정 -->
 
 <div class="container" style="margin-top:30px">
   <div class="row">
     <div class="col-sm-4">
-      <h6 class="mb-4">로그인 중인 회원 : ${sNickName}</h6>
-      <h6 class="text-right">최근 가입한 회원</h6>
-      <div class="fakeimg">
-      	<table class="table table-striped table-hover text-center">
-      	  <tr class="thead-dark">
-      	    <th>아이디</th>
-      	    <th>성명</th>
-      	    <th>지역</th>
-      	  </tr>
-	        <c:forEach var="vo" items="${recentVos}">
-	          <tr>
-	            <td>${vo.mid}</td>
-	            <td>${vo.name}</td>
-	            <td>${vo.address}</td>
-	          </tr>
-	        </c:forEach>
-        </table>
-      </div>
+      <c:choose>
+	      <c:when test="${sMid != null}">
+    			<h5>마지막 방문일자 : ${cLast}</h5>
+	      	<h3>${sName}(${sMid})</h3>  <!-- session은 EL로 -->
+		      <h4>가입한 회원</h4>
+		      <table class="table table-hover text-center">
+		      	<tr class="table-dark text-dark">
+		      		<th>번호</th>
+		      		<th>아이디</th>
+		      		<th>성명</th>
+		      	</tr>
+<%-- 		      	<c:forEach var="vo" items="${vos}" varStatus="st">
+		      		<tr>
+		      			<td>${vo.idx}</td>
+		      			<td>${vo.mid}</td>
+		      			<td>${vo.name}</td>
+		      		</tr>
+		      	</c:forEach> --%>
+		      	<c:forEach var="vo" items="${recentVos}">
+		          <tr>
+		            <td>${vo.mid}</td>
+		            <td>${vo.name}</td>
+		            <td>${vo.address}</td>
+		          </tr>
+	        	</c:forEach>
+		      	<tr><td colspan="3" class="m-0 p-0"></td></tr>
+		      </table>
+		      </c:when>
+	      <c:otherwise>
+	      	<h2>Welcome!(guest)</h2>
+	      	<div>
+	      		<img src="${ctp}/images/whiteCat.jpg" class="rounded" width="360px" />
+	      	</div>
+	      </c:otherwise>
+      </c:choose>
       <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
       <h3>Some Links</h3>
       <p>Lorem ipsum dolor sit ame.</p>
@@ -131,6 +160,9 @@
     </div>
   </div>
 </div>
+
+<!-- 하단(footer) -->
 <%@ include file = "../../include/footer.jsp" %>
+
 </body>
 </html>

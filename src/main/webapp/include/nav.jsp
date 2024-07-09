@@ -99,6 +99,7 @@
 			      <c:if test="${level <= 4 && level > 1 || level == 0}">
 				      <a class="dropdown-item" href="Schedule.sc">일정관리</a>
 				      <a class="dropdown-item" href="WebMessage.wm">메시지관리</a>  <!-- 가입한 회원에게 보내는 것 // 소캣 말고 DB -->
+				      <a class="dropdown-item" href="PhotoGallery.ptg">PhotoGallery</a>
 				      <a class="dropdown-item" href="MemberList.mem">회원리스트</a>  <!-- 정회원(정보공개한 회원)  -->
 			      </c:if>
 			      <a class="dropdown-item" href="MemberPwdCheck.mem">회원정보수정</a>  <!-- 준회원 if 외의 것 -->
@@ -106,7 +107,7 @@
 			      <c:if test="${sLevel == 0}"><a class="dropdown-item" href="AdminMain.ad">관리자메뉴</a></c:if>
 			    </div>
   			</div>
-      </li>
+      </li>http://localhost:9090/javaclass/guest/GuestList
     </c:if>
 	  </ul>
 		<ul class="navbar-nav ml-auto">
